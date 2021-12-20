@@ -8,7 +8,7 @@ authors: Wang, Zichen, Amazon Web Services; Shi, Yunzhi, Amazon Web Services; Ch
 
 Graph neural networks (GNN) have been an active area of machine learning research to tackle various problems in graph data. Graph is a power way of representing relationships among entities as nodes connected by edges. Sometimes nodes and edges can have spatial features, such as 3D coordinates of nodes and directions along edges. How do we reason over the topology of graphs while considering those geometric features? In this post, discuss a paper published in ICLR 2021: 
 
-* Bowen Jing, Stephan Eismann, Patricia Suriana, Raphael J Townshend, Ron Dror (2021): Learning from Protein Structure with Geometric Vector Perceptrons. https://iclr.cc/virtual/2021/spotlight/3449
+* Bowen Jing, Stephan Eismann, Patricia Suriana, Raphael J Townshend, Ron Dror (2021): [Learning from Protein Structure with Geometric Vector Perceptrons](https://iclr.cc/virtual/2021/spotlight/3449). 
 
 
 ## Graphs and geometric graph
@@ -35,6 +35,7 @@ So how does GVP do that? Let’s first revisit how perceptrons work. We denote $
 $$
 \begin{equation}
     \mathbf{s}' = Perceptron(\mathbf{s}) = \sigma(\mathbf{w}^\intercal\mathbf{s} + b)
+    \tag{1}
 \end{equation}
 $$
 
@@ -42,6 +43,7 @@ A GVP deals with a data point that possess vector features $\mathbf{V} \in \math
 $$
 \begin{equation}
     \mathbf{s}', \mathbf{V}' = GVP(\mathbf{s}, \mathbf{V})
+    \tag{2}
 \end{equation}
 $$
 
@@ -52,12 +54,14 @@ $$
         \| \mathbf{W}_h \mathbf{V} \|_2\\
         \mathbf{s}
     \end{bmatrix}  + \mathbf{b})
+    \tag{3}
 \end{equation}
 $$
 
 $$
 \begin{equation}
     \mathbf{V}' = \sigma^+(\| \mathbf{W}_{\mu} \mathbf{W}_{h} \mathbf{V} \|_2) \odot \mathbf{W}_{\mu} \mathbf{W}_{h} \mathbf{V} 
+    \tag{4}
 \end{equation}
 $$
 
@@ -73,6 +77,7 @@ The message function describes how a pair of nodes and the edge connecting them 
 $$
 \begin{equation}
     \mathbf{m}_{ij} = M(\mathbf{h}_i, \mathbf{h}_j, \mathbf{h}_{ij})    
+    \tag{5}
 \end{equation}
 $$
 
@@ -80,6 +85,7 @@ Afterwards, messages collected from all neighbors of a node are aggregated and u
 $$
 \begin{equation}
     \mathbf{h}_{i} \leftarrow U(\mathbf{h}_i, \sum_{j\in \mathcal{N}(i)}\mathbf{m}_{ij} )
+    \tag{6}
 \end{equation}
 $$
 
@@ -90,6 +96,7 @@ $$
 \begin{align}
 \mathbf{m}_{ij} &= M_{GVP}(\mathbf{s}_j, \mathbf{V}_j, \mathbf{s}_{ij}, \mathbf{V}_{ij})\\
  &= GVP(concat(\mathbf{s}_j, \mathbf{s}_{ij}), concat(\mathbf{V}_j, \mathbf{V}_{ij})) \\
+ \tag{7}
 \end{align}
 $$
 
@@ -97,6 +104,7 @@ We use $h=(s, V)$ to simplify notations, GVP-GNN’s update function aggregates 
 $$
 \begin{equation}
 \mathbf{h}_{i} \leftarrow LayerNorm(\mathbf{h}_i + \frac{1}{|\mathcal{N}(i)|} Dropout( \sum_{j\in \mathcal{N}(i)}\mathbf{m}_{ij}))
+\tag{8}
 \end{equation}
 $$
 
@@ -108,6 +116,7 @@ $$
 \mathbf{m}_{ij} 
 % &= M_{SchNet}(\mathbf{s}_j, \mathbf{V}_j, \mathbf{V}_{i}) \\
 &=  \phi_{CF}(\Vert\mathbf{V}_j - \mathbf{V}_i\Vert) \phi_{S}(\mathbf{s}_j)
+\tag{9}
 \end{align}
 $$
 
@@ -117,6 +126,7 @@ $$
 \mathbf{m}_{ij} 
 % &= M_{TFN}(\mathbf{s}_j, \mathbf{V}_j, \mathbf{V}_{i}) \\
 &= \sum_k\mathbf{W}^{lk}(\mathbf{V}_j - \mathbf{V}_i) \mathbf{s}_j^{lk}
+\tag{10}
 \end{align}
 $$
 
@@ -126,6 +136,7 @@ $$
 \mathbf{m}_{ij} 
 % &= M_{SE3}(\mathbf{s}_i, \mathbf{V}_i, \mathbf{V}_{j}) \\
 &= \sum_k\alpha_{ij} \mathbf{W}^{lk}(\mathbf{V}_j - \mathbf{V}_i) \mathbf{s}_j^{lk}
+\tag{11}
 \end{align}
 $$
 
@@ -133,7 +144,7 @@ Observing the message functions (equations 10, 11, 12) from the three preceeding
 
 More concretely, the competing methods are unable to reason with edge vector features that are independent of node vector features. Having indepedent vector features from nodes and edges allows one to construct more expressive geometric graphs. For instance, in the protein graph, the authors encoded unit vector in the direction of neighboring amnio acids as edge vector feature $C\alpha_j - C\alpha_i$, whereas node vector features can represent amino acid's interal direction along $C\beta_i - C\alpha_i$. 
 
-![protein geomtric graph](assets/geometric_protein_graph.png)
+![protein geomtric graph]({{ site.url }}/public/images/2021-12-20-euclidean_geometric_graph/geometric_protein_graph.png)
 *Illustration of vector features on a protein geometric graph.* The left panel depicts amino acid residues from a local neighborhood on a protein in 3D Euclidean space. Amino acid residues are colored by their types, with key atoms ($C$, $O$, $C\alpha$, $C\beta$) labeled for two selected residues. Within residues, two vectors ($C\alpha - C\beta$ and $C\alpha - C$) plotted in dashed arrows form the node feature $\mathbf{V}_i \in \mathbb{R}^{2 \times 3}$. Between residue i and j, the vector $C\alpha_i - C\alpha_j$ can be used as the edge vector features $\mathbf{V}_{ij} \in \mathbb{R}^{1 \times 3}$. The right panel abstracts the protein geometric graphs and their vector features.
 
 (add example of geospatial graph with independent node and edge vector features.)
@@ -145,26 +156,19 @@ Because GVP-GNN learns and updates vector features on nodes and edges, it’s po
 The authors visualized the learned node vector features on protein geometric graphs. We can clearly see the distinctive patterns on different protein graphs: contracting (A and D), rotating (B) expanding (C). It would be really interesting to study if those learned vector fields actually are correlated with molecular forces among the amino acid residues in the protein graphs.
 
 
-![Figure 2 in the GVP paper](assets/GVP_figure2.png)
+![Figure 2 in the GVP paper]({{ site.url }}/public/images/2021-12-20-euclidean_geometric_graph/GVP_figure2.png)
 
 In addition to looking at the resultant vector fields (analogous to feature maps in CNN), one should also analyze GVP’s kernels ($\mathbf{W}_{\mu}$ and $\mathbf{W}_{h}$) because they are the counterpart to CNN’s kernels (aka filters), where lower level kernels learns to detect edge and texture and higher level learns more complex images components such as animal eyes (think DeepDream/[Inceptionism](_https://ai.googleblog.com/2015/06/inceptionism-going-deeper-into-neural.html_)).
 
-### Applications of GVP-GNN within and beyond macro-molecules
+## Applications of GVP-GNN within and beyond macro-molecules
 
 Jing et al. demonstrated the application of their GVP-GNN to various supervised learning tasks on proteins represented as geometric graphs of amino acid residues. A natural next step is to model the protein geometric graphs at atomic level. With its expressiveness in geometric graphs, it would be interesting to see if high-resolution atomic graph representation of proteins improve various benchmarks in protein biology including protein design, and model quality assessment. Looking ahead, GVP-GNN has promising potential in improving protein structure prediction. For instance, in the AlphaFold2 framework ([Jumper et al. 2021](http://doi.org/10.1038/s41586-021-03819-2)), invariant point attention (IPA) module is currently used to refine the high-resolution residue protein structure. Can GVP-GNN perform better than the IPA module on this task? Geometric graphs constructed from other macro-molecules like RNA and small molecules are immediate testbed for GVP-GNN, we also foresee broader applications in other domains.
 
+### Geospatial use cases
 
-(add geospatial data use cases)
-* ETA prediction from GoogleMap+DeepMind: https://deepmind.com/blog/article/traffic-prediction-with-advanced-graph-neural-networks
-* Edge vector features: 
-    * road direction
-* MLSL use cases: (to be anonymized if mention in this blog post)
-    * HERE technology road accident prediction
-    * BMW?
-    * TomTom Transport mode prediction
+In recent development of intelligent transportation systems (ITS), forecasting traffic speed, volume or the density of roads in traffic networks is fundamentally important. Considering the traffic network as a spatial-temporal graph, GNNs are ideally suited to traffic forecasting problems because of their ability to capture spatial dependency. A widely used application is the estimated times of arrival (ETAs) prediction in Google Map by DeepMind ([Lange and Perez, 2020](https://deepmind.com/blog/article/traffic-prediction-with-advanced-graph-neural-networks)). However, other use cases couldn’t be tackled by regular GNNs with non-Euclidean graph structure representations. Traffic accident and anomaly prediction is a particularly challenging example: it involves accident records, geometric road structures, and meteorological conditions in addition to road networks. For example, the direct sunlight behind a sleep hill or a sharp turn with no lane separation significantly increase the accident risk, and could be modeled in the GVP-GNN by considering geometric relations between road nodes and edges. [Jiang and Luo (2021)](https://arxiv.org/abs/2101.11174) mentioned other use cases such as parking availability and lane occupancy forecasting that are likely to benefit from introducing geometric relations.
 
-* ~~Modeling N-body systems from physics?~~
-* ~~*V* beyond 3D space?~~
+Another geospatial use case is the problem of collision-free navigation in multi-robot systems where the robots are restricted in observation and communication range. Positional relations between the robot fleet is crucial to the task. In [Li et al. (2019)](https://arxiv.org/abs/1912.06095), they jointly trained two networks: a CNN that extracts adequate features from local observations, and a GNN that learns to explicitly communicate these features among robots. GVP-GNN has a potential to determine what information is necessary and effectively communicate to facilitate efficnet path planning.
 
 ### Application in graph drawing 
 
@@ -174,11 +178,14 @@ When we revisit the graph drawing problem, we noted it can be formulated as a no
 
 
 ## References
-* Justin Gilmer, Samuel S. Schoenholz, Patrick F. Riley, Oriol Vinyals and George E. Dahl (2017): “Neural Message Passing for Quantum Chemistry” arXiv:1704.01212 (https://arxiv.org/abs/1704.01212)
-* Kristof T. Schütt, Pieter-Jan Kindermans, Huziel E. Sauceda, Stefan Chmiela, Alexandre Tkatchenko and Klaus-Robert Müller (2017): “SchNet: A continuous-filter convolutional neural network for modeling quantum interactions” arXiv:1706.08566 (https://arxiv.org/abs/1706.08566)
-* Nathaniel Thomas, Tess Smidt, Steven Kearnes, Lusann Yang, Li Li, Kai Kohlhoff and Patrick Riley (2018): “Tensor field networks: Rotation- and translation-equivariant neural networks for 3D point clouds” arXiv:1802.08219 (https://arxiv.org/abs/1802.08219)
-* Fabian B. Fuchs, Daniel E. Worrall, Volker Fischer and Max Welling (2020): “SE(3)-Transformers: 3D Roto-Translation Equivariant Attention Networks” arXiv:2006.10503 (https://arxiv.org/abs/2006.10503)
-* Michael M. Bronstein, Joan Bruna, Taco Cohen and Petar Veličković (2021): “Geometric Deep Learning: Grids, Groups, Graphs, Geodesics, and Gauges” arXiv:2104.13478 (https://arxiv.org/abs/2104.13478)
-* John Jumper et al. (2021) “Highly accurate protein structure prediction with AlphaFold” Nature doi.org/10.1038/s41586-021-03819-2 (http://doi.org/10.1038/s41586-021-03819-2)
-* Andrew Y. Ng, Michael I. Jordan, Yair Weiss (2001): “On Spectral Clustering: Analysis and an algorithm” http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.19.8100
-* Fruchterman, Thomas M. J.; Reingold, Edward M. (1991), "Graph Drawing by Force-Directed Placement", Software – Practice & Experience, Wiley, 21 (11): 1129–1164, doi:10.1002/spe.4380211102 (https://doi.org/10.1002/spe.4380211102)
+* Justin Gilmer, Samuel S. Schoenholz, Patrick F. Riley, Oriol Vinyals and George E. Dahl (2017): “Neural Message Passing for Quantum Chemistry” [arXiv:1704.01212](https://arxiv.org/abs/1704.01212)
+* Kristof T. Schütt, Pieter-Jan Kindermans, Huziel E. Sauceda, Stefan Chmiela, Alexandre Tkatchenko and Klaus-Robert Müller (2017): “SchNet: A continuous-filter convolutional neural network for modeling quantum interactions” [arXiv:1706.08566](https://arxiv.org/abs/1706.08566)
+* Nathaniel Thomas, Tess Smidt, Steven Kearnes, Lusann Yang, Li Li, Kai Kohlhoff and Patrick Riley (2018): “Tensor field networks: Rotation- and translation-equivariant neural networks for 3D point clouds” [arXiv:1802.08219](https://arxiv.org/abs/1802.08219)
+* Fabian B. Fuchs, Daniel E. Worrall, Volker Fischer and Max Welling (2020): “SE(3)-Transformers: 3D Roto-Translation Equivariant Attention Networks” [arXiv:2006.10503](https://arxiv.org/abs/2006.10503)
+* Michael M. Bronstein, Joan Bruna, Taco Cohen and Petar Veličković (2021): “Geometric Deep Learning: Grids, Groups, Graphs, Geodesics, and Gauges” [arXiv:2104.13478](https://arxiv.org/abs/2104.13478)
+* John Jumper et al. (2021) “Highly accurate protein structure prediction with AlphaFold” Nature [doi.org/10.1038/s41586-021-03819-2](http://doi.org/10.1038/s41586-021-03819-2)
+* Andrew Y. Ng, Michael I. Jordan, Yair Weiss (2001): [“On Spectral Clustering: Analysis and an algorithm”](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.19.8100)
+* Fruchterman, Thomas M. J.; Reingold, Edward M. (1991), "Graph Drawing by Force-Directed Placement", Software – Practice & Experience, Wiley, 21 (11): 1129–1164, [doi:10.1002/spe.4380211102](https://doi.org/10.1002/spe.4380211102)
+* Oliver Lange, Luis Perez (2020): [“Traffic prediction with advanced Graph Neural Networks”](https://deepmind.com/blog/article/traffic-prediction-with-advanced-graph-neural-networks)
+* Weiwei Jiang, Jiayun Luo (2021): “Graph Neural Network for Traffic Forecasting: A Survey” [arXiv:2101.11174](https://arxiv.org/abs/2101.11174)
+* Qingbiao Li, Fernando Gama, Alejandro Ribeiro, Amanda Prorok (2019): “Graph Neural Networks for Decentralized Multi-Robot Path Planning” [arXiv:1912.06095](https://arxiv.org/abs/1912.06095)
