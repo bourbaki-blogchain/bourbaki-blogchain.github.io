@@ -65,7 +65,7 @@ $$
 \end{equation}
 $$
 
-The output $\mathbf{s}'$, $\mathbf{V}'$ from GVP is provable $E(3)$ invariant and equivariant, respectively, with respect to rotations and reflections. As we can easily see in equation (3) that the scalar output $\mathbf{s}'$ only depends on the l2-norm of the vector, which is constant after any rotations/reflections. Similarly, in equation (4), the directions in the vector output $\mathbf{V}'$ is a function of $\mathbf{W}_{\mu} \mathbf{W}_{h} \mathbf{V}$, which means it only changes with transformation of $\mathbf{V}$. 
+The output $\mathbf{s}'$, $\mathbf{V}'$ from GVP is provable $E(3)$ invariant and equivariant, respectively, with respect to rotations and reflections. As we can easily see in equation (3) that the scalar output $\mathbf{s}'$ only depends on the l2-norm of the vector, which is constant after any rotations/reflections. Similarly, in equation (4), the directions in the vector output $\mathbf{V}'$ is a function of $$\mathbf{W}_{\mu} \mathbf{W}_{h} \mathbf{V}$$, which means it only changes with transformation of $\mathbf{V}$. 
 
 The authors further extended the universal approximation theorem from perceptron to GVP: they proved that GVP can approximate any rotation-invariant functions. Now that we have GVP to take care of the Euclidean transformations, we can use it to build a GNN to tackle geometric graphs. 
 
@@ -120,7 +120,7 @@ $$
 \end{align}
 $$
 
-TFN uses spherical harmonics to compute its learnable weight kernel Wlk to preserves $SE(3)$ equivariance: 
+TFN uses spherical harmonics to compute its learnable weight kernel $\mathbf{W}^{lk}$ to preserves $SE(3)$ equivariance: 
 $$
 \begin{align}
 \mathbf{m}_{ij} 
@@ -140,12 +140,12 @@ $$
 \end{align}
 $$
 
-Observing the message functions (equations 10, 11, 12) from the three preceeding algorithms, we note that they all depend on the direction between the vector features: $\mathbf{V}_j - \mathbf{V}_i$. In contrast, GVP-GNN achieve $SE(3)$ equivariance of the message via concatenation of vector features of node ***and*** edge: $concat(\mathbf{V}_j, \mathbf{V}_{ij})$. The concatenation allows GVP-GNN to generate an ensemble of vector messages from both nodes and edges, making it more flexible and versatile than the competing methods. 
+Observing the message functions (equations 10, 11, 12) from the three preceeding algorithms, we note that they all depend on the direction between the vector features: $$\mathbf{V}_j - \mathbf{V}_i$$. In contrast, GVP-GNN achieve $SE(3)$ equivariance of the message via concatenation of vector features of node **and** edge: $$concat(\mathbf{V}_j, \mathbf{V}_{ij})$$. The concatenation allows GVP-GNN to generate an ensemble of vector messages from both nodes and edges, making it more flexible and versatile than the competing methods. 
 
 More concretely, the competing methods are unable to reason with edge vector features that are independent of node vector features. Having indepedent vector features from nodes and edges allows one to construct more expressive geometric graphs. For instance, in the protein graph, the authors encoded unit vector in the direction of neighboring amnio acids as edge vector feature $C\alpha_j - C\alpha_i$, whereas node vector features can represent amino acid's interal direction along $C\beta_i - C\alpha_i$. 
 
 ![protein geomtric graph]({{ site.url }}/public/images/2021-12-20-euclidean_geometric_graph/geometric_protein_graph.png)
-*Illustration of vector features on a protein geometric graph.* The left panel depicts amino acid residues from a local neighborhood on a protein in 3D Euclidean space. Amino acid residues are colored by their types, with key atoms ($C$, $O$, $C\alpha$, $C\beta$) labeled for two selected residues. Within residues, two vectors ($C\alpha - C\beta$ and $C\alpha - C$) plotted in dashed arrows form the node feature $\mathbf{V}_i \in \mathbb{R}^{2 \times 3}$. Between residue i and j, the vector $C\alpha_i - C\alpha_j$ can be used as the edge vector features $\mathbf{V}_{ij} \in \mathbb{R}^{1 \times 3}$. The right panel abstracts the protein geometric graphs and their vector features.
+*Illustration of vector features on a protein geometric graph.* The left panel depicts amino acid residues from a local neighborhood on a protein in 3D Euclidean space. Amino acid residues are colored by their types, with key atoms ($C$, $O$, $C\alpha$, $C\beta$) labeled for two selected residues. Within residues, two vectors ($C\alpha - C\beta$ and $C\alpha - C$) plotted in dashed arrows form the node feature $$\mathbf{V}_i \in \mathbb{R}^{2 \times 3}$$. Between residue i and j, the vector $C\alpha_i - C\alpha_j$ can be used as the edge vector features $\mathbf{V}_{ij} \in \mathbb{R}^{1 \times 3}$. The right panel abstracts the protein geometric graphs and their vector features.
 
 (add example of geospatial graph with independent node and edge vector features.)
 
@@ -158,7 +158,7 @@ The authors visualized the learned node vector features on protein geometric gra
 
 ![Figure 2 in the GVP paper]({{ site.url }}/public/images/2021-12-20-euclidean_geometric_graph/GVP_figure2.png)
 
-In addition to looking at the resultant vector fields (analogous to feature maps in CNN), one should also analyze GVP’s kernels ($\mathbf{W}_{\mu}$ and $\mathbf{W}_{h}$) because they are the counterpart to CNN’s kernels (aka filters), where lower level kernels learns to detect edge and texture and higher level learns more complex images components such as animal eyes (think DeepDream/[Inceptionism](_https://ai.googleblog.com/2015/06/inceptionism-going-deeper-into-neural.html_)).
+In addition to looking at the resultant vector fields (analogous to feature maps in CNN), one should also analyze GVP’s kernels ($$\mathbf{W}_{\mu}$$ and $$\mathbf{W}_{h}$$) because they are the counterpart to CNN’s kernels (aka filters), where lower level kernels learns to detect edge and texture and higher level learns more complex images components such as animal eyes (think DeepDream/[Inceptionism](_https://ai.googleblog.com/2015/06/inceptionism-going-deeper-into-neural.html_)).
 
 ## Applications of GVP-GNN within and beyond macro-molecules
 
