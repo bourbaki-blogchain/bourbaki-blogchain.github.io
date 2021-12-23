@@ -173,6 +173,13 @@ Graph drawing algorithms (aka network layout algorithms) are used to compute the
 
 When we revisit the graph drawing problem, we noticed it can be formulated as a node-level tasks on a geometric graph: given a graph, we compute the coordinates of nodes ($\mathbf{V}_i \in \mathbb{R}^{1 \times d}$, where $d$ equals 2 or 3, for visualizing in 2D or 3D) that minimize the energy function. GVP-GNN can be plugged in as a function approximator to solve this problem. The node vector features can be initialized randomly, just like in force-directed graph drawing algorithms where the positions of the nodes are initialized randomly. Graph drawing with GVP-GNN can reduce the time complexity of force-directed algorithms because each message passing epoch of GVP-GNN only costs $\mathcal{O}(m)$, where $m$ is the number of edges, which is guaranteed to be $m \leq n^2$.
 
+## Conclusion
+
+In this post, we highlighted the novelties of GVP-GNN developed by Jing and colleagues, including the provable $E(3)$-invariance and equivariance, extension of the universal approximation guarantee, inherent interpretability by visualizing the learned vector features, and its SoTA performance on tasks related to protein structures. 
+
+More importantly, we analyzed how GVP-GNN fits into the Geometric Deep Learning blueprint and how it unifies two types of symmetries in geometric graphs. Through this post, we hope we inspire the readers with the breadth of under-utilized applications of geometric graphs and Euclidean equivariant GNNs: spanning from biochemical and geospatial data to network visualization and many more to follow! 
+
+
 ## References
 * Justin Gilmer, Samuel S. Schoenholz, Patrick F. Riley, Oriol Vinyals and George E. Dahl (2017): “Neural Message Passing for Quantum Chemistry” [arXiv:1704.01212](https://arxiv.org/abs/1704.01212)
 * Kristof T. Schütt, Pieter-Jan Kindermans, Huziel E. Sauceda, Stefan Chmiela, Alexandre Tkatchenko and Klaus-Robert Müller (2017): “SchNet: A continuous-filter convolutional neural network for modeling quantum interactions” [arXiv:1706.08566](https://arxiv.org/abs/1706.08566)
