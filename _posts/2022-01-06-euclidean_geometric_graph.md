@@ -28,9 +28,9 @@ Following the geometric deep learning blueprint ([Bronstein et al. 2021](https:/
 Most GNN architectures are unable to reason over the spatial relationships among the nodes and edges in a geometric graph. The study by Jing et al. focuses on the tasks operating on the tertiary structures of proteins and frames the method as “learning from structures”. In fact, the problem of learning from a geometric graph can be naively solved by ignoring either aspect of the data: 1) relational reasoning on graphs using GNN while ignoring the Euclidean geometry, and 2) geometric reasoning on the protein structures using 3D CNN with voxelized representations. Motivated by combining the best from both worlds of GNN and CNN, the authors developed GVP-GNN, which is a novel GNN architecture with GVP as building blocks. 
 
 ### GVP, the Euclid’s neuron 
-As its name suggests, GVP is a type of perceptron, just like a basic perceptron used in dense layers of neural networks. The novelty of GVP lies in its ability to jointly process features from two independent modalities: scalar and geometric vector features. 
+As its name suggests, GVP is a type of perceptron, just like a basic perceptron used in dense layers of neural networks. The novelty of GVP lies in its ability to jointly process features from two independent modalities: scalar and geometric vector features. Throughout this post, we use $\mathbf{s} \in \mathbb{R}^h$ and $\mathbf{V} \in \mathbb{R}^{\nu \times 3}$ to denote scalar and geometric vector features, respectively. 
 
-So how does GVP do that? Let’s first revisit how perceptrons work. We denote $\mathbf{s} \in \mathbb{R}^h$ as a feature vector whose entries are irrelevant to the spatial information. A perceptron is simply the linear transformation of $\mathbf{s}$ followed by nonlinearity:
+So how does GVP do that? Let’s first revisit how perceptrons work. Scalar feature $\mathbf{s} \in \mathbb{R}^h$ is a feature vector whose entries are irrelevant to the spatial information. A perceptron is simply the linear transformation of $\mathbf{s}$ followed by nonlinearity:
 
 $$
 \begin{equation}
@@ -39,7 +39,7 @@ $$
 \end{equation}
 $$
 
-A GVP jointly process $\mathbf{s}$ and $\mathbf{V} \in \mathbb{R}^{\nu \times 3}$ with the following computations:
+A GVP jointly process $\mathbf{s}$ and vector feature $\mathbf{V}$ with the following computations:
 $$
 \begin{equation}
     \mathbf{s}', \mathbf{V}' = GVP(\mathbf{s}, \mathbf{V})
@@ -72,9 +72,10 @@ The authors further extended the universal approximation theorem from perceptron
 
 ### Refresher on GNN basics
 
-GNN typically reasons among neighboring nodes by exchanging messages between them to update the node representations with node and edge features, thus integrating the topological structures of the graph when making inferences. The message passing paradigm ([Gilmer et al. 2017](https://arxiv.org/abs/1704.01212)) unifies many GNN architectures as collecting and aggregating messages from neighbors to update the node representations. 
+GNN typically reasons among neighboring nodes by exchanging messages between them to update the node representations with node and edge features, thus integrating the topological structures of the graph when making inferences. The message passing paradigm ([Gilmer et al. 2017](https://arxiv.org/abs/1704.01212)) unifies many GNN architectures as collecting and aggregating messages from neighbors to update the node representations. Below we use $$\mathbf{h}_i$$ and $$\mathbf{h}_j$$ to denote features on nodes $i$ and $j$, and $$\mathbf{e}_{ij}$$ to denote the feature on the edge connecting them.
 
-The message function describes how a pair of nodes and the edge connecting them contribute in generating a message: 
+The message function $M$ describes how a pair of nodes and the connecting edge contribute in generating a message $$\mathbf{m}_{ij}$$: 
+
 $$
 \begin{equation}
     \mathbf{m}_{ij} = M(\mathbf{h}_i, \mathbf{h}_j, \mathbf{e}_{ij})    
@@ -82,13 +83,14 @@ $$
 \end{equation}
 $$
 
-Afterwards, messages collected from all neighbors of a node are aggregated and used for updating the node’s representation:
+Afterwards, messages collected from all neighbors of a node are aggregated and used for updating the node’s representation with update function $U$:
 $$
 \begin{equation}
     \mathbf{h}_{i} \leftarrow U(\mathbf{h}_i, AGG_{j\in \mathcal{N}(i)}\mathbf{m}_{ij} )
     \tag{6}
 \end{equation}
 $$
+, where $AGG$ denotes some aggregating function and $\mathcal{N}(i)$ denotes the neighbors of $i$ in the graph.
 
 ### GVP-GNN: Message from vector features
 
@@ -143,7 +145,7 @@ $$
 
 Observing the message functions (equations 9, 10, 11) from the three preceding algorithms, we note that they all depend on the direction between the vector features: $$\mathbf{V}_j - \mathbf{V}_i$$. In contrast, GVP-GNN achieves $SE(3)$ equivariance of the message via concatenation of vector features of node **and** edge: $$concat(\mathbf{V}_j, \mathbf{V}_{ij})$$, allowing it to incorporate edge features. The concatenation allows GVP-GNN to generate an ensemble of vector messages from both nodes and edges, making it more flexible and versatile than the competing methods. 
 
-More concretely, the competing methods are unable to reason with edge vector features that are independent of node vector features. Having independent vector features from nodes and edges allows one to construct more expressive geometric graphs. For instance, in a protein graph, the authors encoded unit vector in the direction of neighboring amino acids as edge vector feature $C\alpha_j - C\alpha_i$, whereas node vector features can represent amino acid's internal direction along $C\beta_i - C\alpha_i$. 
+More concretely, the competing methods are unable to reason with edge vector features that are independent of node vector features. Having independent vector features from nodes and edges allows one to construct more expressive geometric graphs. For instance, in the protein graph used in the GVP paper, each node in the graph represents an amino acid residue with multiple key atoms, including $C$ (carboxyl carbon), $O$ (carbonyl oxygen), $C\alpha$ (alpha carbon next to the carboxyl group), and $C\beta$ (beta carbon of the carboxyl group, e.g. two-hop neighbor of $C$). The authors encoded unit vector in the direction of neighboring amino acids $i$ and $j$ along their $C\alpha$ atoms as edge vector feature: $C\alpha_j - C\alpha_i$, whereas node vector features can represent amino acid's internal direction along $C\beta_i - C\alpha_i$. 
 
 ![protein geometric graph]({{ site.url }}/public/images/2021-12-20-euclidean_geometric_graph/geometric_protein_graph.png)
 *Illustration of vector features on a protein geometric graph.* The left panel depicts amino acid residues from a local neighborhood on a protein in 3D Euclidean space. Amino acid residues are colored by their types. Key atoms ($C$, $O$, $C\alpha$, $C\beta$) are labeled for two selected residues. Within residues, two vectors ($C\alpha - C\beta$ and $C\alpha - C$) are plotted in dashed arrows form the node feature $$\mathbf{V}_i \in \mathbb{R}^{2 \times 3}$$. Between residue i and j, the vector $C\alpha_i - C\alpha_j$ can be used as the edge vector features $\mathbf{V}_{ij} \in \mathbb{R}^{1 \times 3}$. The right panel abstracts the protein geometric graph and their vector features.
