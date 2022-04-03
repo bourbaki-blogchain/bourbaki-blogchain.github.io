@@ -34,7 +34,7 @@ $$
 p(\mathbf{y}, \mathbf{z} \vert \mathbf{x}) = p(y_{z_1} \vert \mathbf{x})p(z_1 \vert y_{z_1}, \mathbf{x})\prod_{i=2}^n p(y_{z_i} \vert z_{<i}, y_{z_{<i}}\mathbf{x})p(z_i \vert z_{<i}, y_{z_{\leq i}}\mathbf{x})
 $$
 
-where $$\mathbf{z} = (z_1, \ldots, z_n) \in S$$ is a one-dimensional representation of permutation.
+where $\mathbf{z} = (z_1, \ldots, z_n) \in S$ is a one-dimensional representation of permutation.
 
 Although mathematically sound, determining the <i>best order</i> using previous known approaches is empirically challenging, especially in situations where the domain of the data is not provided. The model needs to infer that *adaptively* from the data.
 
@@ -163,7 +163,7 @@ $$
 
 While determinants find applications in combinatorics as well as have geometric interpretations (volume of an $$n$$-dimensional parallelepiped), a matrix permanent is mainly used as a combinatorial object and has no such geometric interpretations.
 
-For a special case of non-negative entries i.e., $$X \in \mathbb{R}^+_{n \times n}$$ (*this will be useful for us later in* [*VOI*](#variational-order-inference)), the permanent can be approximated using by solving a certain Bethe free energy optimization problem [[Yedidia 2001](#Yedidia)]. The **Bethe permanent** is an approximation for a matrix $$X \in \mathbb{R}^+_{n \times n}$$ is defined as:
+For a special case of non-negative entries i.e., $$X \in \mathbb{R}^+_{n \times n}$$ (*this will be useful for us later in* [*VOI*](#variational-order-inference)), the permanent can be approximated by solving a certain Bethe free energy optimization problem [[Yedidia 2001](#Yedidia)]. The **Bethe permanent** is an approximation for a matrix $$X \in \mathbb{R}^+_{n \times n}$$ and is defined as:
 
 $$
 \texttt{perm}_B(A) = \texttt{exp}\left(\max_{\gamma \in \mathcal{B}_{n \times n}} \sum_{i, j}\left(\gamma_{i,j}\log X_{i,j} - \gamma_{i,j}\log \gamma_{i,j} + (1-\gamma_{i,j})\log (1-\gamma_{i,j})\right)\right)
@@ -190,14 +190,14 @@ Now that we have defined all these special types of matrices, it is a good time 
 
 The [Birkhoff polytope](https://en.wikipedia.org/wiki/Birkhoff_polytope) $$\mathcal{B}_n$$ is the convex polytope in $$R^{n \times n}$$ whose points are the doubly stochastic matrices. This polytope has $$n!$$ vertices and by the [Birkhoff–von Neumann theorem](https://en.wikipedia.org/wiki/Birkhoff%E2%80%93von_Neumann_theorem) it follows that each vertex is a **permutation matrices**. Further more, any *doubly-stochastic matrix* can be represented as a convex combination of permutation matrices.
 
-By definitions of permutation matrices, double-stochastic matrices it should be evident that 
+By definitions of permutation matrices, and doubly-stochastic matrices it should be evident that 
 $$\mathcal{P}_{n \times n} \subset \mathcal{B}_{n \times n} \subset \mathbb{R}^+_{n \times n}$$
 
 ## (B) Prelude to Gumbel-Sinkhorn
 
 ### Definition: Frobenius Norm
 
-Given two matrices $A$ and $B$, $\langle A,B \rangle_F = Tr(A^\top B) = \sum_{ij}\overline{A_{ij}}B_{ij}$
+Given two matrices $A$ and $B$, the Frobenius norm: $\langle A,B \rangle_F = Tr(A^\top B) = \sum_{ij}\overline{A_{ij}}B_{ij}$
 
 ### Discrete Approximations for Vectors
 
@@ -428,7 +428,7 @@ We first formulate the problem, and then discuss the proposed model with an infe
 
 ## Formulation
 
-Consider a sequence of source tokens (or source representations in case of non-text input domains) $$\mathbf{x} = (x_1, \ldots, x_m)$$. The goal of an NLG model is to model a sequence of target tokens $$\mathbf{y} = (y_1, \ldots,  y_n)$$, conditioned on $$x$$.
+Consider a sequence of source tokens (or source representations in case of non-text input domains) $$\mathbf{x} = (x_1, \ldots, x_m)$$. The goal of an NLG model is to model a sequence of target tokens $$\mathbf{y} = (y_1, \ldots,  y_n)$$, conditioned on $$\mathbf{x}$$.
 
 In the standard autoregressive modeling with fixed orderings (monotonic auto-regressive), the model is formulated as follows:
 
@@ -436,7 +436,7 @@ $$
 p(\mathbf{y} \vert \mathbf{x}) = p(y_1 \vert \mathbf{x}) \prod_{i=2}^n p(y_i|y_{<i}, \mathbf{x})
 $$
 
-In this work, however, the focus is on modeling non-monotonic autoregressive NLG frameworks, where the position or ordering of the sequence token is not fixed. Let the latent variable to model these orderings be denoted as $$\mathbf{z} = (z_1, \ldots, z_n)$$. Each $$z_i$$ denotes the position at which $$y_{z_i}$$ should be inserted into the sequence $$\mathbf{y}$$. Thus instead of modeling $$p(\mathbf{y} \vert \mathbf{x})$$ directly, we are interested in modeling $$p(\mathbf{y}, \mathbf{z}\vert\mathbf{x})$$ first and marginalizing it over $$z$$ to obtain $$p(\mathbf{y} \vert \mathbf{x})$$. In order to model this autoregressively, $$p(\mathbf{y}, \mathbf{z}\vert\mathbf{x})$$ is factorized as follows:
+In this work, however, the focus is on modeling non-monotonic autoregressive NLG frameworks, where the position or ordering of the sequence token is not fixed. Let the latent variable to model these orderings be denoted as $$\mathbf{z} = (z_1, \ldots, z_n)$$. Each $$z_i$$ denotes the position at which $$y_{z_i}$$ should be inserted into the sequence $$\mathbf{y}$$. Thus instead of modeling $$p(\mathbf{y} \vert \mathbf{x})$$ directly, we are interested in modeling $$p(\mathbf{y}, \mathbf{z}\vert\mathbf{x})$$ first and marginalizing it over $$\mathbf{z}$$ to obtain $$p(\mathbf{y} \vert \mathbf{x})$$. In order to model this autoregressively, $$p(\mathbf{y}, \mathbf{z}\vert\mathbf{x})$$ is factorized as follows:
 
 $$
 p(\mathbf{y}, \mathbf{z} \vert \mathbf{x}) = p(y_{z_1}\vert\mathbf{x})p(z_1 \vert y_{z_1}, \mathbf{x})\prod_{i=2}^n p(y_{z_i} \vert z_{<i}, y_{z_{<i}}\mathbf{x})p(z_i \vert z_{<i}, y_{z_{\leq i}}\mathbf{x}),
@@ -592,7 +592,7 @@ In the next section, we discuss the experiments conducted in the paper and the r
   <img src="{{ site.url }}/public/images/2022-03-25-non-monotonic-autoregressive-ordering/voi_practice.png" alt="VOI_practice" width="95%"/>
 </p>
 
-In the following section, we discuss the findings of running VOI on different NLG tasks. Without going into the exact experimental details regarding each, we discuss only the key findings of the work. We categorize them into the following headings. 
+In this section, we discuss the findings of running VOI on different NLG tasks. Without going into the exact experimental details regarding each, we discuss only the key findings of the work. We categorize them into the following headings. 
 
 ## A. Quantitative Results
 
@@ -771,7 +771,7 @@ The figure leads to two observations:
 1. It can be seen that although the VOI model favours left-to-right orderings, $$\mathcal{D}_{\text{ORC}}(\mathbf{w},\mathbf{z}) = 0.6$$ shows that left-to-right ordering might not be the perfect strategy. A non-zero value for rare-orderings also indicates that sometimes a more complex ordering strategy might be followed to obtain the *high-quality* generations $$\mathbf{y}$$. 
 2. Interestingly, as the generated sequences increase in length, $$\mathcal{D}_{\text{NLD}}$$ keeps on decreasing till the final value of 0.57. This shows that approximately half of the tokens (but not all) are already arranged according to a left-to-right generation order. The authors hypothesize that certain phrases might be getting generated from left-to-right, but their arrangement follows a *best-first* strategy. In other words, the model prefers generation of key semantic phrases, with the correct order of tokens in them, over filler/non-descriptive phrases.
 
-**Question 3.** *To what extent is the generation order learned by Variational Order Inference dependent on the contents of the conditioning variable $$\mathbf{x}$$?. In other words is it adaptive?*
+**Question 3.** *To what extent is the generation order learned by Variational Order Inference dependent on the contents of the conditioning variable $$\mathbf{x}$$? In other words is it adaptive?*
 
 <p align="center">
   <img src="{{ site.url }}/public/images/2022-03-25-non-monotonic-autoregressive-ordering/perturb.png" alt="Effect of Perturbation" width="75%"/>
