@@ -173,7 +173,7 @@ Practical implementation of the algorithm uses Rayleigh formulation with $\mathc
 
 Primary component which rests behind the success of GOREN is its weight assignment and adjustment scheme. Using a GNN allows GOREN to reset and adjust edge weights. These weights capture local structure from neighborhoods of the original graph. This small trick can be applied on top of previous coarsening algorithms and improve node connectivity. 
 
-<p style="text-align:center;"><img src="{{ site.url }}/public/images/2022-03-25-coarsening/ws.png" style="width:460px;height:320px;display:inline-block;" /><img src="{{ site.url }}/public/images/2022-03-25-coarsening/shape.png" style="width:460px;height:320px;display:inline-block;" /></p>
+<p style="text-align:center;"><img src="{{ site.url }}/public/images/2022-03-25-coarsening/ws.png" style="width:500px;height:320px;display:inline-block;" /><img src="{{ site.url }}/public/images/2022-03-25-coarsening/shape.png" style="width:500px;height:320px;display:inline-block;" /></p>
 
 <p style="text-align:center;color:silver;font-size:15px;margin-top:10px;">GOREN outperforms MLP weight assignment in error reduction on (left) WS and (right) shape datasets.</p>
 
