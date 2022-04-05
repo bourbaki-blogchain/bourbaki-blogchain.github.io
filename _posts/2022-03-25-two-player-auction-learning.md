@@ -17,7 +17,7 @@ That information is private (it’s called their private type, or valuation), bu
 The auctioneer solicits bids from the bidders, who are free to strategically misreport their valuations, anticipating similar strategic behavior by the other bidders.
 The result is a potentially complicated [Bayes-Nash equilibrium](https://en.wikipedia.org/wiki/Bayesian_game#Bayesian_Nash_equilibrium), which may be hard to even compute let alone optimize.
 
-{% include 2021-12-01-two-player-auction-learning/basicauction.html  url='/public/images/2021-12-01-two-player-auction-learning/basicauction.png'  %}
+{% include 2022-03-25-two-player-auction-learning/basicauction.html  url='/public/images/2022-03-25-two-player-auction-learning/basicauction.png'  %}
 
 To cut the Gordian knot, the mechanism designer might wish to ensure that even though bidders are free to lie, there is no incentive to do so.
 This is known as [incentive compatibility](https://en.wikipedia.org/wiki/Incentive_compatibility) — in this post, we'll focus on the particularly strong notion of dominant-strategy incentive compatibility (DSIC), also known as [strategyproofness](https://en.wikipedia.org/wiki/Strategyproofness).
@@ -40,7 +40,8 @@ This lack of theoretical progress motivates a different approach: automated mech
 Given knowledge of the distribution (in the form of samples), can we somehow learn a good — hopefully optimal — mechanism? There’s a lot of work in theory and in practice in this direction.
 In this blog post, we’ll be focusing on the nascent area of differentiable economics — the use of rich, differentiable function approximators to represent classes of mechanisms, which can be trained using gradient-based methods to achieve desired goals.
 
-In particular, we’ll be focusing on "[Auction Learning as a Two-Player Game](https://arxiv.org/abs/2006.05684)", which appeared at ICLR 2021.
+In particular, we’ll be focusing on "[Auction Learning as a Two-Player Game](https://arxiv.org/abs/2006.05684)", which appeared at ICLR 
+.
 This paper builds on previous work that represents allocation and payment rules as feedforward neural networks.
 It differs by also modeling bidder’s strategic behavior as a neural network.
 The resulting training algorithm strongly resembles a GAN.
@@ -48,7 +49,7 @@ The resulting training algorithm strongly resembles a GAN.
 # Formulation
 ### The Mechanism Design Setting
 
-{% include 2021-12-01-two-player-auction-learning/auctionflowchart.html  url='/public/images/2021-12-01-two-player-auction-learning/auctionflowchart.png' %}
+{% include 2022-03-25-two-player-auction-learning/auctionflowchart.html  url='/public/images/2022-03-25-two-player-auction-learning/auctionflowchart.png' %}
 
 Let’s make things concrete.
 Suppose there’s $n$ agents buying $m$ items.
@@ -213,7 +214,7 @@ But this still doesn't have any hyperparameters.)
 
 ## Lack of Hyperparameter Tuning
 
-{% include 2021-12-01-two-player-auction-learning/table1.html url='/public/images/2021-12-01-two-player-auction-learning/table1.png'%}
+{% include 2022-03-25-two-player-auction-learning/table1.html url='/public/images/2022-03-25-two-player-auction-learning/table1.png'%}
 
 A major advantage of ALGNet over previous approaches is that there are simply fewer hyperparameters.
 While RegretNet can perform well after hyperparameter tuning, those hyperparameters are relatively brittle.
