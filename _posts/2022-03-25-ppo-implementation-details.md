@@ -79,10 +79,20 @@ Failing to control his excitement, Jon started running around in the office, acc
 And the blog post is here! Instead of doing ablation studies and making recommendations on which details matter, this blog post takes a step back and focuses on reproductions of PPO's results in all accounts. Specifically, this blog post complements prior work in the following ways:
 
 1. **Genealogy Analysis:** we establish what it means to reproduce the **official PPO implementation** by examining its historical revisions in the `openai/baselines` GitHub repository (the official repository for PPO). As we will show, the code in the `openai/baselines` repository has undergone several refactorings which could produce different results from the original paper. So it is important to recognize *which version* of the official implementation is worth studying.
-2. **Video Tutorials and Single-file Implementations:** we make video tutorials on re-implementing PPO in PyTorch from scratch, matching details in the official PPO implementation to handle classic control tasks, Atari games, and MuJoCo tasks. Notably, we adopt single-file implementations in our code base, making the code quicker and easier to read. The video links are as follows:
+2. **Video Tutorials and Single-file Implementations:** we make video tutorials on re-implementing PPO in PyTorch from scratch, matching details in the official PPO implementation to handle classic control tasks, Atari games, and MuJoCo tasks. Notably, we adopt single-file implementations in our code base, making the code quicker and easier to read. The videos are shown below:
+<div class="grid-container">
+<iframe style="margin: 30px;" width="350" height="197" src="https://www.youtube.com/embed/MEt6rrxH8W4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe style="margin: 30px;" width="350" height="197" src="https://www.youtube.com/embed/05RMTj-2K_Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe style="margin: 30px;" width="350" height="197" src="https://www.youtube.com/embed/BvZvx7ENZBw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+<!-- 
+<div style="text-align: center;"></div>
+<div style="text-align: center;"><iframe width="560" height="315" src="https://www.youtube.com/embed/MEt6rrxH8W4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+<div style="text-align: center;"><iframe width="560" height="315" src="https://www.youtube.com/embed/BvZvx7ENZBw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div> -->
+<!-- 
 * [Video Link 1](https://www.youtube.com/watch?v=MEt6rrxH8W4&list=PLD80i8An1OEHhcxclwq8jOMam0m0M9dQ_&index=1) ![]({{ site.url }}/public/images/2022-03-25-ppo-implementation-details//wandb_ppo.png)
 * [Video Link 2](https://www.youtube.com/watch?v=05RMTj-2K_Y&list=PLD80i8An1OEHhcxclwq8jOMam0m0M9dQ_&index=2) ![]({{ site.url }}/public/images/2022-03-25-ppo-implementation-details//wandb_ppo_atari.png)
-* [Video Link 3](https://www.youtube.com/watch?v=BvZvx7ENZBw&list=PLD80i8An1OEHhcxclwq8jOMam0m0M9dQ_&index=3) ![]({{ site.url }}/public/images/2022-03-25-ppo-implementation-details//wandb_ppo_continuous_action.png)
+* [Video Link 3](https://www.youtube.com/watch?v=BvZvx7ENZBw&list=PLD80i8An1OEHhcxclwq8jOMam0m0M9dQ_&index=3) ![]({{ site.url }}/public/images/2022-03-25-ppo-implementation-details//wandb_ppo_continuous_action.png) -->
 3. **Implementation Checklist with References:** During our re-implementation, we have compiled an implementation checklist containing 37 details as follows. For each implementation detail, we display the permanent link to its code (which is not done in academic papers) and point out its literature connection.
     * 13 core implementation details
     * 9 Atari specific implementation details
