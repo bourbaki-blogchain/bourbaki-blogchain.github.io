@@ -17,7 +17,6 @@ That information is private (it’s called their private type, or valuation), bu
 The auctioneer solicits bids from the bidders, who are free to strategically misreport their valuations, anticipating similar strategic behavior by the other bidders.
 The result is a potentially complicated [Bayes-Nash equilibrium](https://en.wikipedia.org/wiki/Bayesian_game#Bayesian_Nash_equilibrium), which may be hard to even compute let alone optimize.
 
-<img src={{ site.url }}/public/images/2022-03-25-two-player-auction-learning/basicauction.png />
 
 {% include 2022-03-25-two-player-auction-learning/basicauction.html  url='/public/images/2022-03-25-two-player-auction-learning/basicauction.png'  %}
 
@@ -300,3 +299,7 @@ But the use of powerful computational tools from deep learning for mechanism des
 We hope that this post can make researchers from both areas feel curious about the other -- there is a lot of room for contributions going both ways.
 
 <hr style="height:1px;border:none;color:#333;background-color:#333;" />
+
+<img src={{ site.url }}public/images/2022-03-25-two-player-auction-learning/basicauction.png />
+<img src={{ site.url }}public/images/2022-03-25-two-player-auction-learning/table1.png />
+
