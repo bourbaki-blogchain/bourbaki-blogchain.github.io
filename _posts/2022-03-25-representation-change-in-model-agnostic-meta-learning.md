@@ -72,7 +72,7 @@ The authors of BOIL verify their claims via the experiments discussed in the nex
 For most of the datasets, BOIL outperforms MAML and ANIL significantly. This holds for few-shot learning tasks based on coarse-grained datasets and fine-grained datasets.
 In addition, experiments are performed where the meta-train tasks are not coming from the same distribution mixing more general datasets with specific ones. In the classical case of transfer learning to use a trained model on general data for specific data, BOIL outperforms the other methods significantly.
 
-All in all, we observe that BOIL significantly outperforms ANIL and MAML  for most of the cases, and ANIL mostly outperforms MAML sig. But to answer whether representation change or reuse is dominant, we believe that focussing only on the predictive performance is insufficient.
+All in all, we observe that BOIL significantly outperforms ANIL and MAML  for most of the cases, and ANIL mostly outperforms MAML. But to answer whether representation change or reuse is dominant, we believe that focussing only on the predictive performance is insufficient.
 
 {% include 2022-03-25-representation-change-in-model-agnostic-meta-learning/performances.html %}  
 
@@ -83,8 +83,8 @@ In both ANIL and BOIL, representation similarity analysis is applied on query se
 
 ### Center Kernel Alignment
 
-After applying center kernel alignment (CKA) [[Kornblith et al., 2019]](#Kornblith) on the representation of MAML before and after the inner loop updates, it can be observed that the similarity in the last layer of the model changes a lot during fine-tuning, whereas all of the other layers change only barely.
-As the assignment of the label in few-show learning is entirely random, this is not surprising. Looking at how tasks are generated, we know that there could be two tasks that have exactly the same data but a different order of the labels.
+After applying center kernel alignment (CKA) [[Kornblith et al., 2019]](#Kornblith) on the representation of MAML before and after the inner loop updates, it can be observed that the similarity in the last layer of the model changes a lot during fine-tuning. In contrast, all of the other layers change only barely.
+As the assignment of the label in few-show learning is entirely random, this is not surprising. Looking at how tasks are generated, we know that there could be two tasks with exactly the same data but a different order of the labels.
 
 <div style="float: left; margin-right: 25px; margin-bottom: 25px; max-width: 350px; width:100%">
 {% include 2022-03-25-representation-change-in-model-agnostic-meta-learning/cka.html %}
@@ -103,11 +103,11 @@ Looking at the results of CKA on BOIL, we observe that there is more change in t
 {% include 2022-03-25-representation-change-in-model-agnostic-meta-learning/cosine_similarity.html %}
 </div>
 
-In addition to CKA, the authors of BOIL explore the layer-wise alteration of the representation with the cosine similarities of the four convolution modules. They compare all the similarities between the samples with the same class (intra-class) and between samples with a different class (inter-class). The results can be seen on the right side.
+In addition to CKA, the authors of BOIL explore the layer-wise alteration of the representation with the cosine similarities of the four convolution modules. They compare all the similarities between the samples with the same class (intra-class) and samples with a different class (inter-class). The results can be seen on the right side.
 
-We observe that the similarity does not change for MAML and ANIL. In addition, their pattern is similar, and both hint at *representation reuse*. Their pattern - monotonically decreasing to make the representations separable - does not change during fine-tuning. We see that the intra-class similarity is higher than the intra-class similarity, hinting at a separated representation. Hence, MAML's and ANIL's effectiveness depends on the meta-initialized body and not on task-specific adaptation.
+We observe that the similarity does not change for MAML and ANIL. In addition, their pattern is similar, and both hint at *representation reuse*. Their pattern - monotonically decreasing to make the representations separable - does not change during fine-tuning. The intra-class similarity is higher than the intra-class similarity, hinting at a separated representation. Hence, MAML's and ANIL's effectiveness depends on the meta-initialized body and not on task-specific adaptation.
 
-BOILs pattern is different. It only decreases until convolutional block three. Also, the intra-class and inter-class similarities are not significantly different. Therefore, the representations resulting from the meta-initialized body cannot be classified. However, we see that the inter-class cosine similarities have decreased after fine-tuning the model. After adaptation, the representations can be classified (and, as we know, even from a not fine-tuned head).
+BOILs pattern is different. It only decreases until convolutional block three. Also, the intra-class and inter-class similarities are not significantly different. Therefore, the representations resulting from the meta-initialized body cannot be classified. However, the inter-class cosine similarities have decreased after fine-tuning the model. After adaptation, the representations can be classified (and, as we know, even from a not fine-tuned head).
 
 Although the similarity of convolutional blocks one to three do not change, the authors justify this with a general peculiarity of the convolutional body [[Oh et al., 2021]](#Oh). As the gradient norms in convolution modules one to three are also higher than in MAML and ANIL, they conclude that the *representation reuse* is lower.
 
@@ -115,12 +115,12 @@ Although the similarity of convolutional blocks one to three do not change, the 
 
 MAML is a great meta-learning algorithm and very flexible due to its bi-level optimization setup. However, it is sometimes criticized that it does not actually *learn to learn* (this term is often used equivalent to meta-learning) but only learns a good average across similar tasks. (A)NIL supports this argument by showing equivalent performance without inner loops for the network body on established few-shot learning benchmarks.
 On the other hand, BOIL demonstrates the fact that layers earlier than the head *can* significantly adapt to tasks, despite the fact that this is only possible when freezing the head entirely. 
-Albeit, we think that the most important factor leading to the present observations is related to the few-shot learning setup and a lack of task diversity. We hope that in the future also other, more difficult few-shot tasks will become popular, where the samples of the distribution of tasks are more dissimilar, e.g., the Meta-Dataset [[Triantafillou et al., 2020]](#Triantafillou).
+Albeit, we think that the most important factor leading to the present observations is related to the few-shot learning setup and a lack of task diversity. We hope that in the future other, more difficult few-shot tasks will also become popular, where the samples of the distribution of tasks are more dissimilar, e.g., the Meta-Dataset [[Triantafillou et al., 2020]](#Triantafillou).
 
-As a result of the methods presented above, we can conclude that the MAML objective is able to enforce *representation change* on earlier layers but has a natural tendency to focus most of the fine-tuning adaptation on the head *if* the head is available for adaptation in the inner loop. This tendency becomes evident again throughout BOIL where representation change in the earlier layers persists.
-We doubt that the current state of experiments suffices to determine whether this is due to algorithmic or architectural design or whether task distributions are possibly not yet diverse enough to make network-wide representation change necessary. We note that, while general representation change might be desirable in the context of domain adaptation, using the MAML update scheme also comes with a significant computational cost. However, it has become evident that the currently established benchmarks such as *miniImageNet* might not make representation change necessary in all layers, while the performance increase that BOIL achieved might indicate the superiority of representation change in the long run.
-We believe that this, together with the fact that BOIL is the first successful application of *representation change* in the context of MAML, makes the algorithm a very important contribution for the future application and understanding of MAML, particularly in that it provides an argument to prefer a high amount of representation change in a convolutional layer, as opposed to in the head.
-
+As a result of the methods presented above, we can conclude that the MAML objective is able to enforce *representation change* on earlier layers but has a natural tendency to focus most of the fine-tuning adaptation on the head *if* the head is available for adaptation in the inner loop. This tendency becomes evident again throughout BOIL, where representation change in the earlier layers persists.
+We doubt that the current state of experiments suffices to determine whether this is due to algorithmic or architectural design or whether task distributions are possibly not yet diverse enough to make network-wide representation change necessary. We note that, while general representation change might be desirable in the context of domain adaptation, using the MAML update scheme also comes with a high computational cost. However, it has become evident that the currently established benchmarks such as *miniImageNet* might not make representation change necessary in all layers. The performance increase that BOIL achieved might indicate the superiority of representation change in the long run.
+We believe that performance increase, together with the fact that BOIL is the first successful application of *representation change* in the context of MAML, makes the algorithm a very important contribution to the future application and understanding of MAML.
+It particularly provides an argument to prefer a high amount of representation change in a convolutional layer instead of in the head.
 ## References
 
 <a name="Finn" href="http://proceedings.mlr.press/v70/finn17a.html">Chelsea Finn, Pieter Abbeel, Sergey Levine. Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks. ICML, 2017.</a>
