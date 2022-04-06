@@ -17,7 +17,7 @@ That information is private (it’s called their private type, or valuation), bu
 The auctioneer solicits bids from the bidders, who are free to strategically misreport their valuations, anticipating similar strategic behavior by the other bidders.
 The result is a potentially complicated [Bayes-Nash equilibrium](https://en.wikipedia.org/wiki/Bayesian_game#Bayesian_Nash_equilibrium), which may be hard to even compute let alone optimize.
 
-{% include 2022-03-25-two-player-auction-learning/basicauction.html  url='/public/images/2022-03-25-two-player-auction-learning/basicauction.png'  %}
+{% include 2022-03-25-two-player-auction-learning/basicauction.html  url='./public/images/2022-03-25-two-player-auction-learning/basicauction.png'  %}
 
 To cut the Gordian knot, the mechanism designer might wish to ensure that even though bidders are free to lie, there is no incentive to do so.
 This is known as [incentive compatibility](https://en.wikipedia.org/wiki/Incentive_compatibility) — in this post, we'll focus on the particularly strong notion of dominant-strategy incentive compatibility (DSIC), also known as [strategyproofness](https://en.wikipedia.org/wiki/Strategyproofness).
