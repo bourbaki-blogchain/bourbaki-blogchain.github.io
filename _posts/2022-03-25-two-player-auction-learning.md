@@ -299,7 +299,3 @@ But the use of powerful computational tools from deep learning for mechanism des
 We hope that this post can make researchers from both areas feel curious about the other -- there is a lot of room for contributions going both ways.
 
 <hr style="height:1px;border:none;color:#333;background-color:#333;" />
-
-<img src={{ site.url }}public/images/2022-03-25-two-player-auction-learning/basicauction.png />
-<img src={{ site.url }}public/images/2022-03-25-two-player-auction-learning/table1.png />
-
