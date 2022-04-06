@@ -45,7 +45,7 @@ Although mathematically sound, determining the <i>best order</i> using previous 
   <img src="{{ site.url }}/public/images/2022-03-25-non-monotonic-autoregressive-ordering/main_fig_p.png" alt="Decoding" width="60%"/>
 </p>
 
-- In the above figure the top autoregressive strategy (natural order) is that of *monotonic left-to-right ordering*, while the lower one (generation order) is that of *adaptive non-monotonic ordering*. It can be seen that in the *adaptive non-monotonic* strategy the more descriptive tokens or content words like <span style="color:red"> people, now </span> are produced before fillers and determiners like  <span style="color:red">on, the</span>. Note that the generated tokens are permuted (automatically based on the ordering $$\mathbf{z}$$) to form the natural order in case of *non-monotonic ordering* strategy, for grammaticality.
+- In the above figure the top autoregressive strategy (natural order) is that of *monotonic left-to-right ordering*, while the lower one (generation order) is that of *adaptive non-monotonic ordering*. It can be seen that in the *adaptive non-monotonic* strategy the more descriptive tokens or content words like <span style="color:red"> people, now </span> are produced before fillers and determiners like  <span style="color:red">on, the</span>. Note that the generated tokens are permuted (automatically based on the ordering $$\mathbf{z}$$) to form the natural order in case of *non-monotonic ordering* strategy, for grammaticality (Image Source: [Li 2021](#Xuanlin)).
 
 
 While being empirically superior in terms of quality, auto-regressive generations are <b>time-inefficient</b>. Each token is predicted sequentially and in the case of <i>Non-Monotonic and adaptive ordering</i> the number of time-steps doubles with every new output token since the location is also being predicted apart from the actual token of generation itself. To address this issue of time-inefficiency, another set of techniques were developed under the umbrella term <i>non-autoregressive generation</i>. 
@@ -269,7 +269,9 @@ where $\mathbb{E}(X)$ is the Expectation over the random variable $X$.  It can b
 
 <p align="center">
   <img src="{{ site.url }}/public/images/2022-03-25-non-monotonic-autoregressive-ordering/ConvexFunction.svg" alt="Convex Functions" width="50%"/>
+  (Image Source: <a href="https://en.wikipedia.org/wiki/Convex_function">Convex Functions</a>)
 </p>
+
 
 
 ## (D) Log Trick
@@ -321,7 +323,7 @@ Sinkhorn Networks ([Mena 2016](#Mena)) are supervised models for learning to rec
   <img src="{{ site.url }}/public/images/2022-03-25-non-monotonic-autoregressive-ordering/network.png" alt="Sinkhorn Networks" width="65%"/>
 </p>
 
-From the above figure it can be seen that the original distorted input $$\tilde{X}$$ goes through transformations $$g, g_1, g_2$$. The its output is then passed through the temperature-dependent Sinkhorn operator $$S(\cdot)$$ during training, and the matching operator $$M(\cdot)$$ during inference. $$S(\cdot)$$ can be thought of as a soft-permutation. Here, $$P_{\theta, \tilde{X}}$$ (in the ideal case) is a permutation matrix mapping $$X \to \tilde{X}$$. Unlike traditional neural networks where output changes with any change in the input, Sinkhorn networks are only dependent on the **content of the input and not the order in which they are presented to the network**.
+From the above figure (Image Source: [Mena 2018](#Mena)) it can be seen that the original distorted input $$\tilde{X}$$ goes through transformations $$g, g_1, g_2$$. The its output is then passed through the temperature-dependent Sinkhorn operator $$S(\cdot)$$ during training, and the matching operator $$M(\cdot)$$ during inference. $$S(\cdot)$$ can be thought of as a soft-permutation. Here, $$P_{\theta, \tilde{X}}$$ (in the ideal case) is a permutation matrix mapping $$X \to \tilde{X}$$. Unlike traditional neural networks where output changes with any change in the input, Sinkhorn networks are only dependent on the **content of the input and not the order in which they are presented to the network**.
 
 This entails that we should only consider those networks that satisfy the following property of *permutation equivariance* i.e., $$P_{\theta, P'\tilde{X}}(P'\tilde{X}) = P'(P_{\theta, \tilde{X}}\tilde{X})$$, where $$P'$$ is any arbitrary permutation matrix.
 
@@ -574,6 +576,7 @@ This is what the final update procedure looks like
 
 <p align="center">
   <img src="{{ site.url }}/public/images/2022-03-25-non-monotonic-autoregressive-ordering/VOI_Algo.png" alt="VOI Algorithm" width="75%"/>
+  (Image Source: <a href="https://arxiv.org/pdf/2110.15797.pdf">Li 2021</a>)
 </p>
 
 Once the model has been trained, we need to generate autoregressive sequences. This is descibed in the following sub-section.
@@ -590,6 +593,7 @@ In the next section, we discuss the experiments conducted in the paper and the r
 
 <p align="center">
   <img src="{{ site.url }}/public/images/2022-03-25-non-monotonic-autoregressive-ordering/voi_practice.png" alt="VOI_practice" width="95%"/>
+  (Image Source: <a href="https://arxiv.org/pdf/2110.15797.pdf">Li 2021</a>)
 </p>
 
 In this section, we discuss the findings of running VOI on different NLG tasks. Without going into the exact experimental details regarding each, we discuss only the key findings of the work. We categorize them into the following headings. 
@@ -739,6 +743,7 @@ In this section we try to answer three interesting questions:
 
 <p align="center">
   <img src="{{ site.url }}/public/images/2022-03-25-non-monotonic-autoregressive-ordering/generationorder.png" alt="Generation Order" width="75%"/>
+  (Image Source: <a href="https://arxiv.org/pdf/2110.15797.pdf">Li 2021</a>)
 </p>
 
 The key insight here is that the model generates the sentence in the following order: **What to write about** $\to$ **How to write it**
@@ -749,6 +754,7 @@ This behaviour can also be seen in the following diagram based on the overall da
 
 <p align="center">
   <img src="{{ site.url }}/public/images/2022-03-25-non-monotonic-autoregressive-ordering/pos_index.png" alt="Local Analysis" width="85%"/>
+  (Image Source: <a href="https://arxiv.org/pdf/2110.15797.pdf">Li 2021</a>)
 </p>
 
 Here it can be seen that the VOI model favours nouns, numerics, adverbs much before pronouns and determiners, as we had seen already. This is in contrast to baseline-L2R ordering where determiners and conjunctions statistically appear much before descriptive tokens like nouns.
@@ -762,6 +768,7 @@ To address this, the author compare the orderings $$\mathbf{w}, \mathbf{z}$$ for
 
 <p align="center">
   <img src="{{ site.url }}/public/images/2022-03-25-non-monotonic-autoregressive-ordering/global_stats.png" alt="Global Analysis" width="85%"/>
+  (Image Source: <a href="https://arxiv.org/pdf/2110.15797.pdf">Li 2021</a>)
 </p>
 
 In the above figure, we see the comparison between VOI learned (adaptive) orders and a set of predefined orders (solid lines). The reference is an L2R fixed ordering model with the same set of predefined orders (dashed lines).
@@ -775,6 +782,7 @@ The figure leads to two observations:
 
 <p align="center">
   <img src="{{ site.url }}/public/images/2022-03-25-non-monotonic-autoregressive-ordering/perturb.png" alt="Effect of Perturbation" width="75%"/>
+  (Image Source: <a href="https://arxiv.org/pdf/2110.15797.pdf">Li 2021</a>)
 </p>
 
 With reference to the above figure, VOI first obtains generations $$\mathbf{y}$$, and its generation order $$\mathbf{z}$$ based on the original source image $$\mathbf{x}$$. 
