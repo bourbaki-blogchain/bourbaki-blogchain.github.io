@@ -82,7 +82,7 @@ $$
 $$
 
 Here, all the mechanism designer cares about directly is maximizing their revenue (the sum of all agent payments).
-However, because of the IR and DSIC constraints, maximizing payment also requires carefully choosing $a$ and $p$.
+However, because of the IR and DSIC constraints, maximizing payment also requires carefully choosing $a$ along with $p$.
 
 ### Mechanism Design As Learning
 
