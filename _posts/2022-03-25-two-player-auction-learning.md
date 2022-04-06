@@ -253,7 +253,7 @@ Another argument often made against neural network approaches is limited interpr
 Some neural architectures specialized to the single-agent setting -- RochetNet and [MenuNet](https://arxiv.org/abs/1805.03382) -- are already quite interpretable; making deep architectures for multi-agent problems that are also interpretable would be interesting.
 There is [at least one approach in this direction](https://arxiv.org/abs/2202.02872) (though with more limited expressive capacity than ALGNet or RegretNet).
 We see some potential in applications of techniques from [interpretability research in general](https://christophm.github.io/interpretable-ml-book/).
-Finding out [exactly how overparemeterized](https://arxiv.org/abs/1902.04674) a deep learning setup needs to be might also lead to smaller models for auctions and better understanding of their convergence guarantees, possibly improving interpretability.
+Finding out [exactly how overparameterized](https://arxiv.org/abs/1902.04674) a deep learning setup needs to be might also lead to smaller models for auctions and better understanding of their convergence guarantees, possibly improving interpretability.
 
 Finally, one limitation of these approaches may be obvious to mechanism designers -- the strategyproofness is only approximate, and can only be estimated, not measured precisely.
 Some work exists to mitigate this second limitation by [precisely certifying the level of regret](https://arxiv.org/abs/2006.08742).
