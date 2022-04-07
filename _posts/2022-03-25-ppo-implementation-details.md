@@ -571,6 +571,13 @@ Note that `value_network='copy'` means to use the separate MLP networks for poli
 </div>
 
 
+><details>
+  ><summary>Tracked MuJoCo experiments<small> (click to show the interactive panel)</small></summary>
+>
+><iframe src="https://wandb.ai/vwxyzjn/ppo-details/reports/MuJoCo-Our-PPO-vs-openai-baselines-PPO--VmlldzoxODAxMzQz" style="width:100%; height:500px" title="Tracked MuJoCo experiments in an interactive panel"></iframe>
+>
+></details>
+
 ## 5 LSTM implementation details
 
 Next, we introduce the 5 details for implementing LSTM.
@@ -610,6 +617,13 @@ To run the experiments, we use the Atari hyperparameters again and remove the fr
 <img src="{{ site.url }}/public/images/2022-03-25-ppo-implementation-details//BeamRiderNoFrameskip-v4-LSTM.svg">
 </div>
 
+
+><details>
+  ><summary>Tracked Atari LSTM experiments<small> (click to show the interactive panel)</small></summary>
+>
+><iframe src="https://wandb.ai/vwxyzjn/ppo-details/reports/Atari-Our-PPO-LSTM-vs-openai-baselines-PPO-LSTM--VmlldzoxODAxMzQ5" style="width:100%; height:500px" title="Tracked Atari LSTM experiments in an interactive panel"></iframe>
+>
+></details>
 
 ## 1 `MultiDiscrete` action space detail
 
@@ -669,6 +683,13 @@ Below are the benchmarked results.
 <img src="{{ site.url }}/public/images/2022-03-25-ppo-implementation-details//MicrortsRandomEnemyShapedReward3-v1.svg">
 </div>
 
+><details>
+  ><summary>Tracked Gym-MicroRTS experiments<small> (click to show the interactive panel)</small></summary>
+>
+><iframe src="https://wandb.ai/vwxyzjn/ppo-details/reports/Gym-MicroRTS-Our-PPO-vs-openai-baselines-PPO--VmlldzoxODAxMzU5" style="width:100%; height:500px" title="Tracked Gym-MicroRTS experiments in an interactive panel"></iframe>
+>
+></details>
+
 
 ## 4 Auxiliary implementation details
 
@@ -698,6 +719,13 @@ To run the experiments, we use the Atari hyperparameters again and use an older 
 
 <img src="{{ site.url }}/public/images/2022-03-25-ppo-implementation-details//mask/MicrortsRandomEnemyShapedReward3-v1.png">
 </div>
+
+><details>
+  ><summary>Tracked Gym-MicroRTS + Action Mask experiments<small> (click to show the interactive panel)</small></summary>
+>
+><iframe src="https://wandb.ai/vwxyzjn/ppo-details/reports/Gym-MicroRTS-Our-PPO-mask-vs-Our-PPO-vs-vs-openai-baselines-PPO--VmlldzoxNDAwMTc3" style="width:100%; height:500px" title="Tracked Gym-MicroRTS + Action Mask experiments in an interactive panel"></iframe>
+>
+></details>
 
 
 
@@ -784,6 +812,13 @@ As shown below, Envpool + PPO runs 3x faster without side effects (as in no loss
 <img src="{{ site.url }}/public/images/2022-03-25-ppo-implementation-details//BeamRider.png">
 </div>
 
+><details>
+  ><summary>Tracked Atari + Envpool experiments<small> (click to show the interactive panel)</small></summary>
+>
+><iframe src="https://wandb.ai/vwxyzjn/ppo-details/reports/Envpool-Our-PPO-envpool-vs-Our-PPO-vs-openai-baselines-PPO--VmlldzoxNDM3ODQz" style="width:100%; height:500px" title="Tracked Atari + Envpool experiments in an interactive panel"></iframe>
+>
+></details>
+
 Two quick notes: 1) the performance deterioration in BeamRider is largely due to a degenerate random seed, and 2) Envpool uses the v5 ALE environments but has processed them the same way as the v4 ALE environments used in our previous experiments. Furthermore, by tuning the hyperparameters, we obtained a run that solves Pong in 5 mins. This performance is even comparable to IMPALA's ([Espeholt et al., 2018](#IMPALA)) results:
 
 
@@ -794,7 +829,7 @@ Two quick notes: 1) the performance deterioration in BeamRider is largely due to
 <div>
 <img src="{{ site.url }}/public/images/2022-03-25-ppo-implementation-details//Envpool's Pong-v5.png">
 <hr>
-<a href="https://github.com/ray-project/rl-experiments/tree/9543891717cd0f8e137e23812229a06f8ed1c6c2#pong-in-3-minutes">Pong in 5 mins from us</a>, 24 CPU and a RTX 2060
+<a href="https://github.com/vwxyzjn/ppo-implementation-details#atari-with-envpool">Pong in 5 mins from us</a>, 24 CPU and a RTX 2060
 </div>
 
 
@@ -956,3 +991,11 @@ Below are the benchmarked results.
 
 <img src="{{ site.url }}/public/images/2022-03-25-ppo-implementation-details//BigFish.png">
 </div>
+
+
+><details>
+  ><summary>Tracked Procgen experiments<small> (click to show the interactive panel)</small></summary>
+>
+><iframe src="https://wandb.ai/vwxyzjn/ppo-details/reports/Procgen-Our-PPO-vs-openai-baselines-PPO--VmlldzoxNTAxOTY0" style="width:100%; height:500px" title="Tracked Procgen experiments in an interactive panel"></iframe>
+>
+></details>
