@@ -206,9 +206,9 @@ We first introduce the 13 core implementation details commonly used regardless o
         ```python
         env = Env()
         agent = Agent()
-        data = []
         for episode in range(1, num_episodes):
             next_obs = env.reset()
+            data = []
             for step in range(1, max_episode_horizon):
                 obs = next_obs
                 action, other_stuff = agent.get_action(obs)
