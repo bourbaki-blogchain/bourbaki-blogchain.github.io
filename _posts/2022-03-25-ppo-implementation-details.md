@@ -171,33 +171,37 @@ We first introduce the 13 core implementation details commonly used regardless o
 
 
 1. Vectorized architecture ([common/cmd_util.py#L22](https://github.com/openai/baselines/blob/ea25b9e8b234e6ee1bca43083f8f3cf974143998/baselines/common/cmd_util.py#L22)) <span title="Detail related to code-level optimizations" class="detail-label red-label">Code-level Optimizations</span>
-    - PPO leverages an efficient paradigm known as the **vectorized architecture** that features a  single learner that collects samples and learns from multiple (independent) environments. Specifically, PPO initializes the **vectorized environment**, stacking $N$ sub-environments into a single environment. Then, the vectorized architecture loops two phases: the **rollout phase** and the **learning phase**. During the rollout phase, the learner receives a batch of $N$ observations from the sub-environments and samples $N$ actions. Below is a pseudocode:
+    - PPO leverages an efficient paradigm known as the **vectorized architecture** that features a  single learner that collects samples and learns from multiple environments. Below is a pseudocode:
         ```python
-        envs = VecEnv()
+        envs = VecEnv(num_envs=N)
         agent = Agent()
-        data = []
         next_obs = envs.reset()
+        next_done = [0, 0, ..., 0] # of length N
         for update in range(1, total_timesteps // (N*M)):
+            data = []
             # ROLLOUT PHASE
             for step in range(0, M):
                 obs = next_obs
+                done = next_done
                 action, other_stuff = agent.get_action(obs)
-                next_obs, reward, done, info = envs.step(
+                next_obs, reward, next_done, info = envs.step(
                     action
                 ) # step in N environments
                 data.append([obs, action, reward, done, other_stuff]) # store data
 
             # LEARNING PHASE
-            agent.learn(data) # `len(data) = N*M`
+            agent.learn(data, next_obs, next_done) # `len(data) = N*M`
         ```
-    - The vectorized environment is efficient for DRL methods because the neural-network-based agent can step in $N$ environments with a single forward pass. In contrast, most DQN-based approaches [(Mnih et al., 2015)](#Mnih2015) use a single environment and do a forward pass per step.
-    - The agent continues to step in $N$ environments for a fixed number of $M$ steps. After this phase, the agent would have collected the training data of batch size $N*M$. Then, the learning phase begins, and the agent learns from the training data that contains observations, actions, rewards, and other storage variables.
-    - $N$ also has other names: number of sub-environments, `num_envs`, and `n_envs`. $M$ also has other names: the number of steps, the sampling horizon, `nsteps`, and `num_steps`. $N*M$ is also known as the **fixed-length trajectory segments** in the original PPO paper.
+    - In this architecture, PPO first initializes a **vectorized environment** `envs` that runs $N$ (usually independent) environments either sequentially or in parallel by leveraging multi-processes. `envs` presents a synchronous interface that always outputs a batch of $N$ observations from $N$ environments, and it takes a batch of $N$ actions to step the $N$ environments. When calling `next_obs = envs.reset()`, `next_obs` gets a batch of $N$ initial observations (pronounced "next observation"). PPO also initializes an environment done flag variable `next_done` (pronounced "next done") to an $N$-length array of zeros, where its i-th element `next_done[i]` has values of 0 or 1 which corresponds to the $i$-th sub-environment being *not done* and *done*, respectively.
+    - Then, the vectorized architecture loops two phases: the **rollout phase** and the **learning phase**:
+        - Rollout phase : The agent samples actions for the $N$ environments and continue to step them for a fixed number of $M$ steps. During these $M$ steps, the agent continues to append relevant data in an empty list `data`. If the $i$-th sub-environment is done (terminated or truncated) after stepping with the $i$-th action `action[i]`, `envs` would set its returned `next_done[i]` to 1, auto-reset the $i$-th sub-environment and fill `next_obs[i]` with the initial observation in the new episode of the $i$-th environment.
+        - Learning phase: The agent in principal learns from the collected data in the rollout phase: `data` of length $NM$, `next_obs` and `done`. Specifically, PPO can estimate value for the next observation `next_obs` conditioned on `next_done` and calculate the advantage `advantages` and the return `returns`, both of which also has length $NM$. PPO then learns from the prepared data `[data, advantages, returns]`, which is called "fixed-length trajectory segments" by [(Schulman et al., 2017)](#Schulman2017). 
+        - **It is important to understand `next_obs` and `next_done`'s role to help transition between phases**: At the end of the $j$-th rollout phase, `next_obs` can be used to estimate value in the learning phase, and in the begining of the $(j+1)$-th rollout phase, `next_obs` becomes the initial observation in `data`. This intricate design allows PPO to continue step the sub-environments, and because agent always learns from fixed-length trajectory segments after $M$ steps, PPO can train the agent even if the sub-environments never terminate or truncate. This is in principal why PPO can learn in long-horizon games that last 100,000 steps [(default truncation limit for Atari games in `gym`)](https://github.com/openai/gym/blob/a7b6462136ebaa610c8941e4da8a9c92155b04d1/gym/envs/__init__.py#L744) in a single episode.
+    - $N$ is the `num_envs` (decision C1) and $M*N$ is the `iteration_size` (decision C2) in [Andrychowicz, et al. (2021)](#Andrychowicz), who suggest increasing $N$ (such as $N=256$) boosts the training throughput but makes the performance worse.  They argued the performance deterioration was due to "shortened experience chunks" ($M$ becomes smaller due to the increase in $N$ in their setup ) and "earlier value bootstrapping." While we agree increasing $N$ could hurt sample efficiency, we argue the evaluation should be based on wall-clock time efficiency. That is, if the algorithm terminates much sooner with a larger $N$ compared to other configurations, why not run the algorithm longer? Although being a different robotics simulator, [Brax](https://github.com/google/brax) follows this idea and can train a viable agent in similar tasks with PPO using a massive $N = 2048$ and a small $M=20$ yet finish the training in one minute.
     - The vectorized environments also support multi-agent reinforcement learning (MARL) environments. Below is the quote from ([gym3](https://github.com/openai/gym3)) using our notation:
         > In the simplest case, a vectorized environment corresponds to a single multiplayer game with $N$ players. If we run an RL algorithm in this environment, we are doing self-play without historical opponents. This setup can be straightforwardly extended to having $K$ concurrent games with $H$ players each, with $N = H*K$.
 
         * Such MARL usage is widely adopted in games such as Gym-μRTS ([Huang et al, 2021](#Huang2021)), pettingzoo, etc.
-    - $N$ is the `num_envs` (decision C1) and $M*N$ is the `iteration_size` (decision C2) in [Andrychowicz, et al. (2021)](#Andrychowicz), who suggest increasing $N$ (such as $N=256$) boosts the training throughput but makes the performance worse.  They argued the performance deterioration was due to "shortened experience chunks" ($M$ becomes smaller due to the increase in $N$ in their setup ) and "earlier value bootstrapping." While we agree increasing $N$ could hurt sample efficiency, we argue the evaluation should be based on wall-clock time efficiency. That is, if the algorithm terminates much sooner with a larger $N$ compared to other configurations, why not run the algorithm longer? Although being a different robotics simulator, [Brax](https://github.com/google/brax) follows this idea and can train a viable agent in similar tasks with PPO using a massive $N = 2048$ and a small $M=20$ yet finish the training in one minute.
     - A common incorrect implementation is to train PPO based on episodes and setting a maximum episode horizon. Below is a pseudocode. There are several downsides to this approach. First, it can be inefficient because the agent has to do one forward pass per environment step. Second, it does not scale to games with larger horizons such as StarCraft II (SC2). A single episode of the SC2 could last 100,000 steps, which bloats the memory requirement in this implementation.
         ```python
         env = Env()
