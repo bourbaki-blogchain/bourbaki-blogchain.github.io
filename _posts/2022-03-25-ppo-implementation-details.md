@@ -887,7 +887,7 @@ Reproducing PPO's results has been difficult in the past few years. While recent
 
 # Acknowledgment
 
-We thank [Weights and Biases](https://wandb.ai) for providing a free academic license that helps us track the experiments. Shengyi would like to personally thank Angelica Pan, Scott Condron, Ivan Goncharov, Morgan McGuire, Jeremy Salwen, Cayla Sharp, Lavanya Shukla, and Aakarshan Chauhan for supporting him in making the video tutorials.
+We thank [Weights and Biases](https://wandb.ai) for providing a free academic license that helps us track the experiments. Shengyi Huang would like to personally thank Angelica Pan, Scott Condron and Ivan Goncharov for video editing tips, Cayla Sharp for the background music recommendation in the videos, Jeremy Salwen and Aakarshan Chauhan for giving feedback on the videos, and Morgan McGuire and Lavanya Shukla for overall support in making the video tutorials.
 
 ### Bibliography
 <a href="http://arxiv.org/abs/1707.06347" name="Schulman2017">Schulman J, Wolski F, Dhariwal P, Radford A, Klimov O. Proximal policy optimization algorithms. arXiv preprint arXiv:1707.06347. 2017 Jul 20.</a>
