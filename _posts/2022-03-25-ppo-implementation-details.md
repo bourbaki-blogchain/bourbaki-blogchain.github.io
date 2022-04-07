@@ -85,14 +85,6 @@ And the blog post is here! Instead of doing ablation studies and making recommen
 <iframe style="margin: 30px;" width="350" height="197" src="https://www.youtube.com/embed/05RMTj-2K_Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 <iframe style="margin: 30px;" width="350" height="197" src="https://www.youtube.com/embed/BvZvx7ENZBw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
-<!-- 
-<div style="text-align: center;"></div>
-<div style="text-align: center;"><iframe width="560" height="315" src="https://www.youtube.com/embed/MEt6rrxH8W4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
-<div style="text-align: center;"><iframe width="560" height="315" src="https://www.youtube.com/embed/BvZvx7ENZBw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div> -->
-<!-- 
-* [Video Link 1](https://www.youtube.com/watch?v=MEt6rrxH8W4&list=PLD80i8An1OEHhcxclwq8jOMam0m0M9dQ_&index=1) ![]({{ site.url }}/public/images/2022-03-25-ppo-implementation-details//wandb_ppo.png)
-* [Video Link 2](https://www.youtube.com/watch?v=05RMTj-2K_Y&list=PLD80i8An1OEHhcxclwq8jOMam0m0M9dQ_&index=2) ![]({{ site.url }}/public/images/2022-03-25-ppo-implementation-details//wandb_ppo_atari.png)
-* [Video Link 3](https://www.youtube.com/watch?v=BvZvx7ENZBw&list=PLD80i8An1OEHhcxclwq8jOMam0m0M9dQ_&index=3) ![]({{ site.url }}/public/images/2022-03-25-ppo-implementation-details//wandb_ppo_continuous_action.png) -->
 3. **Implementation Checklist with References:** During our re-implementation, we have compiled an implementation checklist containing 37 details as follows. For each implementation detail, we display the permanent link to its code (which is not done in academic papers) and point out its literature connection.
     * 13 core implementation details
     * 9 Atari specific implementation details
@@ -102,10 +94,7 @@ And the blog post is here! Instead of doing ablation studies and making recommen
 4. **High-fidelity Reproduction:** To validate our re-implementation, we show that the empirical results of our implementation match closely with those of the original, in classic control tasks, Atari games, MuJoCo tasks, LSTM, and Real-time Strategy (RTS) game tasks.
 5. **Situational Implementation Details:** We also cover 4 implementation details not used in the official implementation but potentially useful on special occasions.
 
-Our ultimate purpose is to help people understand the PPO implementation through and through, reproduce past results with high fidelity, and facilitate customization for new research. To make research reproducible, we have made source code available at [https://github.com/vwxyzjn/ppo-implementation-details](https://github.com/vwxyzjn/ppo-implementation-details).
-
-
-
+Our ultimate purpose is to help people understand the PPO implementation through and through, reproduce past results with high fidelity, and facilitate customization for new research. To make research reproducible, we have made source code available at [https://github.com/vwxyzjn/ppo-implementation-details](https://github.com/vwxyzjn/ppo-implementation-details) and the tracked experiments available at [https://wandb.ai/vwxyzjn/ppo-details](https://wandb.ai/vwxyzjn/ppo-details)
 
 
 # Background
@@ -324,6 +313,14 @@ Below are the benchmarked results.
 </div>
 
 
+><details>
+  ><summary>Tracked classic control experiments<small> (click to show the interactive panel)</small></summary>
+>
+><iframe src="https://wandb.ai/vwxyzjn/ppo-details/reports/Classic-Control-Our-PPO-vs-openai-baselines-PPO--VmlldzoxMzk5NDA0" style="width:100%; height:500px" title="Tracked classic control experiments in an interactive panel"></iframe>
+>
+></details>
+
+
 While shared-network architecture is the default setting in PPO, the separate-networks architecture clearly outperforms in simpler environments. The shared-network architecture performs worse probably due to the competing objectives of the policy and value functions. For this reason, we implement the separate-networks architecture in the video tutorial.
 
 
@@ -466,6 +463,14 @@ Below are the benchmarked results.
 
 <img src="{{ site.url }}/public/images/2022-03-25-ppo-implementation-details//BeamRider.svg">
 </div>
+
+><details>
+  ><summary>Tracked Atari experiments<small> (click to show the interactive panel)</small></summary>
+>
+><iframe src="https://wandb.ai/vwxyzjn/ppo-details/reports/Atari-Our-PPO-vs-openai-baselines-PPO--VmlldzoxODAxMzI0" style="width:100%; height:500px" title="Tracked Atari experiments in an interactive panel"></iframe>
+>
+></details>
+
 
 ## 9 details for continuous action domains (e.g. Mujoco)
 
