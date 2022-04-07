@@ -220,7 +220,7 @@ We first introduce the 13 core implementation details commonly used regardless o
         > In the simplest case, a vectorized environment corresponds to a single multiplayer game with $N$ players. If we run an RL algorithm in this environment, we are doing self-play without historical opponents. This setup can be straightforwardly extended to having $K$ concurrent games with $H$ players each, with $N = H*K$.
 
         - For example, if there is a two-player game, we can create a vectorized environment that spawns two sub-environments. Then, the vectorized environment produces a batch of two observations, where the first observation is from player 1 and the second observation is from player 2. Next, the vectorized environment takes a batch of two actions and tells the game engine to let player 1 execute the first action and player 2 execute the second action. Consequently, PPO learns to control both player 1 and player 2 in this vectorized environment.
-        - Such MARL usage is widely adopted in games such as Gym-μRTS ([Huang et al, 2021](#Huang2021)), pettingzoo, etc.
+        - Such MARL usage is widely adopted in games such as Gym-μRTS ([Huang et al, 2021](#Huang2021)), Pettingzoo ([Terry et al, 2021](#Terry)), etc.
 
 2. Orthogonal Initialization of Weights and Constant Initialization of biases ([a2c/utils.py#L58)](https://github.com/openai/baselines/blob/ea25b9e8b234e6ee1bca43083f8f3cf974143998/baselines/a2c/utils.py#L58)) <span title="Detail related to neural network" class="detail-label blue-label">Neural Network</span> <span title="Detail related to code-level optimizations" class="detail-label red-label">Code-level Optimizations</span>
     - The related code is across multiple files in the `openai/baselines` library. The code for such initialization is in [a2c/utils.py#L58](https://github.com/openai/baselines/blob/ea25b9e8b234e6ee1bca43083f8f3cf974143998/baselines/a2c/utils.py#L58), when in fact it is used for other algorithms such as PPO. In general, the weights of *hidden* layers use orthogonal initialization of weights with scaling `np.sqrt(2)`, and the biases are set to `0`, as shown in the CNN initialization for Atari ([common/models.py#L15-L26](https://github.com/openai/baselines/blob/ea25b9e8b234e6ee1bca43083f8f3cf974143998/baselines/common/models.py#L15-L26)), and the MLP initialization for Mujoco ([common/models.py#L75-L103](https://github.com/openai/baselines/blob/ea25b9e8b234e6ee1bca43083f8f3cf974143998/baselines/common/models.py#L75-L103)). However, the policy output layer weights are initialized with the scale of `0.01`. The value output layer weights are initialized with the scale of `1` ([common/policies.py#L49-L63](https://github.com/openai/baselines/blob/ea25b9e8b234e6ee1bca43083f8f3cf974143998/baselines/common/policies.py#L49-L63)).
@@ -946,6 +946,11 @@ Makoviychuk, V., Wawrzyniak, L., Guo, Y., Lu, M., Storey, K., Macklin, M., Hoell
 
 <a href="https://arxiv.org/abs/1912.01588" name="Cobbe">
 Cobbe, K., Hesse, C., Hilton, J., & Schulman, J. (2020, November). Leveraging procedural generation to benchmark reinforcement learning. In International conference on machine learning (pp. 2048-2056). PMLR.</a>
+
+
+<a href="https://arxiv.org/pdf/2009.14471.pdf" name="Terry">
+Terry, J.K., Black, B., Hari, A., Santos, L., Dieffendahl, C., Williams, N.L., Lokesh, Y., Horsch, C., & Ravi, P. (2020). Pettingzoo: Gym for multi-agent reinforcement learning. Advances in Neural Information Processing Systems, 34..</a>
+
 
 
 # Appendix
