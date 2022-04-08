@@ -43,9 +43,8 @@ A deeper introduction and an interactive comparison of some variants can be foun
 
 ##  Freezing layers
 
-In the standard version of MAML and most of its variants, all parameters of the meta-optimized model are updated in the inner loop. However, [Raghu et al. [2020]](#Raghu) have discovered that during fine-tuning in the inner loop, representations of the body (convolutional layers before the fully-connected head) of the network hardly change (see the section of [representation similarity analysis](#representation-similarity-analysis)). Therefore, the authors propose to skip updating the network body altogether, saving a significant amount of time, as now the expensive second-order updates are only required for the network head. Additionally, they observe regularization effects that further improve the model's performance. The authors' empirical results confirm a slight increase in performance while achieving an optimization speed by a factor of $1.7$ during training and $4.1$ during inference.
-They conclude that MAML **rather reuses the features than rapidly learns**. Here, the reuse of features is attributed to layers whose performance does not rely on a change of representation in the inner loop (which, according to the authors, goes along with small changes in the layers' weights). Rapid learning can therefore be found only in the head, where a lot of change happens during fine-tuning.
-
+In the standard version of MAML and most of its variants, all parameters of the meta-optimized model are updated in the inner loop when applied on a few-shot learning task. However, [Raghu et al. [2020]](#Raghu) have discovered that during fine-tuning in the inner loop, representations of the body (convolutional layers before the fully-connected head) of the network hardly change (see the section of [representation similarity analysis](#representation-similarity-analysis)). Therefore, the authors propose to skip updating the network body altogether, saving a significant amount of time, as now the expensive second-order updates are only required for the network head. Additionally, they observe regularization effects that further improve the model's performance. The authors' empirical results confirm a slight increase in performance while achieving an optimization speed by a factor of $1.7$ during training and $4.1$ during inference.
+They conclude that MAML is **rather reusing the features than learning them rapidly**. Here, the reuse of features is attributed to layers whose performance does not rely on a change of representation in the inner loop (which, according to the authors, goes along with small changes in the layers' weights). Rapid learning can therefore be found only in the head, where a lot of change happens during fine-tuning.
 
 <div style="float: right; margin-left: 25px; margin-bottom: 25px; max-width: 600px; width:100%">
 {% include 2022-03-25-representation-change-in-model-agnostic-meta-learning/intro_pic.html %}  
@@ -54,12 +53,12 @@ They conclude that MAML **rather reuses the features than rapidly learns**. Here
 In addition, the authors of ANIL propose an algorithm where the meta-learned head is dropped entirely. The unlabeled data of the test task is classified by comparing the distance of its representations after the penultimate layer to the unlabeled ones. They call it NIL (no inter loop), showing at least comparable performance.
 
 
-Instead of simplifying the fine-tuning for MAML, [Oh et al. [2021]](#Oh) come up with a complementary idea. If MAML does not change the representations in the first part of the network, why not force the network to freeze the last layer? Then, the neural network has to update the first part of the network to fulfill the few-shot learning task. 
+Instead of simplifying the fine-tuning for MAML, [Oh et al. [2021]](#Oh) come up with a complementary idea. If MAML does not change the representations in the first part of the network, why not freeze the last layer and hence, force the network to update the first part in order to fulfill the few-shot learning task. 
 
 The differences in learning can be seen on the right-side figure. The points describe the representations after the feature extractor (in the images tasks, this usually is the convolutional part), and the two lines depict the (linear) classifier.
 MAML hardly updates the representation, but the classifier changes clearly. ANIL only changes the linear classifier, whereas BOIL changes only the representations.
 
-For the reasons of clarity, [Oh et al. [2021]](#Oh) re-express feature reuse to representation reuse and rapid learning to representation change. In the following, we will also use the re-expressed terms. In addition, they claim that **representation reuse is necessary to solve cross-domain tasks** and 
+For reasons of clarity, [Oh et al. [2021]](#Oh) re-express feature reuse as representation reuse and rapid learning as representation change. In the following, we will also use these re-expressed terms. In addition, they claim that **representation change is necessary to solve cross-domain tasks** and 
 
 > BOIL is closer to the ultimate goal of meta-learning, which is a domain-agnostic adaptation.
 
@@ -72,7 +71,7 @@ The authors of BOIL verify their claims via the experiments discussed in the nex
 For most of the datasets, BOIL outperforms MAML and ANIL significantly. This holds for few-shot learning tasks based on coarse-grained datasets and fine-grained datasets.
 In addition, experiments are performed where the meta-train tasks are not coming from the same distribution mixing more general datasets with specific ones. In the classical case of transfer learning to use a trained model on general data for specific data, BOIL outperforms the other methods significantly.
 
-All in all, we observe that BOIL significantly outperforms ANIL and MAML  for most of the cases, and ANIL mostly outperforms MAML. But to answer whether representation change or reuse is dominant, we believe that focussing only on the predictive performance is insufficient.
+All in all, we observe that BOIL significantly outperforms ANIL and MAML in most cases, and ANIL mostly outperforms MAML. But to answer whether representation change or reuse is dominant, we believe that focussing only on the predictive performance is insufficient.
 
 {% include 2022-03-25-representation-change-in-model-agnostic-meta-learning/performances.html %}  
 
@@ -83,8 +82,8 @@ In both ANIL and BOIL, representation similarity analysis is applied on query se
 
 ### Center Kernel Alignment
 
-After applying center kernel alignment (CKA) [[Kornblith et al., 2019]](#Kornblith) on the representation of MAML before and after the inner loop updates, it can be observed that the similarity in the last layer of the model changes a lot during fine-tuning. In contrast, all of the other layers change only barely.
-As the assignment of the label in few-show learning is entirely random, this is not surprising. Looking at how tasks are generated, we know that there could be two tasks with exactly the same data but a different order of the labels.
+After applying centered kernel alignment (CKA) [[Kornblith et al., 2019]](#Kornblith) on the representation of MAML before and after the inner loop updates, it can be observed that the similarity in the last layer of the model changes a lot during fine-tuning. In contrast, all of the other layers change only barely.
+As typically the assignment of the labels in few-show learning is entirely random, this is not surprising. Looking at how tasks are generated, we know that there could be two tasks with exactly the same data but a different order of the labels.
 
 <div style="float: left; margin-right: 25px; margin-bottom: 25px; max-width: 350px; width:100%">
 {% include 2022-03-25-representation-change-in-model-agnostic-meta-learning/cka.html %}
@@ -95,7 +94,7 @@ Interestingly, it seems that almost all task-specific adaptation happens in the 
 However, it might also be the case that the data from the distributions studied in MAML and ANIL are simply too similar. Results from [Oh et al. [2021]](#Oh) could hint at this, as in cross-domain tasks, MAML and ANIL are not performing well.
 In addition, it has been shown that already, during training of the meta-optimization, the change in similarity is a magnitude smaller in earlier layers than in later ones [[Goerttler & Obermayer, 2021]](#Goerttler). This can even be observed in classical machine learning, e.g., when applying a convolution network on MNIST.
 
-Looking at the results of CKA on BOIL, we observe that there is more change in the representation of convolution layer 4. However, in earlier layers, similarity stays similarly small as observed in MAML. This raised the question by one of the [reviewers](https://openreview.net/forum?id=umIdUL8rMH) if the penultimate layer is just replacing the head layer and leaving this a random transformation. The authors answer this by saying that *the penultimate layer of BOIL acts as a non-linear transformation*.
+Looking at the results of CKA on BOIL, we observe that there is more change in the representation of convolution layer 4. However, the fine-tuned representation of earlier layers remains similar to their representation before adaptation, showing similar behavior to MAML. This raised the question by one of the [reviewers](https://openreview.net/forum?id=umIdUL8rMH) whether the penultimate layer simply replaces the linear layer, rather than meaningfully adapting to new features. The authors respond to this, saying that *the penultimate layer of BOIL acts as a non-linear transformation* of features into the fixed linear decision boundaries of the head.
 
 ### Cosine Similarity
 
@@ -113,7 +112,7 @@ Although the similarity of convolutional blocks one to three do not change, the 
 
 ## Discussion
 
-MAML is a great meta-learning algorithm and very flexible due to its bi-level optimization setup. However, it is sometimes criticized that it does not actually *learn to learn* (this term is often used equivalent to meta-learning) but only learns a good average across similar tasks. (A)NIL supports this argument by showing equivalent performance without inner loops for the network body on established few-shot learning benchmarks.
+MAML is a great meta-learning algorithm and very flexible due to its bi-level optimization setup. However, it is sometimes criticized that it does not actually *learn to learn* (this term is often used interchangebly with meta-learning) but only learns a good average across similar tasks. (A)NIL supports this argument by showing equivalent performance without inner loops for the network body on established few-shot learning benchmarks.
 On the other hand, BOIL demonstrates the fact that layers earlier than the head *can* significantly adapt to tasks, despite the fact that this is only possible when freezing the head entirely. 
 Albeit, we think that the most important factor leading to the present observations is related to the few-shot learning setup and a lack of task diversity. We hope that in the future other, more difficult few-shot tasks will also become popular, where the samples of the distribution of tasks are more dissimilar, e.g., the Meta-Dataset [[Triantafillou et al., 2020]](#Triantafillou).
 
