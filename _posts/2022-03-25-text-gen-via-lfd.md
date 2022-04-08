@@ -1,7 +1,7 @@
 ---
 layout: post
 title: An Understanding of Learning from Demonstrations for Neural Text Generation
-authors: Kantharaju, Pavan, Smart Information Flow Technologies; Sankar, Aiswarya, Uber
+authors: Kantharaju, Pavan, Smart Information Flow Technologies; Sankar, Aiswarya, Independent
 tags: [Text Generation, Reinforcement Learning, Learning from Demonstration]  # This should be the relevant areas related to your blog post
 ---
 
