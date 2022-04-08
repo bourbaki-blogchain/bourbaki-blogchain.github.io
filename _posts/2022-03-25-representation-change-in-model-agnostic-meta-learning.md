@@ -2,7 +2,7 @@
 layout: post
 title: Representation Change in Model-Agnostic Meta-Learning
 authors: Goerttler, Thomas (TU Berlin); Müller, Luis (TU Berlin); Obermayer, Klaus (TU Berlin)
-tags: [meta-learning, maml, representation change, representation reuse, domain adaptation]  # This should be the relevant areas related to your blog post
+tags: [meta-learning, maml, representation change, representation reuse, domain adaptation, cross-domain]  # This should be the relevant areas related to your blog post
 ---
 
 
@@ -15,7 +15,7 @@ The authors adapt MAML by freezing the last layer to force *body only inner lear
 * Aniruddh Raghu, Maithra Raghu, Samy Bengio, Oriol Vinyals (ICLR, 2020) [Rapid Learning or Feature Reuse? Towards Understanding the Effectiveness of MAML](#Raghu)
 
 Both papers attempt to **understand the success** of MAML and **improve** it.
-[Oh et al. [2021]](#Oh) compare BOIL, ANIL, and MAML and show that both improve the performance of MAML, but BOIL outperforms ANIL, especially when the task distribution varies between training and testing.
+[Oh et al. [2021]](#Oh) compare BOIL, ANIL, and MAML and show that both improve the performance of MAML. Albeit, BOIL outperforms ANIL, especially when the task distribution varies between training and testing.
 
 
 ## MAML
@@ -78,12 +78,12 @@ All in all, we observe that BOIL significantly outperforms ANIL and MAML in most
 ## Representation Similarity Analysis
 
 Both the authors of ANIL and BOIL use representation similarity analysis to justify their hypotheses, specifically to claim representation change or representation reuse for different layers. We want to extend this discussion and reason about the similarity analysis results.
-In both ANIL and BOIL, representation similarity analysis is applied on query sets with 5 classes and 15 images from the miniImageNet dataset.
+Representation similarity analysis is applied in both ANIL and BOIL on query sets with 5 classes and 15 images from the miniImageNet dataset.
 
 ### Center Kernel Alignment
 
 After applying centered kernel alignment (CKA) [[Kornblith et al., 2019]](#Kornblith) on the representation of MAML before and after the inner loop updates, it can be observed that the similarity in the last layer of the model changes a lot during fine-tuning. In contrast, all of the other layers change only barely.
-As typically the assignment of the labels in few-show learning is entirely random, this is not surprising. Looking at how tasks are generated, we know that there could be two tasks with exactly the same data but a different order of the labels.
+Since the assignment of the labels in few-show learning is typically entirely random, the large change in the head is not surprising. Looking at how tasks are generated, we know that there could be two tasks with exactly the same data but a different order of the labels.
 
 <div style="float: left; margin-right: 25px; margin-bottom: 25px; max-width: 350px; width:100%">
 {% include 2022-03-25-representation-change-in-model-agnostic-meta-learning/cka.html %}
@@ -94,7 +94,7 @@ Interestingly, it seems that almost all task-specific adaptation happens in the 
 However, it might also be the case that the data from the distributions studied in MAML and ANIL are simply too similar. Results from [Oh et al. [2021]](#Oh) could hint at this, as in cross-domain tasks, MAML and ANIL are not performing well.
 In addition, it has been shown that already, during training of the meta-optimization, the change in similarity is a magnitude smaller in earlier layers than in later ones [[Goerttler & Obermayer, 2021]](#Goerttler). This can even be observed in classical machine learning, e.g., when applying a convolution network on MNIST.
 
-Looking at the results of CKA on BOIL, we observe that there is more change in the representation of convolution layer 4. However, the fine-tuned representation of earlier layers remains similar to their representation before adaptation, showing similar behavior to MAML. This raised the question by one of the [reviewers](https://openreview.net/forum?id=umIdUL8rMH) whether the penultimate layer simply replaces the linear layer, rather than meaningfully adapting to new features. The authors respond to this, saying that *the penultimate layer of BOIL acts as a non-linear transformation* of features into the fixed linear decision boundaries of the head.
+Looking at the results of CKA on BOIL, we observe that there is more change in the representation of convolution layer 4. However, the fine-tuned representation of earlier layers remains similar to their representation before adaptation, showing similar behavior to MAML. This raised the question by one of the [reviewers](https://openreview.net/forum?id=umIdUL8rMH) whether the penultimate layer simply replaces the linear layer rather than meaningfully adapting to new features. The authors respond to this, saying that *the penultimate layer of BOIL acts as a non-linear transformation* of features into the fixed linear decision boundaries of the head.
 
 ### Cosine Similarity
 
@@ -112,7 +112,7 @@ Although the similarity of convolutional blocks one to three do not change, the 
 
 ## Discussion
 
-MAML is a great meta-learning algorithm and very flexible due to its bi-level optimization setup. However, it is sometimes criticized that it does not actually *learn to learn* (this term is often used interchangebly with meta-learning) but only learns a good average across similar tasks. (A)NIL supports this argument by showing equivalent performance without inner loops for the network body on established few-shot learning benchmarks.
+MAML is a great meta-learning algorithm and very flexible due to its bi-level optimization setup. However, it is sometimes criticized that it does not actually *learn to learn* (this term is often used interchangeably with meta-learning) but only learns a good average across similar tasks. (A)NIL supports this argument by showing equivalent performance without inner loops for the network body on established few-shot learning benchmarks.
 On the other hand, BOIL demonstrates the fact that layers earlier than the head *can* significantly adapt to tasks, despite the fact that this is only possible when freezing the head entirely. 
 Albeit, we think that the most important factor leading to the present observations is related to the few-shot learning setup and a lack of task diversity. We hope that in the future other, more difficult few-shot tasks will also become popular, where the samples of the distribution of tasks are more dissimilar, e.g., the Meta-Dataset [[Triantafillou et al., 2020]](#Triantafillou).
 
