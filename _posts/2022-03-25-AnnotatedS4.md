@@ -4,7 +4,7 @@
  tags: [tag1, tag2, tag3]
  authors: Alexander M. Rush, Cornell; Sidd Karamcheti, Stanford
  <!-- authors: Doe, John, Institution; Doe, Jane, Institution -->
- ---
+---
  
 <!-- #region -->
 <center><h1> The Annotated S4 </h1></center>
