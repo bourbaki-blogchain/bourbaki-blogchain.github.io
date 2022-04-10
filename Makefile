@@ -1,7 +1,7 @@
 BLOG_PATH 	= ${PWD}
 IMAGE 		= velythyl/jekyll-ghp
 TAG 		= latest
-PORT 		= 8600
+PORT 		= 4000
 
 serve:
 	docker run --rm --volume="${BLOG_PATH}:/srv/jekyll" -p ${PORT}:${PORT} -e PORT=${PORT} -it ${IMAGE}:${TAG} ghp_serve
