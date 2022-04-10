@@ -1,7 +1,7 @@
 ---
  layout: post
  title: The Annotated S4
- authors: Alexander M. Rush, Cornell; Sidd Karamcheti, Stanford
+ authors: Alexander M. Rush; Sidd Karamcheti
  tags: [recent, sequence-modeling, generative-models]
 ---
 
