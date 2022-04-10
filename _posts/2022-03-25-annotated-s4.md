@@ -135,12 +135,14 @@ our way through the background of the paper.
 > The [state space model](https://en.wikipedia.org/wiki/State-space_representation) is defined by this simple equation.
 > It maps a 1-D input signal $u(t)$ to an $N$-D latent state $x(t)$
 > before projecting to a 1-D output signal $y(t)$.
+
 $$
   \begin{aligned}
     x'(t) &= \boldsymbol{A}x(t) + \boldsymbol{B}u(t) \\
     y(t) &= \boldsymbol{C}x(t) + \boldsymbol{D}u(t)
   \end{aligned}
 $$
+  
 > Our goal is
 > to simply use the SSM as a black-box representation in a deep
 > sequence model, where $\boldsymbol{A}, \boldsymbol{B}, \boldsymbol{C}, \boldsymbol{D}$ are
@@ -180,6 +182,7 @@ def random_SSM(rng, N):
 > To discretize the continuous-time SSM, we use
 > the [bilinear method](https://en.wikipedia.org/wiki/Bilinear_transform), which converts the
 > state matrix $\boldsymbol{A}$ into an approximation $\boldsymbol{\overline{A}}$.  The discrete SSM is:
+
 $$
 \begin{aligned}
   \boldsymbol{\overline{A}} &= (\boldsymbol{I} - \Delta/2 \cdot \boldsymbol{A})^{-1}(\boldsymbol{I} + \Delta/2 \cdot \boldsymbol{A}) \\
@@ -202,6 +205,7 @@ def discretize(A, B, C, step):
 > This equation is now a *sequence-to-sequence* map $u_k \mapsto y_k$ instead of function-to-function.
 > Moreover the state equation is now a recurrence in $x_k$, allowing the discrete SSM to be computed like an RNN.
 > Concretely, $x_k \in \mathbb{R}^N$ can be viewed as a *hidden state* with transition matrix $\boldsymbol{\overline{A}}$.
+
 $$
 \begin{aligned}
   x_{k} &= \boldsymbol{\overline{A}} x_{k-1} + \boldsymbol{\overline{B}} u_k\\
@@ -373,6 +377,7 @@ by unrolling. Let's go through the derivation.
 >
 > For simplicity let the initial state be $x_{-1} = 0$. Then unrolling  explicitly yields:
 >
+
 $$
 \begin{aligned}
   x_0 &= \boldsymbol{\overline{B}} u_0 &
@@ -385,9 +390,11 @@ $$
   & \dots
 \end{aligned}
 $$
+
 >
 > This can be vectorized into a convolution with an explicit formula for the convolution kernel.
 >
+
 $$
 \begin{aligned}
     y_k &= \boldsymbol{\overline{C}} \boldsymbol{\overline{A}}^k \boldsymbol{\overline{B}} u_0 + \boldsymbol{\overline{C}} \boldsymbol{\overline{A}}^{k-1} \boldsymbol{\overline{B}} u_1 + \dots + \boldsymbol{\overline{C}} \boldsymbol{\overline{A}} \boldsymbol{\overline{B}} u_{k-1} + \boldsymbol{\overline{C}}\boldsymbol{\overline{B}} u_k
@@ -395,12 +402,15 @@ $$
     y &= \boldsymbol{\overline{K}} \ast u
 \end{aligned}
 $$
+
 >
+
 $$
 \begin{aligned}
   \boldsymbol{\overline{K}} \in \mathbb{R}^L  = (\boldsymbol{\overline{C}}\boldsymbol{\overline{B}}, \boldsymbol{\overline{C}}\boldsymbol{\overline{A}}\boldsymbol{\overline{B}}, \dots, \boldsymbol{\overline{C}}\boldsymbol{\overline{A}}^{L-1}\boldsymbol{\overline{B}})
 \end{aligned}
 $$
+
 We call $\boldsymbol{\overline{K}}$ the **SSM convolution kernel** or filter.
 
 
@@ -477,6 +487,7 @@ steps are about 1) making these models stable to train, and 2) making them fast.
 > allow the state $x(t)$ to memorize the history of the input $u(t)$.
 > The most important matrix in this class is defined by the HiPPO matrix.
 >
+
 $$
 \begin{aligned}
   (\text{\textbf{HiPPO Matrix}})
@@ -490,6 +501,7 @@ $$
   \end{cases}
 \end{aligned}
 $$
+
 >
 > Previous work found that simply modifying an SSM from a random matrix $\boldsymbol{A}$ to HiPPO
 > improved its performance on the sequential MNIST classification benchmark from $50\%$ to $98\%$.
@@ -853,6 +865,7 @@ From the paper's appendix:
 > we introduce a generating function on its coefficients and compute evaluations of it.
 >
 >The *truncated SSM generating function* at node $z$ with truncation $L$ is
+
 $$
 \hat{\mathcal{K}}_L(z; \boldsymbol{\overline{A}}, \boldsymbol{\overline{B}}, \boldsymbol{\overline{C}}) \in \mathbb{C} := \sum_{i=0}^{L-1} \boldsymbol{\overline{C}} \boldsymbol{\overline{A}}^i \boldsymbol{\overline{B}} z^i
 $$
@@ -889,6 +902,7 @@ def conv_from_gen(gen, L):
 
 
 More importantly, in the generating function we can replace the matrix power with an inverse!
+
 $$
 \hat{\mathcal{K}}_L(z) = \sum_{i=0}^{L-1} \boldsymbol{\overline{C}} \boldsymbol{\overline{A}}^i \boldsymbol{\overline{B}} z^i = \boldsymbol{\overline{C}} (\boldsymbol{I} - \boldsymbol{\overline{A}}^L z^L) (\boldsymbol{I} - \boldsymbol{\overline{A}} z)^{-1} \boldsymbol{\overline{B}} = \boldsymbol{\tilde{C}}  (\boldsymbol{I} - \boldsymbol{\overline{A}} z)^{-1} \boldsymbol{\overline{B}}
 $$
@@ -1095,6 +1109,7 @@ for the derivation.
 
 
 > Recall that discretization computes,
+
 $$
 \begin{align*}
   \bm{\overline{A}} &= (\bm{I} - \Delta/2 \cdot \bm{A})^{-1}(\bm{I} + \Delta/2 \cdot \bm{A}) \\
@@ -1102,9 +1117,11 @@ $$
   .
 \end{align*}
 $$
+
 >
 > We simplify both terms in the definition of $\bm{\overline{A}}$ independently.
 > The first term is:
+
 $$
 \begin{align*}
   \bm{I} + \frac{\Delta}{2} \bm{A}
@@ -1113,11 +1130,13 @@ $$
   \\&= \frac{\Delta}{2} \bm{A_0}
 \end{align*}
 $$
+
 > where $\bm{A_0}$ is defined as the term in the final brackets.
 >
 > The second term is known as the Backward Euler's method.
 > Although this inverse term is normally difficult to deal with,
 > in the DPLR case we can simplify it using Woodbury's Identity as described above.
+
 $$
 \begin{align*}
   \left( \bm{I} - \frac{\Delta}{2} \bm{A} \right)^{-1}
@@ -1130,10 +1149,12 @@ $$
   \\&= \frac{2}{\Delta} \bm{A_1}
 \end{align*}
 $$
+
 > where $\bm{D} = \left( \frac{2}{\Delta}-\bm{\Lambda} \right)^{-1}$
 > and $\bm{A_1}$ is defined as the term in the final brackets.
 >
 >  The discrete-time SSM \eqref{eq:2} becomes
+
 $$
 \begin{align*}
   x_{k} &= \bm{\overline{A}} x_{k-1} + \bm{\overline{B}} u_k \\
@@ -1179,9 +1200,11 @@ this is just as good as DPLR for the purposes of learning an SSM network.
 
 
 > The S4 techniques can apply to any matrix $\boldsymbol{A}$ that can be decomposed as *Normal Plus Low-Rank (NPLR)*.
+
 $$
->   \boldsymbol{A} = \boldsymbol{V} \boldsymbol{\Lambda} \boldsymbol{V}^* - \boldsymbol{p} \boldsymbol{q}^\top = \boldsymbol{V} \left( \boldsymbol{\Lambda} - \boldsymbol{V}^* \boldsymbol{p} (\boldsymbol{V}^*\boldsymbol{q})^* \right) \boldsymbol{V}^*
+   \boldsymbol{A} = \boldsymbol{V} \boldsymbol{\Lambda} \boldsymbol{V}^* - \boldsymbol{p} \boldsymbol{q}^\top = \boldsymbol{V} \left( \boldsymbol{\Lambda} - \boldsymbol{V}^* \boldsymbol{p} (\boldsymbol{V}^*\boldsymbol{q})^* \right) \boldsymbol{V}^*
 $$
+
 > for [unitary](https://en.wikipedia.org/wiki/Unitary_matrix) $\boldsymbol{V} \in \mathbb{C}^{N \times N}$, diagonal $\boldsymbol{\Lambda}$, and low-rank factorization $\boldsymbol{p}, \boldsymbol{q} \in \mathbb{R}^{N \times r}$.  An NPLR SSM is therefore [unitarily](https://en.wikipedia.org/wiki/Unitary_matrix) equivalent to some DPLR matrix.
 
 
