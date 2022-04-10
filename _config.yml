@@ -2,8 +2,8 @@
 title:               The ICLR Blog Track
 tagline:             ''
 description:         'For short-term, peer-sourced tests of time, generalizations, specializations, reproductions, etc.!'
-url:                 http://kermit.bounceme.net:8600
-baseurl:             ''
+url:                 https://srush.github.io
+baseurl:             /iclr-blog-track.github.io
 paginate:            5
 permalink:           pretty
 
