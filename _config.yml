@@ -2,14 +2,14 @@
 title:               The ICLR Blog Track
 tagline:             ''
 description:         'For short-term, peer-sourced tests of time, generalizations, specializations, reproductions, etc.!'
-url:                 https://srush.github.io/iclr-blog-track.github.io
+url:                 https://iclr-blog-track.github.io
 baseurl:             ''
 paginate:            5
 permalink:           pretty
 
 # github
 github:
-  repo: https://github.com/srush/iclr-blog-track.github.io
+  repo: https://github.com/iclr-blog-track/iclr-blog-track.github.io
 
 exclude: [.github/, docker/]
 
