@@ -491,7 +491,7 @@ steps are about 1) making these models stable to train, and 2) making them fast.
 
 $$
 \begin{aligned}
-  (\text{\textbf{HiPPO Matrix}})
+  (\text{HiPPO Matrix})
   \qquad
   \boldsymbol{A}_{nk}
   =
@@ -1113,26 +1113,26 @@ for the derivation.
 
 $$
 \begin{align*}
-  \bm{\overline{A}} &= (\bm{I} - \Delta/2 \cdot \bm{A})^{-1}(\bm{I} + \Delta/2 \cdot \bm{A}) \\
-  \bm{\overline{B}} &= (\bm{I} - \Delta/2 \cdot \bm{A})^{-1} \Delta \bm{B}
+  \boldsymbol{\overline{A}} &= (\boldsymbol{I} - \Delta/2 \cdot \boldsymbol{A})^{-1}(\boldsymbol{I} + \Delta/2 \cdot \boldsymbol{A}) \\
+  \boldsymbol{\overline{B}} &= (\boldsymbol{I} - \Delta/2 \cdot \boldsymbol{A})^{-1} \Delta \boldsymbol{B}
   .
 \end{align*}
 $$
 
 >
-> We simplify both terms in the definition of $\bm{\overline{A}}$ independently.
+> We simplify both terms in the definition of $\boldsymbol{\overline{A}}$ independently.
 > The first term is:
 
 $$
 \begin{align*}
-  \bm{I} + \frac{\Delta}{2} \bm{A}
-  &= \bm{I} + \frac{\Delta}{2} (\bm{\Lambda} - \bm{p} \bm{q}^*)
-  \\&= \frac{\Delta}{2} \left[ \frac{2}{\Delta}\bm{I} + (\bm{\Lambda} - \bm{p} \bm{q}^*) \right]
-  \\&= \frac{\Delta}{2} \bm{A_0}
+  \boldsymbol{I} + \frac{\Delta}{2} \boldsymbol{A}
+  &= \boldsymbol{I} + \frac{\Delta}{2} (\boldsymbol{\Lambda} - \boldsymbol{p} \boldsymbol{q}^*)
+  \\&= \frac{\Delta}{2} \left[ \frac{2}{\Delta}\boldsymbol{I} + (\boldsymbol{\Lambda} - \boldsymbol{p} \boldsymbol{q}^*) \right]
+  \\&= \frac{\Delta}{2} \boldsymbol{A_0}
 \end{align*}
 $$
 
-> where $\bm{A_0}$ is defined as the term in the final brackets.
+> where $\boldsymbol{A_0}$ is defined as the term in the final brackets.
 >
 > The second term is known as the Backward Euler's method.
 > Although this inverse term is normally difficult to deal with,
@@ -1140,27 +1140,27 @@ $$
 
 $$
 \begin{align*}
-  \left( \bm{I} - \frac{\Delta}{2} \bm{A} \right)^{-1}
+  \left( \boldsymbol{I} - \frac{\Delta}{2} \boldsymbol{A} \right)^{-1}
   &=
-  \left( \bm{I} - \frac{\Delta}{2} (\bm{\Lambda} - \bm{p} \bm{q}^*) \right)^{-1}
+  \left( \boldsymbol{I} - \frac{\Delta}{2} (\boldsymbol{\Lambda} - \boldsymbol{p} \boldsymbol{q}^*) \right)^{-1}
   \\&=
-  \frac{2}{\Delta} \left[ \frac{2}{\Delta} - \bm{\Lambda} + \bm{p} \bm{q}^* \right]^{-1}
+  \frac{2}{\Delta} \left[ \frac{2}{\Delta} - \boldsymbol{\Lambda} + \boldsymbol{p} \boldsymbol{q}^* \right]^{-1}
   \\&=
-  \frac{2}{\Delta} \left[ \bm{D} - \bm{D} \bm{p} \left( 1 + \bm{q}^* \bm{D} \bm{p} \right)^{-1} \bm{q}^* \bm{D} \right]
-  \\&= \frac{2}{\Delta} \bm{A_1}
+  \frac{2}{\Delta} \left[ \boldsymbol{D} - \boldsymbol{D} \boldsymbol{p} \left( 1 + \boldsymbol{q}^* \boldsymbol{D} \boldsymbol{p} \right)^{-1} \boldsymbol{q}^* \boldsymbol{D} \right]
+  \\&= \frac{2}{\Delta} \boldsymbol{A_1}
 \end{align*}
 $$
 
-> where $\bm{D} = \left( \frac{2}{\Delta}-\bm{\Lambda} \right)^{-1}$
-> and $\bm{A_1}$ is defined as the term in the final brackets.
+> where $\boldsymbol{D} = \left( \frac{2}{\Delta}-\boldsymbol{\Lambda} \right)^{-1}$
+> and $\boldsymbol{A_1}$ is defined as the term in the final brackets.
 >
 >  The discrete-time SSM \eqref{eq:2} becomes
 
 $$
 \begin{align*}
-  x_{k} &= \bm{\overline{A}} x_{k-1} + \bm{\overline{B}} u_k \\
-  &= \bm{A_1} \bm{A_0} x_{k-1} + 2 \bm{A_1} \bm{B} u_k \\
-  y_k &= \bm{C} x_k
+  x_{k} &= \boldsymbol{\overline{A}} x_{k-1} + \boldsymbol{\overline{B}} u_k \\
+  &= \boldsymbol{A_1} \boldsymbol{A_0} x_{k-1} + 2 \boldsymbol{A_1} \boldsymbol{B} u_k \\
+  y_k &= \boldsymbol{C} x_k
   .
 \end{align*}
 $$
