@@ -2,7 +2,7 @@
 layout: post
 title: Emergent Symbols through Binding in External Memory
 tags: [symbolic, memory, neural, binding]
-authors: Ameya Daigavane$\dagger$, Ansh Khurana$\dagger$, Shweta Bhardwaj, Gaurav Aggarwal
+authors: Ameya Daigavane, Ansh Khurana, Shweta Bhardwaj, Gaurav Aggarwal
 ---
 
 Our blog post describes the paper
@@ -573,8 +573,8 @@ We train the ESBN model with the provided hyper-parameters for each of the symbo
 All experiments are performed with a train set of $5$ symbols, and thus, a test set of 
 $95$ unseen symbols.
 
-Below, we illustrate how the <span style='color: red'>key</span> representations evolve during training,
-starting from their values at initialization <span style='color: red'>for the first 100 training steps. The learnt key representations ($k_w$) across different time step are shown using different colors. </span>
+Below, we illustrate how the key representations evolve during training,
+starting from their values at initialization for the first 100 training steps. The learnt key representations ($k_w$) across different time step are shown using different colors.
 We observe that the keys computed by ESBN model seem to be
 independent of the actual image being encoded. 
 
@@ -622,7 +622,7 @@ to the questions, not the options.
 
 For all tasks, the keys written at the first two time steps
 ($t=1,2$) are tightly clustered at one location for all training examples.
-From the third time step onwards, the encoded key is task dependent. <span style='color: red'>Tight clustering of key representations for a given time step represent the capabality of ESBN to learn task-dependent symbolic representations across different examples for the given task. </span>
+From the third time step onwards, the encoded key is task dependent. Tight clustering of key representations for a given time step represent the capabality of ESBN to learn task-dependent symbolic representations across different examples for the given task.
 
 ### The Generalizability of ESBN Representations
 
@@ -665,7 +665,7 @@ However, there are lot of outlier data points in the test representation.
 The generalisation of performance on the test distribution is not perfect,
 and the representations do not align well with the train distribution.
 In the appendix of the paper, the representations for the
-test distribution are shown only in range of the train representation. <span style='color: red'>When observed in this range, the train and test representations are well aligned. However, there are some outlier test instances which outside the train representations range showing that the alignment is not perfect.</span>
+test distribution are shown only in range of the train representation. When observed in this range, the train and test representations are well aligned. However, there are some outlier test instances which outside the train representations range showing that the alignment is not perfect.
 
 <!-- We observe that the alignment between train and test representations is not perfect. -->
 
