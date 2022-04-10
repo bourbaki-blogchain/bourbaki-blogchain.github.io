@@ -9,7 +9,7 @@ permalink:           pretty
 
 # github
 github:
-  repo: https://github.com/iclr-blog-track/iclr-blog-track.github.io
+  repo: https://github.com/srush/iclr-blog-track.github.io
 
 exclude: [.github/, docker/]
 
