@@ -1,11 +1,9 @@
 ---
  layout: post
  title: The Annotated S4
- tags: [tag1, tag2, tag3]
  authors: Alexander M. Rush, Cornell; Sidd Karamcheti, Stanford
- <!-- authors: Doe, John, Institution; Doe, Jane, Institution -->
----
- 
+ ---
+
 <!-- #region -->
 <center><h1> The Annotated S4 </h1></center>
 
@@ -17,7 +15,7 @@
 <center>
 <p> Albert Gu, Karan Goel, and Christopher Ré.</p>
 </center>
-<img src="images/hero.png" width="100%"/>
+<img src="{{ site.url }}/public/images/2022-03-25-annotated-s4/images/hero.png" width="100%"/>
 <!-- #endregion -->
 
 
@@ -34,7 +32,7 @@ of thousands of steps. Especially impressive are the model's results on the chal
 to reason over sequences of up to **16,000+** elements with high accuracy.
 
 
-<img src="images/table.png" width="100%"/>
+<img src="{{ site.url }}/public/images/2022-03-25-annotated-s4/images/table.png" width="100%"/>
 
 
 The paper is also a refreshing departure from Transformers, taking a
@@ -52,13 +50,13 @@ for training, but then convert to an efficient RNN at test time.  To
 preview the results, you will be able to generate images from pixels
 and sounds directly on sound waves on a standard GPU.
 
-<center> <img src="images/im0.4.png" width="70%">
-<img src='images/speech25.0.png' width='80%'>
+<center> <img src="{{ site.url }}/public/images/2022-03-25-annotated-s4/images/im0.4.png" width="70%">
+<img src='{{ site.url }}/public/images/2022-03-25-annotated-s4/images/speech25.0.png' width='80%'>
 <audio controls>
- <source src='images/sample25.0.wav' type='audio/wav'>
+ <source src='{{ site.url }}/public/images/2022-03-25-annotated-s4/images/sample25.0.wav' type='audio/wav'>
 </audio>
 <audio controls>
- <source src='images/sample25.0.gold.wav' type='audio/wav'>
+ <source src='{{ site.url }}/public/images/2022-03-25-annotated-s4/images/sample25.0.gold.wav' type='audio/wav'>
 </audio>
 </center>
 
@@ -468,7 +466,7 @@ steps are about 1) making these models stable to train, and 2) making them fast.
 ### Addressing Long-Range Dependencies with HiPPO
 
 
-<img src="images/hippo.png" width="100%"/>
+<img src="{{ site.url }}/public/images/2022-03-25-annotated-s4/images/hippo.png" width="100%"/>
 
 > [Prior work](https://arxiv.org/abs/2008.07669) found that the basic SSM actually performs very poorly in
 > practice.  Intuitively, one explanation is that they  suffer from gradients scaling exponentially in the sequence length (i.e., the
@@ -590,7 +588,7 @@ shown as blue functions. The intuition is that the HiPPO matrix
 updates these coefficients each step.
 
 
-<img src="images/leg.png" width="100%">
+<img src="{{ site.url }}/public/images/2022-03-25-annotated-s4/images/leg.png" width="100%">
 
 
 ### An SSM Neural Network.
@@ -1477,21 +1475,21 @@ NLL in base 2 for MNIST. A score of 0.52 is ~0.76 BPD which is near PixelCNN++.
 
 
 
-<img src="images/sample.png" width="100%">
+<img src="{{ site.url }}/public/images/2022-03-25-annotated-s4/images/sample.png" width="100%">
 
 
 We can also do prefix-samples – given the first 300 pixels, try to complete the image.
 S4 is on the left, true on the right.
 
 
-<img src="images/im0.1.png" width="45%">
-<img src="images/im0.2.png" width="45%">
-<img src="images/im0.3.png" width="45%">
-<img src="images/im0.4.png" width="45%">
-<img src="images/im0.5.png" width="45%">
-<img src="images/im0.6.png" width="45%">
-<img src="images/im0.7.png" width="45%">
-<img src="images/im0.8.png" width="45%">
+<img src="{{ site.url }}/public/images/2022-03-25-annotated-s4/images/im0.1.png" width="45%">
+<img src="{{ site.url }}/public/images/2022-03-25-annotated-s4/images/im0.2.png" width="45%">
+<img src="{{ site.url }}/public/images/2022-03-25-annotated-s4/images/im0.3.png" width="45%">
+<img src="{{ site.url }}/public/images/2022-03-25-annotated-s4/images/im0.4.png" width="45%">
+<img src="{{ site.url }}/public/images/2022-03-25-annotated-s4/images/im0.5.png" width="45%">
+<img src="{{ site.url }}/public/images/2022-03-25-annotated-s4/images/im0.6.png" width="45%">
+<img src="{{ site.url }}/public/images/2022-03-25-annotated-s4/images/im0.7.png" width="45%">
+<img src="{{ site.url }}/public/images/2022-03-25-annotated-s4/images/im0.8.png" width="45%">
 
 
 ```python
@@ -1565,12 +1563,12 @@ able to generate relatively coherent completions. These are prefix
 samples with 500 pixels given.
 
 
-<img src="images/quickdraw/im1.png" width="45%">
-<img src="images/quickdraw/im2.png" width="45%">
-<img src="images/quickdraw/im3.png" width="45%">
-<img src="images/quickdraw/im4.png" width="45%">
-<img src="images/quickdraw/im5.png" width="45%">
-<img src="images/quickdraw/im6.png" width="45%">
+<img src="{{ site.url }}/public/images/2022-03-25-annotated-s4/images/quickdraw/im1.png" width="45%">
+<img src="{{ site.url }}/public/images/2022-03-25-annotated-s4/images/quickdraw/im2.png" width="45%">
+<img src="{{ site.url }}/public/images/2022-03-25-annotated-s4/images/quickdraw/im3.png" width="45%">
+<img src="{{ site.url }}/public/images/2022-03-25-annotated-s4/images/quickdraw/im4.png" width="45%">
+<img src="{{ site.url }}/public/images/2022-03-25-annotated-s4/images/quickdraw/im5.png" width="45%">
+<img src="{{ site.url }}/public/images/2022-03-25-annotated-s4/images/quickdraw/im6.png" width="45%">
 
 
 
@@ -1592,84 +1590,84 @@ long at an 8kHz sampling rate, discretized to 256 classes with
 
 
 <center>
-<img src='images/speech3.1.png' width='100%'>
+<img src='{{ site.url }}/public/images/2022-03-25-annotated-s4/images/speech3.1.png' width='100%'>
 <audio controls>
- <source src='images/sample3.1.wav' type='audio/wav'>
+ <source src='{{ site.url }}/public/images/2022-03-25-annotated-s4/images/sample3.1.wav' type='audio/wav'>
 </audio>
 <audio controls>
- <source src='images/sample3.1.gold.wav' type='audio/wav'>
-</audio>
-
-<img src='images/speech6.1.png' width='100%'>
-<audio controls>
- <source src='images/sample6.1.wav' type='audio/wav'>
-</audio>
-<audio controls>
- <source src='images/sample6.1.gold.wav' type='audio/wav'>
+ <source src='{{ site.url }}/public/images/2022-03-25-annotated-s4/images/sample3.1.gold.wav' type='audio/wav'>
 </audio>
 
-<img src='images/speech7.0.png' width='100%'>
+<img src='{{ site.url }}/public/images/2022-03-25-annotated-s4/images/speech6.1.png' width='100%'>
 <audio controls>
- <source src='images/sample7.0.wav' type='audio/wav'>
+ <source src='{{ site.url }}/public/images/2022-03-25-annotated-s4/images/sample6.1.wav' type='audio/wav'>
 </audio>
 <audio controls>
- <source src='images/sample7.0.gold.wav' type='audio/wav'>
-</audio>
-
-<img src='images/speech9.0.png' width='100%'>
-<audio controls>
- <source src='images/sample9.0.wav' type='audio/wav'>
-</audio>
-<audio controls>
- <source src='images/sample9.0.gold.wav' type='audio/wav'>
+ <source src='{{ site.url }}/public/images/2022-03-25-annotated-s4/images/sample6.1.gold.wav' type='audio/wav'>
 </audio>
 
-<img src='images/speech10.0.png' width='100%'>
+<img src='{{ site.url }}/public/images/2022-03-25-annotated-s4/images/speech7.0.png' width='100%'>
 <audio controls>
- <source src='images/sample10.0.wav' type='audio/wav'>
+ <source src='{{ site.url }}/public/images/2022-03-25-annotated-s4/images/sample7.0.wav' type='audio/wav'>
 </audio>
 <audio controls>
- <source src='images/sample10.0.gold.wav' type='audio/wav'>
-</audio>
-
-<img src='images/speech13.1.png' width='100%'>
-<audio controls>
- <source src='images/sample13.1.wav' type='audio/wav'>
-</audio>
-<audio controls>
- <source src='images/sample13.1.gold.wav' type='audio/wav'>
+ <source src='{{ site.url }}/public/images/2022-03-25-annotated-s4/images/sample7.0.gold.wav' type='audio/wav'>
 </audio>
 
-<img src='images/speech23.0.png' width='100%'>
+<img src='{{ site.url }}/public/images/2022-03-25-annotated-s4/images/speech9.0.png' width='100%'>
 <audio controls>
- <source src='images/sample23.0.wav' type='audio/wav'>
+ <source src='{{ site.url }}/public/images/2022-03-25-annotated-s4/images/sample9.0.wav' type='audio/wav'>
 </audio>
 <audio controls>
- <source src='images/sample23.0.gold.wav' type='audio/wav'>
-</audio>
-
-<img src='images/speech25.0.png' width='100%'>
-<audio controls>
- <source src='images/sample25.0.wav' type='audio/wav'>
-</audio>
-<audio controls>
- <source src='images/sample25.0.gold.wav' type='audio/wav'>
+ <source src='{{ site.url }}/public/images/2022-03-25-annotated-s4/images/sample9.0.gold.wav' type='audio/wav'>
 </audio>
 
-<img src='images/speech26.0.png' width='100%'>
+<img src='{{ site.url }}/public/images/2022-03-25-annotated-s4/images/speech10.0.png' width='100%'>
 <audio controls>
- <source src='images/sample26.0.wav' type='audio/wav'>
+ <source src='{{ site.url }}/public/images/2022-03-25-annotated-s4/images/sample10.0.wav' type='audio/wav'>
 </audio>
 <audio controls>
- <source src='images/sample26.0.gold.wav' type='audio/wav'>
+ <source src='{{ site.url }}/public/images/2022-03-25-annotated-s4/images/sample10.0.gold.wav' type='audio/wav'>
 </audio>
 
-<img src='images/speech26.1.png' width='100%'>
+<img src='{{ site.url }}/public/images/2022-03-25-annotated-s4/images/speech13.1.png' width='100%'>
 <audio controls>
- <source src='images/sample26.1.wav' type='audio/wav'>
+ <source src='{{ site.url }}/public/images/2022-03-25-annotated-s4/images/sample13.1.wav' type='audio/wav'>
 </audio>
 <audio controls>
- <source src='images/sample26.1.gold.wav' type='audio/wav'>
+ <source src='{{ site.url }}/public/images/2022-03-25-annotated-s4/images/sample13.1.gold.wav' type='audio/wav'>
+</audio>
+
+<img src='{{ site.url }}/public/images/2022-03-25-annotated-s4/images/speech23.0.png' width='100%'>
+<audio controls>
+ <source src='{{ site.url }}/public/images/2022-03-25-annotated-s4/images/sample23.0.wav' type='audio/wav'>
+</audio>
+<audio controls>
+ <source src='{{ site.url }}/public/images/2022-03-25-annotated-s4/images/sample23.0.gold.wav' type='audio/wav'>
+</audio>
+
+<img src='{{ site.url }}/public/images/2022-03-25-annotated-s4/images/speech25.0.png' width='100%'>
+<audio controls>
+ <source src='{{ site.url }}/public/images/2022-03-25-annotated-s4/images/sample25.0.wav' type='audio/wav'>
+</audio>
+<audio controls>
+ <source src='{{ site.url }}/public/images/2022-03-25-annotated-s4/images/sample25.0.gold.wav' type='audio/wav'>
+</audio>
+
+<img src='{{ site.url }}/public/images/2022-03-25-annotated-s4/images/speech26.0.png' width='100%'>
+<audio controls>
+ <source src='{{ site.url }}/public/images/2022-03-25-annotated-s4/images/sample26.0.wav' type='audio/wav'>
+</audio>
+<audio controls>
+ <source src='{{ site.url }}/public/images/2022-03-25-annotated-s4/images/sample26.0.gold.wav' type='audio/wav'>
+</audio>
+
+<img src='{{ site.url }}/public/images/2022-03-25-annotated-s4/images/speech26.1.png' width='100%'>
+<audio controls>
+ <source src='{{ site.url }}/public/images/2022-03-25-annotated-s4/images/sample26.1.wav' type='audio/wav'>
+</audio>
+<audio controls>
+ <source src='{{ site.url }}/public/images/2022-03-25-annotated-s4/images/sample26.1.gold.wav' type='audio/wav'>
 </audio>
 </center>
 
