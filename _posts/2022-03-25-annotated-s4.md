@@ -2,7 +2,7 @@
  layout: post
  title: The Annotated S4
  authors: Alexander M. Rush, Cornell; Sidd Karamcheti, Stanford
- ---
+---
 
 <!-- #region -->
 <center><h1> The Annotated S4 </h1></center>
