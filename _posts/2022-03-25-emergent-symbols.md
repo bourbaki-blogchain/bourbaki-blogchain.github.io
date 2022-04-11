@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Emergent Symbols through Binding in External Memory
+title: Symbolic Binding in Neural Networks through Factorized Memory Systems
 tags: [symbolic, memory, neural, binding]
 authors: Ameya Daigavane, Ansh Khurana, Shweta Bhardwaj, Gaurav Aggarwal
 ---
@@ -218,14 +218,12 @@ $$
 \begin{aligned}
 k_{w_t} &= \text{ReLU}(\text{Linear}(h_t)) \\
 g_t &= \sigma(\text{Linear}(h_t)) \\
-y_t &= \sigma(\text{Linear}(h_t)) \\
+y_t &= \sigma_F(\text{Linear}(h_t)) \\
 \end{aligned}
 $$
 
-where $\sigma$ is the sigmoid activation, as before.
-For the **Distribution of Three** and **Identity Rules** tasks,
-as more than two options are present, a softmax activation
-is instead used to compute $y_t$ instead of a sigmoid activation.
+where $\sigma_F$ is either the sigmoid activation or the softmax activation,
+depending on the number of options present.
 
 This key $k_{w_t}$ is now concatenated to the memory $M_k$:
 
@@ -467,8 +465,7 @@ For clarity, here we describe the operation of a PrediNet with only
 one head.
  
 Given the sequence of embeddings $\\{z_t\\}$ as a matrix $L$
-of dimension $T \times K$
-where $K$ is the common length of the embeddings $z_t$,
+of leading dimension $T$,
 PrediNet first flattens $L$. Then, it computes two sets of
 query vectors $Q_1$ and $Q_2$, and a key matrix $K$:
 
@@ -533,7 +530,7 @@ Consider a batch $Z$ consisting of $B$ sequences
 of encoded images, each of length $T$,
 where each encoded image has $K$ features.
 Then, by $Z_{itk}$, we mean the $k$th feature of $z_t$
-where $\\{z\\}$ is the $i$th sequence in $Z$.
+where $\\{z_t\\}_{t = 1}^T$ is the $i$th sequence in the batch.
 Then, TCN performs the following normalization:
 
 $$
@@ -622,7 +619,8 @@ to the questions, not the options.
 
 For all tasks, the keys written at the first two time steps
 ($t=1,2$) are tightly clustered at one location for all training examples.
-From the third time step onwards, the encoded key is task dependent. Tight clustering of key representations for a given time step represent the capabality of ESBN to learn task-dependent symbolic representations across different examples for the given task.
+From the third time step onwards, the encoded key is task dependent.
+Tight clustering of key representations for a given time step represent the capabality of ESBN to learn task-dependent symbolic representations across different examples for the given task.
 
 ### The Generalizability of ESBN Representations
 
@@ -631,10 +629,11 @@ for train and test instances, across the four different tasks.
 Overall, we find that there is significant overlap in the 
 structure of the train and test representations, even though
 the test symbols are completely unseen during training.
-In particular, even when the ESBN has observed only a small subset of symbols
-during training (the setting with $m = 95$ withheld symbols),
-the model is able to generalize to near-perfect accuracy on all tasks,
-unlike any of the other baselines.
+
+This explains why the ESBN model is able to generalize to near-perfect accuracy on all tasks
+unlike any of the other baselines,
+even when the ESBN has observed only a small subset of symbols
+during training.
 
 #### Same-Different Task: Generalization
 {% include 2021-12-01-emergent-symbols/3D_same_diff_trend_subplot.html %}
