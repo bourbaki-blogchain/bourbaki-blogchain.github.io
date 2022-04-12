@@ -1,8 +1,8 @@
 ---
 layout: post
 title: A Deeper Look at Zero-Cost Proxies for Lightweight NAS  
-authors: Anonymous
-tags: [deep learning, neural architecture search, zero-cost proxies]  # This should be the relevant areas related to your blog post
+authors: White, Colin; Khodak, Mikhail; Tu, Renbo; Shah, Shital; Bubeck, Sébastien; Dey, Debadeepta
+tags: [deep learning, automated machine learning, neural architecture search, zero-cost proxies]  # This should be the relevant areas related to your blog post
 ---
 
 <img src="{{ site.url }}/public/images/2022-03-25-zero-cost-proxies/MainFigure.png"
