@@ -3,9 +3,9 @@
  title: The Annotated S4
  authors: Alexander M. Rush; Sidd Karamcheti
  tags: [recent, sequence-modeling, generative-models]
+ excerpt: "A guide to the S4 model from 'Efficiently Modeling Long Sequences with Structured State Spaces' annotated in a literate coding style as a working system."
 ---
 
-<!-- #region -->
 <center><h1> The Annotated S4 </h1></center>
 
 
@@ -17,7 +17,6 @@
 <p> Albert Gu, Karan Goel, and Christopher Ré.</p>
 </center>
 <img src="{{ site.url }}/public/images/2022-03-25-annotated-s4/images/hero.png" width="100%"/>
-<!-- #endregion -->
 
 
 *Blog Post and [Library](https://github.com/srush/annotated-s4/) by [Sasha Rush](http://rush-nlp.com/) and [Sidd Karamcheti](https://www.siddkaramcheti.com/)*, v2
@@ -825,26 +824,22 @@ skip to Part 3 for some cool applications like MNIST completion.
 
 Specifically, recall this function here:
 
-<!-- #region -->
 ```python
 def K_conv(Ab, Bb, Cb, L):
    return np.array(
        [(Cb @ matrix_power(Ab, l) @ Bb).reshape() for l in range(L)]
    )
 ```
-<!-- #endregion -->
 
 The contribution of S4 is a stable method for speeding up this particular operation.
 To do this we are going to focus on the case where the SSM
 has special structure. Specifically, Diagonal Plus Low-Rank (DPLR) in complex
 space.
 
-<!-- #region -->
 **DPLR:** SSM is  $(\boldsymbol{\Lambda} - \boldsymbol{p}\boldsymbol{q}^*, \boldsymbol{B}, \boldsymbol{C})$ for some diagonal $\boldsymbol{\Lambda}$ and vectors $\boldsymbol{p}, \boldsymbol{q}, \boldsymbol{B}, \boldsymbol{C} \in \mathbb{C}^{N \times 1}$.
 
 
 Under this DPLR assumption, S4 overcomes the speed bottleneck in three steps
-<!-- #endregion -->
 
 
  1. Instead of computing $\boldsymbol{\overline{K}}$ directly,
