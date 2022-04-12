@@ -5,7 +5,7 @@ authors: Anonymous
 tags: [deep learning, neural architecture search, zero-cost proxies]  # This should be the relevant areas related to your blog post
 ---
 
-<img src="{{ site.url }}/public/images/2021-12-01-zero-cost-proxies/MainFigure.png"
+<img src="{{ site.url }}/public/images/2022-03-25-zero-cost-proxies/MainFigure.png"
      alt="Markdown Monster icon"
      style="float: left; margin-right: 10px;" />
 
@@ -123,7 +123,7 @@ Now we describe the search spaces, datasets, and tasks that we use for experimen
 3. **TransNAS-Bench-101.** [TransNAS-Bench-101](https://arxiv.org/abs/2105.11871) is a tabular NAS benchmark which consists of two separate search spaces: a micro search space of size 4096, and a macro search space of size 3256. All architectures on each search space are evaluated on seven different computer vision-based tasks from the [Taskonomy](http://taskonomy.stanford.edu/) dataset. The tasks include object classification, scene classification, unscrambling the image (jigsaw), and image upscaling (autoencoder). We use the micro-level search space, which is similar to NAS-Bench-201 but with 4 choices of operations per edge instead of 6.
 
 |$\quad\quad\text{Raw Image}\quad\quad$|$\text{Object Classification}$|$\text{Scene Classification}\;$| $\quad\text{Jigsaw Puzzle}\quad$ |$\quad\text{Autoencoding}\quad$|
-| ![Raw Image]({{ site.url }}/public/images/2021-12-01-zero-cost-proxies/original.png) | ![Object Classification]({{ site.url }}/public/images/2021-12-01-zero-cost-proxies/object_classification.png) | ![Scene Classification]({{ site.url }}/public/images/2021-12-01-zero-cost-proxies/scene_classification.png) | ![Jigsaw]({{ site.url }}/public/images/2021-12-01-zero-cost-proxies/jigsaw.png) | ![Autoencoder]({{ site.url }}/public/images/2021-12-01-zero-cost-proxies/autoencoder.png) |
+| ![Raw Image]({{ site.url }}/public/images/2022-03-25-zero-cost-proxies/original.png) | ![Object Classification]({{ site.url }}/public/images/2022-03-25-zero-cost-proxies/object_classification.png) | ![Scene Classification]({{ site.url }}/public/images/2022-03-25-zero-cost-proxies/scene_classification.png) | ![Jigsaw]({{ site.url }}/public/images/2022-03-25-zero-cost-proxies/jigsaw.png) | ![Autoencoder]({{ site.url }}/public/images/2022-03-25-zero-cost-proxies/autoencoder.png) |
 
 *Figure 1: Diverse tasks from [TransNAS-Bench-101](https://arxiv.org/abs/2105.11871) based on [Taskonomy](http://taskonomy.stanford.edu/) used in our experiments.*
 
@@ -141,7 +141,7 @@ Darcy Flow refers to a family of partial differential equations (PDE), and the t
 This dataset is a drop-in replacement for CIFAR-10 with the same image resolution of 32x32, 3 channels, 50000 training and 10000 test images. It was designed by [Dey et al. (2021)](https://arxiv.org/abs/2106.04010) to test the performance of ZC proxies. The images are sampled from a random Gaussian distribution, and their class membership labels are determined by passing the images through 10 randomly initialized neural networks and picking the label to be the ID of the neural network that had the maximum output response to the image. We include this dataset in our repertoire to study whether the content of data itself has an effect on the performance of ZC proxies. 
 
 | Spherical CIFAR-100 | NinaPro DB5 | Darcy Flow | Synthetic CIFAR-10 |
-| ![Spherical CIFAR-100]({{ site.url }}/public/images/2021-12-01-zero-cost-proxies/spherical.png) | ![NinaPro DB5]({{ site.url }}/public/images/2021-12-01-zero-cost-proxies/ninapro.png) | ![Darcy Flow]({{ site.url }}/public/images/2021-12-01-zero-cost-proxies/darcyflow.png) | ![Synthetic CIFAR-10]({{ site.url }}/public/images/2021-12-01-zero-cost-proxies/synthetic.png) |
+| ![Spherical CIFAR-100]({{ site.url }}/public/images/2022-03-25-zero-cost-proxies/spherical.png) | ![NinaPro DB5]({{ site.url }}/public/images/2022-03-25-zero-cost-proxies/ninapro.png) | ![Darcy Flow]({{ site.url }}/public/images/2022-03-25-zero-cost-proxies/darcyflow.png) | ![Synthetic CIFAR-10]({{ site.url }}/public/images/2022-03-25-zero-cost-proxies/synthetic.png) |
 
 *Figure 2: Diverse datasets from [NAS-Bench-360](https://arxiv.org/abs/2110.05668) and [synthetic data](https://arxiv.org/abs/2106.04010) used in our experiments.*
 
@@ -214,25 +214,25 @@ Figures 3-5 give the full correlations on each of the 12 datasets, while Figure 
 
 | NATS-Bench TSS <br> CIFAR-100 | NATS-Bench TSS <br> Spherical CIFAR-100 | NATS-Bench TSS <br>  Synthetic CIFAR-10 |
 | :------------------: | :------------------: | :------------------: |
-| ![Zero-cost NATS-Bench]({{ site.url }}/public/images/2021-12-01-zero-cost-proxies/all_pairs_zc_spe_natsbench_cifar100.png) | ![Zero-cost NATS-Bench]({{ site.url }}/public/images/2021-12-01-zero-cost-proxies/all_pairs_zc_spe_natsbench_scifar100.png) | ![Zero-cost NATS-Bench]({{ site.url }}/public/images/2021-12-01-zero-cost-proxies/all_pairs_zc_spe_natsbench_synthetic_cifar10.png) | 
+| ![Zero-cost NATS-Bench]({{ site.url }}/public/images/2022-03-25-zero-cost-proxies/all_pairs_zc_spe_natsbench_cifar100.png) | ![Zero-cost NATS-Bench]({{ site.url }}/public/images/2022-03-25-zero-cost-proxies/all_pairs_zc_spe_natsbench_scifar100.png) | ![Zero-cost NATS-Bench]({{ site.url }}/public/images/2022-03-25-zero-cost-proxies/all_pairs_zc_spe_natsbench_synthetic_cifar10.png) | 
 
 *Figure 3: Spearman's rank correlation among all pairs of ZC proxies on NATS-Bench Topological Search Space (TSS).*
 
 | DARTS <br> CIFAR-100 | DARTS <br> Darcy Flow | DARTS <br> Ninapro | DARTS <br> Spherical CIFAR-100 | DARTS <br> Synthetic CIFAR-10 | 
 | :------------------: | :------------------: | :------------------: | :------------------: | :------------------: |
-| ![Zero-cost DARTS]({{ site.url }}/public/images/2021-12-01-zero-cost-proxies/all_pairs_zc_spe_darts_cifar100.png)  | ![Zero-cost DARTS]({{ site.url }}/public/images/2021-12-01-zero-cost-proxies/all_pairs_zc_spe_darts_darcyflow.png) | ![Zero-cost DARTS]({{ site.url }}/public/images/2021-12-01-zero-cost-proxies/all_pairs_zc_spe_darts_ninapro.png) | ![Zero-cost DARTS]({{ site.url }}/public/images/2021-12-01-zero-cost-proxies/all_pairs_zc_spe_darts_scifar100.png) | ![Zero-cost DARTS]({{ site.url }}/public/images/2021-12-01-zero-cost-proxies/all_pairs_zc_spe_darts_synthetic_cifar10.png) |
+| ![Zero-cost DARTS]({{ site.url }}/public/images/2022-03-25-zero-cost-proxies/all_pairs_zc_spe_darts_cifar100.png)  | ![Zero-cost DARTS]({{ site.url }}/public/images/2022-03-25-zero-cost-proxies/all_pairs_zc_spe_darts_darcyflow.png) | ![Zero-cost DARTS]({{ site.url }}/public/images/2022-03-25-zero-cost-proxies/all_pairs_zc_spe_darts_ninapro.png) | ![Zero-cost DARTS]({{ site.url }}/public/images/2022-03-25-zero-cost-proxies/all_pairs_zc_spe_darts_scifar100.png) | ![Zero-cost DARTS]({{ site.url }}/public/images/2022-03-25-zero-cost-proxies/all_pairs_zc_spe_darts_synthetic_cifar10.png) |
 
 *Figure 4: Spearman's rank correlation among all pairs of ZC proxies on DARTS.*
 
 | TransNAS-Bench-101 <br> Jigsaw | TransNAS-Bench-101 <br> Object Classification | TransNAS-Bench-101 <br> Scene Classification | TransNAS-Bench-101 <br> Autoencoder |
 | :------------------: | :------------------: | :------------------: |
-| ![Zero-cost TransNAS-Bench-101]({{ site.url }}/public/images/2021-12-01-zero-cost-proxies/jigsaw_all_pairs_zc_spe.png) | ![Zero-cost TransNAS-Bench-101]({{ site.url }}/public/images/2021-12-01-zero-cost-proxies/class_object_all_pairs_zc_spe.png) | ![Zero-cost TransNAS-Bench-101]({{ site.url }}/public/images/2021-12-01-zero-cost-proxies/class_scene_all_pairs_zc_spe.png) | ![Zero-cost TransNAS-Bench-101]({{ site.url }}/public/images/2021-12-01-zero-cost-proxies/autoencoder_all_pairs_zc_spe.png) | 
+| ![Zero-cost TransNAS-Bench-101]({{ site.url }}/public/images/2022-03-25-zero-cost-proxies/jigsaw_all_pairs_zc_spe.png) | ![Zero-cost TransNAS-Bench-101]({{ site.url }}/public/images/2022-03-25-zero-cost-proxies/class_object_all_pairs_zc_spe.png) | ![Zero-cost TransNAS-Bench-101]({{ site.url }}/public/images/2022-03-25-zero-cost-proxies/class_scene_all_pairs_zc_spe.png) | ![Zero-cost TransNAS-Bench-101]({{ site.url }}/public/images/2022-03-25-zero-cost-proxies/autoencoder_all_pairs_zc_spe.png) | 
 
 *Figure 5: Spearman's rank correlation among all pairs of ZC proxies on TransNAS-Bench-101.*
 
 | NATS-Bench TSS | DARTS | TransNAS-Bench-101 | Overall |
 | :------------------: | :------------------: | :------------------: | :------------------: |
-| ![Zero-cost NATS-Bench TSS]({{ site.url }}/public/images/2021-12-01-zero-cost-proxies/avg_all_pairs_zc_spe_natsbench.png) | ![Zero-cost DARTS]({{ site.url }}/public/images/2021-12-01-zero-cost-proxies/avg_all_pairs_zc_spe_darts.png) | ![Zero-cost TransNAS-Bench-101]({{ site.url }}/public/images/2021-12-01-zero-cost-proxies/avg_all_pairs_zc_spe.png) | ![Zero-cost Overall]({{ site.url }}/public/images/2021-12-01-zero-cost-proxies/avg_all_pairs_zc_spe_all.png) | 
+| ![Zero-cost NATS-Bench TSS]({{ site.url }}/public/images/2022-03-25-zero-cost-proxies/avg_all_pairs_zc_spe_natsbench.png) | ![Zero-cost DARTS]({{ site.url }}/public/images/2022-03-25-zero-cost-proxies/avg_all_pairs_zc_spe_darts.png) | ![Zero-cost TransNAS-Bench-101]({{ site.url }}/public/images/2022-03-25-zero-cost-proxies/avg_all_pairs_zc_spe.png) | ![Zero-cost Overall]({{ site.url }}/public/images/2022-03-25-zero-cost-proxies/avg_all_pairs_zc_spe_all.png) | 
 
 *Figure 6: Spearman's rank correlation among all pairs of ZC proxies averaged within each search space and across all search spaces.*
 
@@ -267,13 +267,13 @@ If one ZC proxy were to achieve the best performance across all tasks, then its 
 
  NATS-Bench TSS | DARTS 
 :-------------------------:|:-------------------------:
- ![Zero-cost PP]({{ site.url }}/public/images/2021-12-01-zero-cost-proxies/pp_nats.png)  | ![Zero-cost PP]({{ site.url }}/public/images/2021-12-01-zero-cost-proxies/pp_darts.png) 
+ ![Zero-cost PP]({{ site.url }}/public/images/2022-03-25-zero-cost-proxies/pp_nats.png)  | ![Zero-cost PP]({{ site.url }}/public/images/2022-03-25-zero-cost-proxies/pp_darts.png) 
 
 *Figure 7:  Relative performance profiles on NATS-Bench TSS and DARTS.*
 
 | TransNASBench-101 | Avg. over all search spaces and tasks|
 | :--: | :--: | 
-| ![Zero-cost PP]({{ site.url }}/public/images/2021-12-01-zero-cost-proxies/pp_trans.png) | ![Zero-cost PP]({{ site.url }}/public/images/2021-12-01-zero-cost-proxies/pp_all_tasks.png) |
+| ![Zero-cost PP]({{ site.url }}/public/images/2022-03-25-zero-cost-proxies/pp_trans.png) | ![Zero-cost PP]({{ site.url }}/public/images/2022-03-25-zero-cost-proxies/pp_all_tasks.png) |
 
 *Figure 8: Relative performance profiles on TransNASBench-101, and averaged over all search spaces and tasks.*
 
@@ -286,7 +286,7 @@ datasets: CIFAR-10 and Spherical CIFAR-100.
 
 | Spearmans's rank correlation vs. training epochs <br> NATS-Bench TSS CIFAR-10 | Spearmans's rank correlation vs. training epochs <br> NATS-Bench TSS Spherical CIFAR-100 |
 | :--: | :--: | 
-| ![Zero-cost Epochs]({{ site.url }}/public/images/2021-12-01-zero-cost-proxies/zerocost_epochs_c10.gif) | ![Zero-cost Epochs]({{ site.url }}/public/images/2021-12-01-zero-cost-proxies/zerocost_epochs_scifar100.gif) |
+| ![Zero-cost Epochs]({{ site.url }}/public/images/2022-03-25-zero-cost-proxies/zerocost_epochs_c10.gif) | ![Zero-cost Epochs]({{ site.url }}/public/images/2022-03-25-zero-cost-proxies/zerocost_epochs_scifar100.gif) |
 
 *Figure 9: Spearman's rank correlation vs. training epochs on NATS-Bench TSS CIFAR-10 and Spherical CIFAR-100.*
 
