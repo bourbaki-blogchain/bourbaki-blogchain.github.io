@@ -306,14 +306,6 @@ It would not be unreasonable to expect future ZC proxies to be able to capitaliz
 However, we note that this property can be obtained artificially by combining the ZC proxy with a technique that already has this property.
 For example, there is preliminary work on combining [ZC proxies with learning curve extrapolation](https://arxiv.org/abs/2104.01177).
 
-<!-- Example collapsible text -->
-<!-- <details>
-  <summary>Details of every heatmap</summary>
-
-    Example text.
-
-</details> -->
-
 
 ## Cases For and Against Zero-Cost Proxies
 
