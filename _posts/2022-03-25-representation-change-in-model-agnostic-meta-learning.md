@@ -7,13 +7,13 @@ tags: [meta-learning, maml, representation change, representation reuse, domain 
 
 
 Last year, an exciting adaptation of one of the most popular optimization-based meta-learning approaches, model-agnostic meta-learning (MAML) [[Finn et al., 2017]](#Finn), was proposed in 
-
-* Jaehoon Oh, Hyungjun Yoo, ChangHwan Kim, Se-Young Yun (ICLR, 2021) [BOIL: Towards Representation Change for Few-shot Learning](#Oh)
-
+<p></p>
+<span>&nbsp;&nbsp;&nbsp;&#9654;&nbsp;&nbsp;</span>Jaehoon Oh, Hyungjun Yoo, ChangHwan Kim, Se-Young Yun (ICLR, 2021) [BOIL: Towards Representation Change for Few-shot Learning](#Oh)
+<p></p>
 The authors adapt MAML by freezing the last layer to force *body only inner learning* (BOIL). Interestingly, this is complementary to ANIL (almost no inner loop) proposed in
-
-* Aniruddh Raghu, Maithra Raghu, Samy Bengio, Oriol Vinyals (ICLR, 2020) [Rapid Learning or Feature Reuse? Towards Understanding the Effectiveness of MAML](#Raghu)
-
+<p></p>
+<span>&nbsp;&nbsp;&nbsp;&#9654;&nbsp;&nbsp;</span>Aniruddh Raghu, Maithra Raghu, Samy Bengio, Oriol Vinyals (ICLR, 2020) [Rapid Learning or Feature Reuse? Towards Understanding the Effectiveness of MAML](#Raghu)
+<p></p>
 Both papers attempt to **understand the success** of MAML and **improve** it.
 [Oh et al. [2021]](#Oh) compare BOIL, ANIL, and MAML and show that both improve the performance of MAML. Albeit, BOIL outperforms ANIL, especially when the task distribution varies between training and testing.
 
