@@ -354,7 +354,7 @@ if False:
     example_ssm()
 ```
 
-<img src="line.gif" width="100%">
+<img src="{{ site.url }}/public/images/2022-03-25-annotated-s4/images/line.gif" width="100%">
 
 
 Neat! And that it was just 1 SSM, with 2 hidden states over 100 steps.
