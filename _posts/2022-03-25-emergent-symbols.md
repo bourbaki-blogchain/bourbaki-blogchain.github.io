@@ -3,6 +3,10 @@ layout: post
 title: Symbolic Binding in Neural Networks through Factorized Memory Systems
 tags: [symbolic, memory, neural, binding]
 authors: Ameya Daigavane, Ansh Khurana, Shweta Bhardwaj, Gaurav Aggarwal
+abstract: In this blog post, we describe the paper 'Emergent Symbols through Binding in External Memory',
+which introduces the Emergent Symbol Binding Network (ESBN), a recurrent neural network with an augmented factorized memory system,
+to solve several logical reasoning tasks. We describe the design choices of the ESBN in great detail to compare with other sequence models,
+and perform a qualitative validation of the generalization claims from the original paper.
 ---
 
 Our blog post describes the paper
@@ -18,7 +22,7 @@ them to abstract concepts, represented by logical rules and symbols.
 To illustrate this, consider the following scene with four objects
 of differing shape, size and color:
 
-{% include 2021-12-01-emergent-symbols/clevr.html %} 
+{% include 2022-03-25-emergent-symbols/clevr.html %} 
 
 Many of us are able to quickly identify all of the objects
 in this scene. Once we do this, we can recognize certain
@@ -64,7 +68,7 @@ and [Dendral](https://en.wikipedia.org/wiki/Dendral),
 and [IBM's Watson](https://www.ibm.com/ibm/history/ibm100/us/en/icons/watson/)
 that won at 'Jeopardy!'.
 
-{% include 2021-12-01-emergent-symbols/watson.html %} 
+{% include 2022-03-25-emergent-symbols/watson.html %} 
 
 However, a major limitation of these systems was
 the need for well-defined structured inputs.
@@ -97,26 +101,26 @@ while still operating on high-dimensional inputs.
 To understand how well machine learning models can perform abstract reasoning, the authors construct
 a set of $4$ increasingly difficult tasks:
 * **Same-Different**: Identify whether two images are the same or different from each other.
-{% include 2021-12-01-emergent-symbols/same_different.html %}
+{% include 2022-03-25-emergent-symbols/same_different.html %}
 
 * **Relational Match-To-Sample (RMTS)**: Given a source pair of images which have some relationship between them,
 identify which of two target pairs of images have the same relationship.
 Here, the authors considered the 'same-different' relationship:
 the source pair consists of either the same or different images.
 
-{% include 2021-12-01-emergent-symbols/rmts.html %}
+{% include 2022-03-25-emergent-symbols/rmts.html %}
 
 * **Distribution of Three**: A row of three distinct images is provided.
 This row is permuted to form a second row of images, but the last image is removed.
 Identify which of four options was the removed image from the second row.
 
-{% include 2021-12-01-emergent-symbols/dist3.html %}
+{% include 2022-03-25-emergent-symbols/dist3.html %}
 
 * **Identity Rules**: A row of images following a repetition rule (*ABA*, *ABB*, or *AAA*) is provided.
 A second row of images is provided, with the last image removed.
 Identify which of four options should be filled in the second row to follow the same repetition rule.
 
-{% include 2021-12-01-emergent-symbols/identity_rules.html %}
+{% include 2022-03-25-emergent-symbols/identity_rules.html %}
 
 The authors create a pool of $100$ common symbols (eg. the triangle and square above).
 For each task, $m$ symbols are kept withheld, completely unseen during training.
@@ -158,7 +162,7 @@ at every timestep t:
 * Write key $k_{w_t}$ to memory $M_k$ and value $z_t$ to memory $M_v$.
 
 Below is an animated description of these operations:
-{% include 2021-12-01-emergent-symbols/esbn_visualization.html %}
+{% include 2022-03-25-emergent-symbols/esbn_visualization.html %}
 
 For ease of exposition, we have chosen a different (but completely equivalent)
 order of operations here than the original paper.
@@ -524,7 +528,7 @@ helped the performance of all models significantly.
 In the table below, $m$ refers to the number of withheld symbols (out of $100$)
 that are *not* observed during training.
 
-{% include 2021-12-01-emergent-symbols/results.html %} 
+{% include 2022-03-25-emergent-symbols/results.html %} 
 
 Consider a batch $Z$ consisting of $B$ sequences
 of encoded images, each of length $T$,
@@ -545,7 +549,7 @@ where $\epsilon$ is a small positive value to avoid division by zero.
 Thus, TCN is the analogue of batch normalization, but applied to the timestep axis,
 instead of the batch axis.
 
-{% include 2021-12-01-emergent-symbols/tcn.html %} 
+{% include 2022-03-25-emergent-symbols/tcn.html %} 
 
 In this work, TCN is applied to the full sequence of $\\{z_t\\}$
 obtained from the image encoder $f_e$.
@@ -576,14 +580,14 @@ We observe that the keys computed by ESBN model seem to be
 independent of the actual image being encoded. 
 
 #### Same-Difference Task: Evolution During Training
-{% include 2021-12-01-emergent-symbols/3D_same_diff_train_slider_epoch.html %}
+{% include 2022-03-25-emergent-symbols/3D_same_diff_train_slider_epoch.html %}
 
 For the **Same-Different** task,
 we find that the ESBN learns to separate the two timestep representations
 without any dependence on the actual symbol being encoded.
 
 #### RMTS Task: Evolution During Training
-{% include 2021-12-01-emergent-symbols/3D_RMTS_train_slider_epoch.html %}
+{% include 2022-03-25-emergent-symbols/3D_RMTS_train_slider_epoch.html %}
 
 The ESBN only requires a few epochs to converge for the **RMTS** task.
 The variance of key representations increases with $t$, indicating
@@ -595,7 +599,7 @@ This means the network might not need to exactly localize the representations
 of the second option pair at $t = 5, 6$ to obtain good performance.
 
 #### Distribution of Three Task: Evolution During Training
-{% include 2021-12-01-emergent-symbols/3D_dist3_train_slider_epoch.html %}
+{% include 2022-03-25-emergent-symbols/3D_dist3_train_slider_epoch.html %}
 
 Similar to the **RMTS** task, the ESBN requires only a few epochs
 to converge for the **Distribution of Three** task.
@@ -606,7 +610,7 @@ and the other options map to 'nonsensical' symbols.
 We see that the key representations for each time step cluster well.
 
 #### Identity Rules Task: Evolution During Training
-{% include 2021-12-01-emergent-symbols/3D_identity_rules_train_slider_epoch.html %}
+{% include 2022-03-25-emergent-symbols/3D_identity_rules_train_slider_epoch.html %}
 
 In the **Identity-Rules** task, the representations
 do not cluster as well as in the other tasks,
@@ -636,7 +640,7 @@ even when the ESBN has observed only a small subset of symbols
 during training.
 
 #### Same-Different Task: Generalization
-{% include 2021-12-01-emergent-symbols/3D_same_diff_trend_subplot.html %}
+{% include 2022-03-25-emergent-symbols/3D_same_diff_trend_subplot.html %}
 In this plot we show the keys written by the ESBN network ($k_w$) at $t=1$, and how it compares to
 the key that the network reads after seeing the second input at $t=2$. The LSTM predicts whether the 
 input at $t=2$ is same as or different from the input at $t=1$ using the input $k_{r_2}$ and the hidden
@@ -646,7 +650,7 @@ the strong clustering for these two cases show that ESBN learns instance invaria
 This generalisation is observed for both test and train examples, and the representations align closely.
 
 #### RMTS Task: Generalization
-{% include 2021-12-01-emergent-symbols/3D_RMTS_trend_subplot.html %}
+{% include 2022-03-25-emergent-symbols/3D_RMTS_trend_subplot.html %}
 For the **RMTS** task, we plot the representations for $k_{r}$ for $t= 3$ and $4$ denoting the two possible cases
 for each example. The output of ESBN model would depend on whether the inputs at $t= 3$ and $4$ follow the same relationship as inputs at 
 $t= 1$ and $2$. This can be observed in the segregation between *same relation* (green and orange) and *different relation*
@@ -656,7 +660,7 @@ the test representations seem to interpolate between the clusters formed by the 
 
 
 #### Distribution of Three Task: Generalization
-{% include 2021-12-01-emergent-symbols/3D_dist3_trend_subplot.html %}
+{% include 2022-03-25-emergent-symbols/3D_dist3_trend_subplot.html %}
 For the **Distribution of Three** task, the first three inputs uniquely determine the symbols for the next three time steps. 
 We plot the retrieved representations ($k_r$) for the first match of the corresponding input at $t = $ 1, 2 and 3. In the plot, 
 we observe that the test representation closely matches with the train representation within the expected range of the training examples.
@@ -666,10 +670,9 @@ and the representations do not align well with the train distribution.
 In the appendix of the paper, the representations for the
 test distribution are shown only in range of the train representation. When observed in this range, the train and test representations are well aligned. However, there are some outlier test instances which outside the train representations range showing that the alignment is not perfect.
 
-<!-- We observe that the alignment between train and test representations is not perfect. -->
 
 #### Identity-Rules Task: Generalization
-{% include 2021-12-01-emergent-symbols/3D_identity_rules_trend_subplot.html %}
+{% include 2022-03-25-emergent-symbols/3D_identity_rules_trend_subplot.html %}
 For the **Identity-Rules** task,
 we plot the $k_w$ representations for the time steps corresponding to the question,
 and see how the keys $k_r$ read for the different correct differ.
