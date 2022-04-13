@@ -137,7 +137,7 @@ An illustration of the pattern retrieval mechanism can be found in the
 <a href="https://ml-jku.github.io/hopfield-layers/">Hopfield Networks is All You Need blog post</a>.
 
 <center>
-  <img src="{{ site.url }}/public/images/2021-12-01-Looking-at-the-Performer-from-a-Hopfield-point-of-view/homer_bw.png"
+  <img src="{{ site.url }}/public/images/2022-03-25-Looking-at-the-Performer-from-a-Hopfield-point-of-view/homer_bw.png"
        alt="Homer in B&W"
        style="height:137px;border-radius:0px">
 </center>
@@ -157,7 +157,7 @@ $$
 where for this example $ d = 64 \times 64 $. It takes one update until the original image is restored.
 
 <center>
-  <img src="{{ size.url }}/public/images/2021-12-01-Looking-at-the-Performer-from-a-Hopfield-point-of-view/homer_bw_mr.png"
+  <img src="{{ size.url }}/public/images/2022-03-25-Looking-at-the-Performer-from-a-Hopfield-point-of-view/homer_bw_mr.png"
        alt="Homer in B&W (masked and retrieved)"
        style="width:original;border-radius:0px">
 </center>
@@ -176,7 +176,7 @@ $$
 The <b>six stored patterns</b> refer to the six input images:
 
 <center>
-  <img src="{{ site.url }}/public/images/2021-12-01-Looking-at-the-Performer-from-a-Hopfield-point-of-view/homer_bw_r.png"
+  <img src="{{ site.url }}/public/images/2022-03-25-Looking-at-the-Performer-from-a-Hopfield-point-of-view/homer_bw_r.png"
        alt="Retrieval with Homer in B&W (masked)"
        style="width:100%;border-radius:0px">
 </center>
@@ -313,7 +313,7 @@ so-called <b>FAVOR+</b> (<i>Fast Attention Via positive Orthogonal Random featur
 
 <center>
   <figure>
-    <img src="{{ site.url }}/public/images/2021-12-01-Looking-at-the-Performer-from-a-Hopfield-point-of-view/performer.png"
+    <img src="{{ site.url }}/public/images/2022-03-25-Looking-at-the-Performer-from-a-Hopfield-point-of-view/performer.png"
          alt="Performer attention mechanism"
          style="width:original;border-radius:0px">
     <figcaption>Source: <a href="https://arxiv.org/abs/2009.14794">Rethinking Attention with Performers</a></figcaption>
@@ -565,7 +565,7 @@ continuous, i.e. $ \boldsymbol{x}\_{i} \in \left[ -1, 1\right]^{d} $.
 We start again with the retrieval of only one stored pattern, which is not a too hard job.
 
 <center>
-  <img src="{{ site.url }}/public/images/2021-12-01-Looking-at-the-Performer-from-a-Hopfield-point-of-view/homer_c.png"
+  <img src="{{ site.url }}/public/images/2022-03-25-Looking-at-the-Performer-from-a-Hopfield-point-of-view/homer_c.png"
        alt="Homer continuous (masked and retrieved)"
        style="height:137px;border-radius:0px">
 </center>
@@ -573,7 +573,7 @@ We start again with the retrieval of only one stored pattern, which is not a too
 The next task is again a retrieval out of six stored patterns, which already does not work any more.
 
 <center>
-  <img src="{{ site.url }}/public/images/2021-12-01-Looking-at-the-Performer-from-a-Hopfield-point-of-view/homer_c_r.png"
+  <img src="{{ site.url }}/public/images/2022-03-25-Looking-at-the-Performer-from-a-Hopfield-point-of-view/homer_c_r.png"
        alt="Retrieval with Homer continuous (masked)"
        style="width:100%;border-radius:0px">
 </center>
@@ -595,7 +595,7 @@ $$
 $$
 
 <center>
-  <img src="{{ site.url }}/public/images/2021-12-01-Looking-at-the-Performer-from-a-Hopfield-point-of-view/homer_c_s_r.png"
+  <img src="{{ site.url }}/public/images/2022-03-25-Looking-at-the-Performer-from-a-Hopfield-point-of-view/homer_c_s_r.png"
        alt="Retrieval with Homer continuous and sparse (masked)"
        style="width:100%;border-radius:0px">
 </center>
@@ -603,7 +603,7 @@ $$
 Pattern retrieval now works for 6 stored patterns, but what about more patterns?
 
 <center>
-  <img src="{{ site.url }}/public/images/2021-12-01-Looking-at-the-Performer-from-a-Hopfield-point-of-view/homer_c_s_r_m.png"
+  <img src="{{ site.url }}/public/images/2022-03-25-Looking-at-the-Performer-from-a-Hopfield-point-of-view/homer_c_s_r_m.png"
        alt="Retrieval with Homer continuous and sparse, many samples (masked)"
        style="width:100%;border-radius:0px">
 </center>
@@ -632,7 +632,7 @@ that the learning dynamics for $ \beta = 25 $ are different to the ones shown in
 For 6 stored patterns:
 
 <center>
-  <img src="{{ site.url }}/public/images/2021-12-01-Looking-at-the-Performer-from-a-Hopfield-point-of-view/homer_c_r_b25.png"
+  <img src="{{ site.url }}/public/images/2022-03-25-Looking-at-the-Performer-from-a-Hopfield-point-of-view/homer_c_r_b25.png"
        alt="Retrieval with Homer continuous (masked)"
        style="width:100%;border-radius:0px">
 </center>
@@ -640,7 +640,7 @@ For 6 stored patterns:
 For 24 stored patterns:
 
 <center>
-  <img src="{{ site.url }}/public/images/2021-12-01-Looking-at-the-Performer-from-a-Hopfield-point-of-view/homer_c_r_m_b25.png"
+  <img src="{{ site.url }}/public/images/2022-03-25-Looking-at-the-Performer-from-a-Hopfield-point-of-view/homer_c_r_m_b25.png"
        alt="Retrieval with Homer continuous, many samples (masked)"
        style="width:100%;border-radius:0px">
 </center>
@@ -665,7 +665,7 @@ $$
 For 6 stored patterns:
 
 <center>
-  <img src="{{ site.url }}/public/images/2021-12-01-Looking-at-the-Performer-from-a-Hopfield-point-of-view/homer_c_s_r_b25.png"
+  <img src="{{ site.url }}/public/images/2022-03-25-Looking-at-the-Performer-from-a-Hopfield-point-of-view/homer_c_s_r_b25.png"
        alt="Retrieval with Homer continuous and sparse (masked)"
        style="width:100%;border-radius:0px">
 </center>
@@ -673,7 +673,7 @@ For 6 stored patterns:
 For 24 stored patterns:
 
 <center>
-  <img src="{{ site.url }}/public/images/2021-12-01-Looking-at-the-Performer-from-a-Hopfield-point-of-view/homer_c_s_r_m_b25.png"
+  <img src="{{ site.url }}/public/images/2022-03-25-Looking-at-the-Performer-from-a-Hopfield-point-of-view/homer_c_s_r_m_b25.png"
        alt="Retrieval with Homer continuous and sparse, many samples (masked)"
        style="width:100%;border-radius:0px">
 </center>
@@ -706,7 +706,7 @@ the expectation over $ \boldsymbol{X'}^{T} \boldsymbol{\xi'} \widehat{\boldsymbo
 For 6 stored patterns:
 
 <center>
-  <img src="{{ site.url }}/public/images/2021-12-01-Looking-at-the-Performer-from-a-Hopfield-point-of-view/homer_p_c_r_b25.png"
+  <img src="{{ site.url }}/public/images/2022-03-25-Looking-at-the-Performer-from-a-Hopfield-point-of-view/homer_p_c_r_b25.png"
        alt="Performer retrieval with Homer continuous (masked)"
        style="width:100%;border-radius:0px">
 </center>
@@ -714,7 +714,7 @@ For 6 stored patterns:
 For 24 stored patterns:
 
 <center>
-  <img src="{{ site.url }}/public/images/2021-12-01-Looking-at-the-Performer-from-a-Hopfield-point-of-view/homer_p_c_r_m_b25.png"
+  <img src="{{ site.url }}/public/images/2022-03-25-Looking-at-the-Performer-from-a-Hopfield-point-of-view/homer_p_c_r_m_b25.png"
        alt="Performer retrieval with Homer continuous, many samples (masked)"
        style="width:100%;border-radius:0px">
 </center>
@@ -722,7 +722,7 @@ For 24 stored patterns:
 For clarity, let's now visualize what is going on here:
 
 <center>
-  <img src="{{ site.url }}/public/images/2021-12-01-Looking-at-the-Performer-from-a-Hopfield-point-of-view/performer_retrieval.svg"
+  <img src="{{ site.url }}/public/images/2022-03-25-Looking-at-the-Performer-from-a-Hopfield-point-of-view/performer_retrieval.svg"
        alt="Performer retrieval"
        style="width:50%;border-radius:0px">
 </center>
@@ -747,7 +747,7 @@ $$
 For 6 stored patterns:
 
 <center>
-  <img src="{{ site.url }}/public/images/2021-12-01-Looking-at-the-Performer-from-a-Hopfield-point-of-view/homer_p_c_s_r_b25.png"
+  <img src="{{ site.url }}/public/images/2022-03-25-Looking-at-the-Performer-from-a-Hopfield-point-of-view/homer_p_c_s_r_b25.png"
        alt="Performer retrieval with Homer continuous and sparse (masked)"
        style="width:100%;border-radius:0px">
 </center>
@@ -755,7 +755,7 @@ For 6 stored patterns:
 For 24 stored patterns:
 
 <center>
-  <img src="{{ site.url }}/public/images/2021-12-01-Looking-at-the-Performer-from-a-Hopfield-point-of-view/homer_p_c_s_r_m_b25.png"
+  <img src="{{ site.url }}/public/images/2022-03-25-Looking-at-the-Performer-from-a-Hopfield-point-of-view/homer_p_c_s_r_m_b25.png"
        alt="Performer retrieval with Homer continuous and sparse, many samples(masked)"
        style="width:100%;border-radius:0px">
 </center>
@@ -763,7 +763,7 @@ For 24 stored patterns:
 For clarity, let's now again visualize what is going on here:
 
 <center>
-  <img src="{{ site.url }}/public/images/2021-12-01-Looking-at-the-Performer-from-a-Hopfield-point-of-view/performer_retrieval_s.svg"
+  <img src="{{ site.url }}/public/images/2022-03-25-Looking-at-the-Performer-from-a-Hopfield-point-of-view/performer_retrieval_s.svg"
        alt="Performer retrieval, sparse"
        style="width:50%;border-radius:0px">
 </center>
