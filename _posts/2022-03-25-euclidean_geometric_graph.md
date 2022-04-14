@@ -5,9 +5,7 @@ tags: [graph neural network, geometric deep learning]
 authors: Wang, Zichen, Amazon Web Services; Shi, Yunzhi, Amazon Web Services; Chen, Xin, Amazon Web Services
 ---
 
-Graph neural networks (GNN) have been an active area of machine learning research to tackle various problems in graph data. A graph is a powerful way of representing relationships among entities as nodes connected by edges. Sometimes nodes and edges can have spatial features, such as 3D coordinates of nodes and directions along edges. How do we reason over the topology of graphs while considering those geometric features? In this post, we discuss a paper published in ICLR 2021: 
-
-* Bowen Jing, Stephan Eismann, Patricia Suriana, Raphael J Townshend, Ron Dror (2021): [Learning from Protein Structure with Geometric Vector Perceptrons](https://iclr.cc/virtual/2021/spotlight/3449). 
+Graph neural networks (GNN) have been an active area of machine learning research to tackle various problems in graph data. A graph is a powerful way of representing relationships among entities as nodes connected by edges. Sometimes nodes and edges can have spatial features, such as 3D coordinates of nodes and directions along edges. How do we reason over the topology of graphs while considering those geometric features? In this post, we discuss [Learning from Protein Structure with Geometric Vector Perceptrons (Jing et al. 2021)](https://iclr.cc/virtual/2021/spotlight/3449), published in ICLR 2021.
 
 
 ## Graphs and geometric graph
