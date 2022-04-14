@@ -62,7 +62,7 @@ $$
     \tag{4}
 \end{equation}
 $$
-, where $$\mathbf{W}_{\mu}$$, $$\mathbf{W}_{h}$$, $$\mathbf{W}_{m}$$ are weight matrices for linear transformations of $$\mathbf{s}$$ and $$\mathbf{V}$$.
+where $$\mathbf{W}_{\mu}$$, $$\mathbf{W}_{h}$$, $$\mathbf{W}_{m}$$ are weight matrices for linear transformations of $$\mathbf{s}$$ and $$\mathbf{V}$$.
 
 The output $\mathbf{s}'$, $\mathbf{V}'$ from GVP can be proved to be $E(3)$ invariant and equivariant, respectively, with respect to rotations and reflections, respectively. It can be observed from equation (3) that the scalar output $\mathbf{s}'$ only depends on the l2-norm of the vector, which is constant after any rotations/reflections. Similarly, in equation (4), the directions in the vector output $\mathbf{V}'$ is a function of $$\mathbf{W}_{\mu} \mathbf{W}_{h} \mathbf{V}$$, which means it only changes with transformation of $\mathbf{V}$. 
 
@@ -88,7 +88,7 @@ $$
     \tag{6}
 \end{equation}
 $$
-, where $AGG$ denotes some aggregating function and $\mathcal{N}(i)$ denotes the neighbors of $i$ in the graph.
+where $AGG$ denotes some aggregating function and $\mathcal{N}(i)$ denotes the neighbors of $i$ in the graph.
 
 ### GVP-GNN: Message from vector features
 
@@ -145,7 +145,7 @@ Observing the message functions (equations 9, 10, 11) from the three preceding a
 
 More concretely, the competing methods are unable to reason with edge vector features that are independent of node vector features. Having independent vector features from nodes and edges allows one to construct more expressive geometric graphs. For instance, in the protein graph used in the GVP paper, each node in the graph represents an amino acid residue with multiple key atoms, including $C$ (carboxyl carbon), $O$ (carbonyl oxygen), $C\alpha$ (alpha carbon next to the carboxyl group), and $C\beta$ (beta carbon of the carboxyl group, e.g. two-hop neighbor of $C$). The authors encoded unit vector in the direction of neighboring amino acids $i$ and $j$ along their $C\alpha$ atoms as edge vector feature: $C\alpha_j - C\alpha_i$, whereas node vector features can represent amino acid's internal direction along $C\beta_i - C\alpha_i$. 
 
-![protein geometric graph]({{ site.url }}/public/images/2021-12-20-euclidean_geometric_graph/geometric_protein_graph.png)
+![protein geometric graph]({{ site.url }}/public/images/2022-03-25-euclidean_geometric_graph/geometric_protein_graph.png)
 *Illustration of vector features on a protein geometric graph.* The left panel depicts amino acid residues from a local neighborhood on a protein in 3D Euclidean space. Amino acid residues are colored by their types. Key atoms ($C$, $O$, $C\alpha$, $C\beta$) are labeled for two selected residues. Within residues, two vectors ($C\alpha - C\beta$ and $C\alpha - C$) are plotted in dashed arrows form the node feature $$\mathbf{V}_i \in \mathbb{R}^{2 \times 3}$$. Between residue i and j, the vector $C\alpha_i - C\alpha_j$ can be used as the edge vector features $\mathbf{V}_{ij} \in \mathbb{R}^{1 \times 3}$. The right panel abstracts the protein geometric graph and their vector features.
 
 ### Inherently interpretable by visualizing the learned vector field
@@ -155,7 +155,7 @@ Because GVP-GNN learns and updates vector features on nodes and edges, it’s po
 The authors visualized the learned node vector features on protein geometric graphs. We can clearly see the distinctive patterns on different protein graphs: contracting (A and D), rotating (B) expanding (C). It would be really interesting to study if those learned vector fields actually are correlated with intramolecular forces among the amino acid residues in the protein graphs.
 
 
-![Figure 2 in the GVP paper]({{ site.url }}/public/images/2021-12-20-euclidean_geometric_graph/GVP_figure2.png)
+![Figure 2 in the GVP paper]({{ site.url }}/public/images/2022-03-25-euclidean_geometric_graph/GVP_figure2.png)
 
 In addition to looking at the resultant vector fields (analogous to feature maps in CNN), one should also analyze GVP’s kernels ($$\mathbf{W}_{\mu}$$ and $$\mathbf{W}_{h}$$) because they are the counterpart to CNN’s kernels (aka filters), where lower level kernels learn to detect edge and texture and higher level kernels learn more complex images components such as animal eyes (think DeepDream/[Inceptionism](_https://ai.googleblog.com/2015/06/inceptionism-going-deeper-into-neural.html_)).
 
