@@ -5,13 +5,12 @@ tags: [relational learning, graph convolutions, graph theory]
 authors: Suri, Karush
 ---
 
-<p><span style="color:silver;">10 minute read</span></p>
 
 <p>With the rise of large-scale graphs for relational learning, graph coarsening emerges as a computationally viable alternative. We revisit the <cite><a href="https://openreview.net/pdf?id=uxpzitPEooJ">principles</a></cite> that aim to improve data-driven graph coarsening with adjustable coarsened structures.</p>
 
 # Graph Coarsening 101  
 
-<p><b>TLDR</b>- Coarsening methods group nearby nodes to a supernode while preserving their relational properties. Traditional approaches only aim at node assignment with limited weight adjustment and similarity assessment.</p>
+> <p><b>TLDR</b>- Coarsening methods group nearby nodes to a supernode while preserving their relational properties. Traditional approaches only aim at node assignment with limited weight adjustment and similarity assessment.</p>
 
 <p>Graph coarsening relates to the process of preserving node properties of a graph by grouping them into similarity clusters. These similarity clusters form the new nodes of the coarsened graph and are hence termed as <em>supernodes</em>. Contrary to <span class="popup" onclick="myFunction('myPopup')">partitioning methods <span class="popuptext" id="myPopup">graph partitioning is the process of segregating a graph into its sub-graphs.</span></span> which aim to extract information of local neighborhoods, coarsening aims to extract global representations of a graph. This implies that the coarsened graph must have all the node properties of the original graph preserved up to a certain level of accuracy.</p>
 
@@ -65,7 +64,7 @@ authors: Suri, Karush
 
 # Operations to Coarsen Graphs  
 
-<p><b>TLDR</b>- Assessment of Laplacian leads to a lift & project mapping formulation. In what follows, the formulation constructs a similarity measure $\mathcal{L}$ based on edge and vertex weights.</p>
+> <p><b>TLDR</b>- Assessment of Laplacian leads to a lift & project mapping formulation. In what follows, the formulation constructs a similarity measure $\mathcal{L}$ based on edge and vertex weights.</p>
 
 <p>Establishing a link between original and coarsened graph requires a brief visit into their operators. To compare two graphs the paper defines operators on both original and coarse graphs. Let's begin by revisiting these operators for both structures.</p>
 
@@ -117,7 +116,7 @@ $$\begin{equation}
 
 # Learning Graph Coarsening  
 
-<p><b>TLDR</b>- GOREN utilizes a GNN to assign edge weights by minimizing an unsupervised loss between functional mappings <span style="color:steelblue;">$\mathcal{F}(L,f)$</span> and <span style="color:#7F00FF;">$\mathcal{F}(\hat{L},\hat{f})$</span>. Weight adjustment yields improved quadratic and eigen error reduction.</p>
+> <p><b>TLDR</b>- GOREN utilizes a GNN to assign edge weights by minimizing an unsupervised loss between functional mappings <span style="color:steelblue;">$\mathcal{F}(L,f)$</span> and <span style="color:#7F00FF;">$\mathcal{F}(\hat{L},\hat{f})$</span>. Weight adjustment yields improved quadratic and eigen error reduction.</p>
 
 We now utilize the Rayleigh Quotient formulation to construct a framework for learning coarsening of graphs. The core of learning process is formed by the motivation to reset and learn edge weight assignments of the coarse graph.
 
@@ -166,7 +165,7 @@ When compared to MLP-based weight assignment on various coarsening algorithms; n
 
 # Closing Remarks  
 
-<p><b>TLDR</b>- Learning the coarsening process can be further improved by extending GOREN towards (1) learnable node assignment, (2) non-differentiable loss functions and (3) similarity with downstream tasks.</p>
+> <p><b>TLDR</b>- Learning the coarsening process can be further improved by extending GOREN towards (1) learnable node assignment, (2) non-differentiable loss functions and (3) similarity with downstream tasks.</p>
 
 We looked at graph coarsening in the presence of edge weights. A weight assignment and adjustment scheme is constructed using the GOREN framework. GNNs are trained in an unsupervised fashion to preserve the spectral properties of original graph. While our discussion has been restricted to the study of GOREN, we briefly extend the scope towards other future avenues.
 
