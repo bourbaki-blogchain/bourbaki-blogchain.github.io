@@ -137,7 +137,7 @@ It particularly provides an argument to prefer a high amount of representation c
 
 <a name="Raghu" href="https://openreview.net/forum?id=rkgMkCEtPB">Aniruddh Raghu, Maithra Raghu, Samy Bengio, Oriol Vinyals. Rapid Learning or Feature Reuse? Towards Understanding the Effectiveness of MAML. ICLR, 2020.</a>
 
-<a name="Triantafillou" href="https://papers.nips.cc/paper/2016/file/90e1357833654983612fb05e3ec9148c-Paper.pdf">Eleni Triantafillou, Tyler Zhu, Vincent Dumoulin, Pascal Lamblin, Utku Evci, Kelvin Xu, Ross Goroshin, Carles Gelada, Kevin Swersky, Pierre-Antoine Manzagol, Hugo Larochelle. Meta-Dataset: A Dataset of Datasets for Learning to Learn from Few Examples. ICLR, 2020.
+<a name="Triantafillou" href="https://openreview.net/pdf?id=rkgAGAVKPr">Eleni Triantafillou, Tyler Zhu, Vincent Dumoulin, Pascal Lamblin, Utku Evci, Kelvin Xu, Ross Goroshin, Carles Gelada, Kevin Swersky, Pierre-Antoine Manzagol, Hugo Larochelle. Meta-Dataset: A Dataset of Datasets for Learning to Learn from Few Examples. ICLR, 2020.
 </a>
 
 
