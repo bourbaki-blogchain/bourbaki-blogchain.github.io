@@ -129,7 +129,7 @@ It particularly provides an argument to prefer a high amount of representation c
 <a name="Kornblith" href="http://proceedings.mlr.press/v97/kornblith19a/kornblith19a.pdf">Simon Kornblith, Mohammad Norouzi, Honglak Lee, Geoffrey Hinton. Similarity of neural network representations revisited. ICML 2019.
 </a>
 
-<a name="Mueller" href="https://interactive-maml.github.io/">Luis Müller, Max Ploner, Thomas Goerttler, Klaus Obermayer. An Interactive Introduction to Model-Agnostic Meta-Learning. Visualization for AI Explainability at IEEE VIS, 2019.
+<a name="Mueller" href="https://interactive-maml.github.io/">Luis Müller, Max Ploner, Thomas Goerttler, Klaus Obermayer. An Interactive Introduction to Model-Agnostic Meta-Learning. Visualization for AI Explainability at IEEE VIS, 2021.
 </a>
 
 
