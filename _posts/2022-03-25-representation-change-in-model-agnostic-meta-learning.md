@@ -129,7 +129,7 @@ It particularly provides an argument to prefer a high amount of representation c
 <a name="Kornblith" href="http://proceedings.mlr.press/v97/kornblith19a/kornblith19a.pdf">Simon Kornblith, Mohammad Norouzi, Honglak Lee, Geoffrey Hinton. Similarity of neural network representations revisited. ICML 2019.
 </a>
 
-<a name="Mueller" href="https://interactive-maml.github.io/">Luis Müller, Max Ploner, Thomas Goerttler, Klaus Obermayer. An Interactive Introduction to Model-Agnostic Meta-Learning. Visualization for AI Explainability at IEEE VIS, 2019.
+<a name="Mueller" href="https://interactive-maml.github.io/">Luis Müller, Max Ploner, Thomas Goerttler, Klaus Obermayer. An Interactive Introduction to Model-Agnostic Meta-Learning. Visualization for AI Explainability at IEEE VIS, 2021.
 </a>
 
 
@@ -137,7 +137,7 @@ It particularly provides an argument to prefer a high amount of representation c
 
 <a name="Raghu" href="https://openreview.net/forum?id=rkgMkCEtPB">Aniruddh Raghu, Maithra Raghu, Samy Bengio, Oriol Vinyals. Rapid Learning or Feature Reuse? Towards Understanding the Effectiveness of MAML. ICLR, 2020.</a>
 
-<a name="Triantafillou" href="https://papers.nips.cc/paper/2016/file/90e1357833654983612fb05e3ec9148c-Paper.pdf">Eleni Triantafillou, Tyler Zhu, Vincent Dumoulin, Pascal Lamblin, Utku Evci, Kelvin Xu, Ross Goroshin, Carles Gelada, Kevin Swersky, Pierre-Antoine Manzagol, Hugo Larochelle. Meta-Dataset: A Dataset of Datasets for Learning to Learn from Few Examples. ICLR, 2020.
+<a name="Triantafillou" href="https://openreview.net/pdf?id=rkgAGAVKPr">Eleni Triantafillou, Tyler Zhu, Vincent Dumoulin, Pascal Lamblin, Utku Evci, Kelvin Xu, Ross Goroshin, Carles Gelada, Kevin Swersky, Pierre-Antoine Manzagol, Hugo Larochelle. Meta-Dataset: A Dataset of Datasets for Learning to Learn from Few Examples. ICLR, 2020.
 </a>
 
 
