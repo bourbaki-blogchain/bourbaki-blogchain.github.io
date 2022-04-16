@@ -1,9 +1,10 @@
 ---
 layout: post
 title: Generating Molecular Conformations via Normalizing Flows and Neural ODEs
-authors: Anonymous
+authors: Mukundh Murthy, Nikhil Devraj
 tags: [cheminformatics, drug discovery, generative modeling]  # This should be the relevant areas related to your blog post
 ---
+In this post, we provide an in-depth overview of methods outlined in the paper "Learning Neural Generative Dynamics for Molecular Conformation Generation," discuss the impact of the work in the context of other conformation generation approaches, and additionally discuss future potential applications to improve the diversity and stability of generated conformations.
 
 1. [Introduction](#introduction)
 2. [An Overview of the Deep Generative Approach](#generative-overview)
@@ -13,16 +14,14 @@ tags: [cheminformatics, drug discovery, generative modeling]  # This should be t
 6. [Future Work](#future-work)
 7. [References](#references)
 
-<br>
-<br>
-
 ## Introduction
 
 In drug discovery, generating molecular conformations is useful across a variety of applications. For example, docking of various molecular 3D conformations to a specific protein allows drug hunters to decide whether a small molecule binds to a specific pocket in a multitude of conformations or a select few.
 
 <p align="center">
-  <img src="/public/images/2021-12-01-conformation-generation/vina.jpg" style="width: 300px">
-  <b>Figure 1:</b> Autodock Vina is a computer program that takes a given 3D conformation of a molecule and protein and predicts the binding free energy. An algorithm like the one discussed in this blog could generate a wide variety of conformations for Autodock Vina to test. (Source: https://vina.scripps.edu/)
+  <img src="{{ site.url }}/public/images/2022-03-25-conformation-generation/vina.jpg" style="width: 300px">
+style="width: 300px">
+  <b>Figure 1:</b> Autodock Vina is a computer program that takes a given 3D conformation of a molecule and protein and predicts the binding free energy. An algorithm like the one discussed in this blog could generate a wide variety of conformations for Autodock Vina to test. ([Source](https://vina.scripps.edu/))
 </p>
 
 It may be helpful to define what we mean when we talk about conformations, whether we are talking about a small organic molecule or a macromolecule like a protein. We start off with a graph, with atoms as nodes connected by bonds as edges that represent intramolecular interactions. In essence, we are starting with a specified connectivity defining how atoms are connected to each other. This two-dimensional representation, however, doesn't capture the three-dimensional coordinates of the atoms and how they are spatially arranged.
@@ -36,9 +35,6 @@ There are two subtle components to the question above that address some deficien
 - A multimodal distribution – there are multiple low energy minima when it comes to the joint distribution of distances between atoms that defines a conformation. In approaches where distances between pairs of atoms or 3D coordinates are randomly sampled to construct a conformation, dependencies and correlations between atomic spatial positions are not captured and the corresponding joint distribution is inaccurate.
 
 - Relative spatial positions – some approaches use [graph neural networks](https://distill.pub/2021/gnn-intro/) directly on molecular graphs to compute representations for the individual nodes (atoms). These nodes can be further fed into other feedforward networks to predict the 3D coordinates of the atoms in a specified conformation. However, directly predicting the 3D coordinates does not capture the idea that a conformation is defined by the relative spatial arrangement and distances between atoms in 3D space. Put another way, if a rotation or translation transformation was applied to the 3D coordinates, the model should not classify that as an entirely different conformation (rotation/translation invariance is not captured). Distances, rather than 3D coordinates could also be predicted; however (mirroring the bullet point above), since distances are predicted independently of each other, there could only be one predicted conformational mode.
-
-<br>
-<br>
 
 ## An Overview of the Deep Generative Approach
 
@@ -58,9 +54,6 @@ $$\int{p(\boldsymbol{R}|d,G)*p(d|G)dd}$$
 
 Let’s walk through the approaches to modeling each of these individual distributions.
 
-<br>
-<br>
-
 ## Modeling Distributions of Distances
 
 In this approach, the distribution of distances given a graph is modeled using a continuous normalizing flow. To understand this approach, we need to define its sub-techniques and understand how they interact with each other.
@@ -78,7 +71,7 @@ $$\boldsymbol{d} = F_\theta(\boldsymbol{d}(t_0), \mathcal{G}) = \boldsymbol{d}(t
 To combine the two methods above: We take $z_0$ and define it as the initial value. $\frac{dz}{dt}$ is calculated using a neural network that takes in $z(t)$, $t$, and $\theta$. With $z_0$ and a function $f$ to calculate $\frac{dz}{dt}$ at any time point, $z(t)$ can be calculated as per the traditional initial value problem formulation. The ODESolver also predicts the $\textrm{log}(p(z(t))$ at any time point, thereby encoding the density function for $z(t)$ in addition to just the values of $z(t)$ alone (Figure 2).
 
 <p align="center">
-  <img src="/public/images/2021-12-01-conformation-generation/ode.png">
+  <img src="{{ site.url }}/public/images/2022-03-25-conformation-generation/ode.png">
   <b> Figure 2: </b> The neural ODE system computes $\boldsymbol{d}(t)$ and $\textrm{log}(p(\boldsymbol{d}(t))$ at various time points in order to try and approximate the actual functions for $\boldsymbol{d}(t)$ and $\textrm{log}(p(\boldsymbol{d}(t))$.
 </p>
 
@@ -92,12 +85,9 @@ In this case, our $z(t)$ is $\boldsymbol{d}(t)$, a function that outputs a vecto
 At a higher level, by combining normalizing flows (Figure 4a) with an ODE system, the authors intended to effectively create a normalizing flow with an infinite number of transformations (in the limit) that can therefore model very long-range dependencies between atoms in all the transformations that occur from time $t_0$ to $t_1$ (Figure 4b).
 
 <p align="center">
-  <img src="/public/images/2021-12-01-conformation-generation/nflow.png">
+  <img src="{{ site.url }}/public/images/2022-03-25-conformation-generation/nflow.png">
   <b> Figure 4a (Left): </b> Traditional normalizing flow. <b> Figure 4b (Right): </b> Continuous normalizing flow with $z(t)$ as $d(t)$.
 </p>
-
-<br>
-<br>
 
 ## Modeling Distributions of Conformations
 
@@ -115,18 +105,12 @@ $$L_{\textrm{nce}}(R, \mathcal{G}; \phi) = -E_{p_{\textrm{data}}}[\log{\frac{1}{
 
 Here, $p_{data}$ and  $p_{\theta}$ are two different distributions that generate distances between pairs of atoms. $p_{data}$ pulls from vectors of true distances between atoms in actual conformations, while $p_{\theta}$ pulls from vectors of generated distances from the continuous flow. Therefore, the conformations represented in the second term on the right-hand side of this equation are noisier than the conformations represented in the first term. By being trained against this objective function, the model learns to distinguish real conformations based on true distances from unreal noisy conformations.
 
-<br>
-<br>
-
 ## Sampling
 Conformations are sampled by pulling an initial vector of distances from a normal distribution, passing it through the continuous graph normalizing flow, and finding an initial conformation $R_0$ that minimizes the energy. Then, conformations are sampled using two steps of stochastic gradient [Langevin Dynamics](https://henripal.github.io/blog/langevin). As in traditional stochastic gradient descent, we subtract the gradient of a secondary energy function that uses both the initial EBM parameters and CGNF parameters from the coordinates from the prior iteration. The “Langevin” part of this stochastic gradient descent implies there is a noise term ($w$) added, the variance of which is equal to the square root of the step size ($\epsilon$). This noise term, and Langevin dynamics more generally, are inspired by modeling [Brownian motion](https://en.wikipedia.org/wiki/Brownian_motion) in particles and have been repurposed for sampling in molecular dynamics.
 
 The secondary function takes into account both the initial energy function and the $\textrm{log}(p(\boldsymbol{R}\|\mathcal{G}))$. Minimizing $E_{\theta, \phi}(R\|\mathcal{G})$ involves $E_{\phi}(R\|\mathcal{G})$ and simultaneously minimizing $p(\boldsymbol{R}\|\mathcal{G})$.
 
 $$R_k = R_{k-1} - \frac{\epsilon}{2}\nabla_RE_{\theta, \phi}(R|\mathcal{G}) + \sqrt{\epsilon}\omega, \omega \sim \mathcal{N}(0, \mathcal{I})$$
-
-<br>
-<br>
 
 ## Future Work
 One could explore different variations on the approach used to compute the continuous-time dynamic – for example, [large-scale pretrained transformers applied on SMILES strings](https://arxiv.org/abs/2010.09885) – to compare how different architectures that are also able to capture long-range dependencies between atoms perform in generating distance distributions and subsequently conformations. Similar to the way that message passing allows for encoding of long-range dependencies, attention also allows for the same. In fact, attention applied to protein sequences has been shown to recover high-level elements of a three-dimensional structural organization; attention weights are a well-calibrated estimator of the probability that two amino acids are in contact in three-dimensional space (Vig et. al).
@@ -137,7 +121,7 @@ One caveat to note concerning the idea above is many models pretrained on protei
 One could also verify the ability of the different molecular conformation generation methods to generate more stable conformations. Towards the end of the paper, the authors proposed that the EBM shifts generation towards more stable conformations. Developing a metric or computational experiment – for example, calculating the free energy of generated molecules – would verify if this is the case. Or we could potentially even ask the question – is there an architectural or algorithmic knob that we could turn to control the tradeoff the algorithm makes between choosing conformational stability over diversity? To evaluate the model’s ability to especially generate low energy stable conformations, one could re-calculate all metrics solely across reference conformations for molecules bound to a protein in the protein data bank (PDB) (Figure 5) or [Cambridge Structural Database](https://www.ccdc.cam.ac.uk/solutions/csd-core/components/csd/) (CSD) in a solid-state crystal structure.
 
 <p align="center">
-  <img src="/public/images/2021-12-01-conformation-generation/mol.png" style="width: 300px">
+  <img src="{{ site.url }}/public/images/2022-03-25-conformation-generation/mol.png" style="width: 300px">
   <b> Figure 5: </b> Example of conformational variability for a single PDB ligand between different protein structures (Source: Hawkins et. al).
 </p>
 
@@ -146,9 +130,6 @@ Finally, Hawkins et. al make the distinction between systematic methods and stoc
 For stochastic approaches to finding multiple local minima, it is necessary to have multiple “starts” in order to cover all local minima. To evaluate the efficiency of the approach, one could measure the number of starts it takes to get a certain threshold of coverage over significant low-energy conformations.
 
 All in all, the approach that Xu et. al employ to generate 3D conformers from a 2D molecular graph is part of a recent frontier in research that involves fewer brute-force physical simulations and more convenient ML-guided predictions that can help accelerate drug discovery.
-
-<br>
-<br>
 
 ## References
 
