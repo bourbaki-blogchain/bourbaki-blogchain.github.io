@@ -2,7 +2,7 @@
 layout: post
 title: Symbolic Binding in Neural Networks through Factorized Memory Systems
 tags: [symbolic, memory, neural, binding]
-authors: Ameya Daigavane, Ansh Khurana, Shweta Bhardwaj, Gaurav Aggarwal
+authors: Daigavane, Ameya; Khurana, Ansh; Bhardwaj, Shweta; Aggarwal, Gaurav
 excerpt: In this blog post, we describe the paper 'Emergent Symbols through Binding in External Memory', which introduces the Emergent Symbol Binding Network (ESBN), a recurrent neural network with an augmented factorized memory system, to solve several logical reasoning tasks. We describe the design choices of the ESBN in great detail to compare with other sequence models, and perform a qualitative validation of the generalization claims from the original paper.
 ---
 
