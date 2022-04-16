@@ -4,6 +4,7 @@
  tags: [Mechanism Design, Deep Learning, Auctions]
  authors: Curry, Michael J., University of Maryland; Reusche, Daniel
 ---
+We discuss a new contribution to the nascent area of deep learning for revenue-maximizing auction design, which uses a GAN-style approach in which two neural networks (one which models strategic behavior by bidders, and one which models an auctioneer) compete with each other.
 
 # Introduction
 
