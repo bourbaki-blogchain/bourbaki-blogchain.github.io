@@ -20,8 +20,7 @@ In drug discovery, generating molecular conformations is useful across a variety
 
 <p align="center">
   <img src="{{ site.url }}/public/images/2022-03-25-conformation-generation/vina.jpg" style="width: 300px">
-style="width: 300px">
-  <b>Figure 1:</b> Autodock Vina is a computer program that takes a given 3D conformation of a molecule and protein and predicts the binding free energy. An algorithm like the one discussed in this blog could generate a wide variety of conformations for Autodock Vina to test. ([Source](https://vina.scripps.edu/))
+  <b>Figure 1:</b> Autodock Vina is a computer program that takes a given 3D conformation of a molecule and protein and predicts the binding free energy. An algorithm like the one discussed in this blog could generate a wide variety of conformations for Autodock Vina to test. (<a href="https://vina.scripps.edu/">Source</a>)
 </p>
 
 It may be helpful to define what we mean when we talk about conformations, whether we are talking about a small organic molecule or a macromolecule like a protein. We start off with a graph, with atoms as nodes connected by bonds as edges that represent intramolecular interactions. In essence, we are starting with a specified connectivity defining how atoms are connected to each other. This two-dimensional representation, however, doesn't capture the three-dimensional coordinates of the atoms and how they are spatially arranged.
@@ -78,7 +77,7 @@ To combine the two methods above: We take $z_0$ and define it as the initial val
 In this case, our $z(t)$ is $\boldsymbol{d}(t)$, a function that outputs a vector with pairwise intramolecular distances. The “continuous-time dynamics" is a function that takes in neural network parameters, the time, and the current state to output the derivative of the distances with respect to time. The neural network is a graph [message passing neural network](https://paperswithcode.com/method/mpnn) (MPNN) that calculates node and edge representations and aggregates the node and edge representations for each bond to calculate $\frac{dd_{uv}}{dt}$ – the change of the distance between two atoms with respect to time (Figure 3).
 
 <p align="center">
-  <img src="/public/images/2021-12-01-conformation-generation/mpnn.png">
+  <img src="{{ site.url }}/public/images/2022-03-25-conformation-generation/mpnn.png">
   <b> Figure 3: </b> First, the individual nodes and edges are embedded using feedforward networks and sent through message passing layers. For every single bond, the final embeddings for the edge and atoms on each (atoms $u$ and $v$) end are concatenated and sent into a final feedforward network to result in a prediction for $\frac{dd_{uv}}{dt}$.
 </p>
 
