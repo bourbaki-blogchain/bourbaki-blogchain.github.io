@@ -26,16 +26,15 @@ authors: Joshi, Chaitanya K.; Anand, Rishabh
 TSP is also a classic example of a **Routing Problem** -- Routing Problems are a class of COPs that require a sequence of nodes (e.g., cities) or edges (e.g., roads between cities) to be traversed in a specific order while fulfilling a set of constraints or optimising a set of variables. TSP requires a set of edges to be traversed in an order that ensures all nodes are visited exactly once. In the algorithmic sense, the optimal "tour" for our salesperson is a sequence of selected edges that provides the minimal distance or time taken over a Hamiltonian cycle, see Figure 1 for an illustration.
 
 <figure><center>
-  <img src="{{ site.url }}/public/images/2021-12-01-deep-learning-for-routing-problems/tsp-gif.gif" width="60%"/>
+  <img src="{{ site.url }}/public/images/2022-03-25-deep-learning-for-routing-problems/tsp-gif.gif" width="60%"/>
   <figcaption><b>Figure 1:</b> TSP asks the following question: Given a list of cities and the distances between each pair of cities, what is the <b>shortest possible route</b> that a salesperson can take to <b>visit each city</b> and <b>returns to the origin city</b>?
-  <!-- Formally, TSP is defined as a constrained optimization problem on a graph: one needs to search the space of permutations to find an optimal sequence of nodes, called a tour, with minimal total edge weights or tour length.  -->
   (Source: <a href="http://mathgifs.blogspot.com/2014/03/the-traveling-salesman.html">MathGifs</a>)</figcaption>
 </center></figure>
 
 In real-world and practical scenarios, Routing Problems, or Vehicle Routing Problems (VRPs), can involve challenging constraints beyond the somewhat *vanilla* TSP; they are generalisations of TSP. For example, the **TSP with Time Windows** (TSPTW) adds a "time window" contraint to nodes in a TSP graph. This means certain nodes can either be active or inactive at a given time, i.e., they can only be visited during certain intervals. Another variant, the **Capacitated Vehicle Routing Problem** (CVRP) aims to find the optimal routes for a fleet of vehicles (i.e., multiple salespersons) visiting a set of customers (i.e., cities), with each vehicle having a maximum carrying capacity.
 
 <figure><center>
-  <img src="{{ site.url }}/public/images/2021-12-01-deep-learning-for-routing-problems/vrps.png" width="50%"/>
+  <img src="{{ site.url }}/public/images/2022-03-25-deep-learning-for-routing-problems/vrps.png" width="50%"/>
   <figcaption><b>Figure 2:</b> TSP and the associated class of Vehicle Routing Problems. VRPs can be characterized by their constraints, and this figure presents the relatively well-studied ones. There could be VRPs in the wild with <b>more complex</b> and <b>non-standard constraints</b>! (Source: adapted from <a href="https://ieeexplore.ieee.org/abstract/document/6887420">Benslimane and Benadada, 2014</a>)</figcaption>
 </center></figure>
 
@@ -70,7 +69,7 @@ Using TSP as a canonical example, we now present a generic **neural combinatoria
 State-of-the-art approaches for TSP take the raw coordinates of cities as input and leverage **GNNs** or **Transformers** combined with classical **graph search** algorithms to constructively build approximate solutions. Architectures can be broadly classified as: (1) **autoregressive** approaches, which build solutions in a step-by-step fashion; and (2) **non-autoregressive** models, which produce the solution in one shot. Models can be trained to **imitate optimal solvers** via supervised learning or by minimizing the length of TSP tours via **reinforcement learning**.
 
 <figure><center>
-  <img src="{{ site.url }}/public/images/2021-12-01-deep-learning-for-routing-problems/pipeline-box.png" width="75%"/>
+  <img src="{{ site.url }}/public/images/2022-03-25-deep-learning-for-routing-problems/pipeline-box.png" width="75%"/>
   <figcaption><b>Figure 3:</b> Neural combinatorial optimization pipeline (Source: <a href="https://arxiv.org/abs/2006.07054">Joshi et al., 2021</a>).</figcaption>
 </center></figure>
 
@@ -79,7 +78,7 @@ The 5-stage pipeline from [Joshi et al., 2021](https://arxiv.org/abs/2006.07054)
 ### (1) Defining the problem via graphs
 
 <figure><center>
-  <img src="{{ site.url }}/public/images/2021-12-01-deep-learning-for-routing-problems/pipeline-1.png" width="60%"/>
+  <img src="{{ site.url }}/public/images/2022-03-25-deep-learning-for-routing-problems/pipeline-1.png" width="60%"/>
   <figcaption><b>Figure 4: Problem Definition:</b> TSP is formulated via a fully-connected graph of cities/nodes, which can be sparsified further.</figcaption>
 </center></figure>
 
@@ -88,7 +87,7 @@ TSP is formulated via a fully-connected graph where **nodes** correspond to **ci
 ### (2) Obtaining latent embeddings for graph nodes and edges
 
 <figure><center>
-  <img src="{{ site.url }}/public/images/2021-12-01-deep-learning-for-routing-problems/pipeline-2.png" width="60%"/>
+  <img src="{{ site.url }}/public/images/2022-03-25-deep-learning-for-routing-problems/pipeline-2.png" width="60%"/>
   <figcaption><b>Figure 5: Graph Embedding:</b> Embeddings for each graph node are obtained using a <b>Graph Neural Network</b> encoder, which builds local structural features via recursively aggregating features from each node's neighbors.</figcaption>
 </center></figure>
 
@@ -101,7 +100,7 @@ A GNN or Transformer encoder computes **hiddden representations** or embeddings 
 ### (3 + 4) Converting embeddings into discrete solutions
 
 <figure><center>
-  <img src="{{ site.url }}/public/images/2021-12-01-deep-learning-for-routing-problems/pipeline-3.png" width="70%"/>
+  <img src="{{ site.url }}/public/images/2022-03-25-deep-learning-for-routing-problems/pipeline-3.png" width="70%"/>
   <figcaption><b>Figure 5: Solution Decoding and Search:</b> Probabilities are assigned to each node or edge for <b>belonging to the solution set</b> (here, an MLP makes a prediction per edge to obtain a 'heatmap' of edge probabilities), and then converted into <b>discrete decisions</b> through classical graph search techniques such as greedy search or beam search.</figcaption>
 </center></figure>
 
@@ -146,14 +145,14 @@ With the unified 5-stage pipeline in place, let us highlight some **recent advan
 One of the most influential early works, the autoregressive Attention Model [[Kool et al., 2019](https://arxiv.org/abs/1803.08475)], considers TSP as a Seq2Seq language translation problem and sequentially constructs TSP tours as permutations of cities. One immediate drawback of this formulation is that it does not consider the **underlying symmetries of routing problems**.
 
 <figure><center>
-  <img src="{{ site.url }}/public/images/2021-12-01-deep-learning-for-routing-problems/pomo.png" width="75%"/>
+  <img src="{{ site.url }}/public/images/2022-03-25-deep-learning-for-routing-problems/pomo.png" width="75%"/>
   <figcaption><b>Figure 6:</b> In general, a TSP has one unique optimal solution (L). However, under the autoregressive formulation when a solution is represented as a sequence of nodes, <b>multiple optimal permutations</b> exist (R). (Source: <a href="https://arxiv.org/abs/2010.16011">Kwon et al., 2020</a>)</figcaption>
 </center></figure>
 
 **POMO: Policy Optimization with Multiple Optima** [[Kwon et al., 2020](https://arxiv.org/abs/2010.16011)] proposes to leverage invariance to the starting city in the constructive autoregressive formulation. They train the same Attention Model, but with a new reinforcement learning algorithm (step 5 in the pipeline) which exploits the existence of multiple optimal tour permutations. 
 
 <figure><center>
-  <img src="{{ site.url }}/public/images/2021-12-01-deep-learning-for-routing-problems/equivariance.png" width="75%"/>
+  <img src="{{ site.url }}/public/images/2022-03-25-deep-learning-for-routing-problems/equivariance.png" width="75%"/>
   <figcaption><b>Figure 7:</b> TSP solutions remain unchanged under the <b>Euclidean symmtery group</b> of rotations, reflections, and translations to the city coordinates. Incorporating these symetries into the model may be a principled approach to tackling large-scale TSPs.</figcaption>
 </center></figure>
 
@@ -166,14 +165,14 @@ Future work may follow the [**Geometric Deep Learning (GDL)**](https://geometric
 Another influential research direction has been the one-shot non-autoregressive Graph ConvNet approach [[Joshi et al., 2019](https://arxiv.org/abs/1906.01227)]. Several recent papers have proposed to retain the same Gated GCN encoder (pipeline step 2) while replacing the beam search component (pipeline step 4) with **more powerful** and **flexible graph search algorithms**, e.g., Dynamic Programming [[Kool et al., 2021](https://arxiv.org/abs/2102.11756)] or Monte-Carlo Tree Search (MCTS) [[Fu et al., 2020](https://arxiv.org/abs/2012.10658)].
 
 <figure><center>
-  <img src="{{ site.url }}/public/images/2021-12-01-deep-learning-for-routing-problems/heatmaps.png" width="75%"/>
+  <img src="{{ site.url }}/public/images/2022-03-25-deep-learning-for-routing-problems/heatmaps.png" width="75%"/>
   <figcaption><b>Figure 8:</b> The Gated GCN encoder <a href="https://arxiv.org/abs/1906.01227">[Joshi et al., 2019]</a> can be used to produce <b>edge prediction 'heatmaps'</b> (in transparent red color) for TSP, CVRP, and TSPTW. These can be further processed by <a href="https://arxiv.org/abs/2102.11756">DP</a> or <a href="https://arxiv.org/abs/2012.10658">MCTS</a> to output routes (in solid colors). The GCN essentially reduces the solution search space for sophisticated search algorithms which may have been intractable when searching over all possible routes. (Source: <a href="https://arxiv.org/abs/2102.11756">Kool et al., 2021</a>)</figcaption>
 </center></figure>
 
 The [GCN + MCTS framework](https://arxiv.org/abs/2012.10658) by Fu et al. in particular has a very interesting approach to **training models efficiently on trivially small TSP** and successfully **transferring the learnt policy to larger graphs** in a zero-shot fashion (something that the original GCN + Beam Search by Joshi et al. struggled with). They ensure that the predictions of the GCN encoder generalize from small to large TSP by updating the problem definition (pipeline step 1): large problem instances are represented as many smaller sub-graphs which are of the same size as the training graphs for the GCN, and then merge the GCN edge predictions before performing MCTS. 
 
 <figure><center>
-  <img src="{{ site.url }}/public/images/2021-12-01-deep-learning-for-routing-problems/sample-merge.png" width="70%"/>
+  <img src="{{ site.url }}/public/images/2022-03-25-deep-learning-for-routing-problems/sample-merge.png" width="70%"/>
   <figcaption><b>Figure 9:</b> The GCN + MCTS framework <a href="https://arxiv.org/abs/2012.10658">[Fu et al., 2020]</a> represents large TSPs as a set of <b>small sub-graphs</b> which are of the same size as the graphs used for training the GCN. Sub-graph edge heatmaps predicted by the GCN are merged together to obtain the heatmap for the full graph. This <b>divide-and-conquer approach</b> ensures that the embeddings and predictions made by the GCN generalize well from smaller to larger instances. (Source: <a href="https://arxiv.org/abs/2012.10658">Fu et al., 2020</a>)</figcaption>
 </center></figure>
 
@@ -186,7 +185,7 @@ Overall, this line of work suggests that **stronger coupling** between the desig
 Recently, a number of papers have explored an alternative to constructive AR and NAR decoding schemes which involves **learning to iteratively improve (sub-optimal) solutions** or **learning to perform local search**, starting with [Chen et al., 2019](https://arxiv.org/abs/1810.00337) and [Wu et al., 2021](https://arxiv.org/abs/1912.05784). Other notable papers include the works of [Cappart et al., 2021](https://ojs.aaai.org/index.php/AAAI/article/view/16484), [da Costa et al., 2020](https://arxiv.org/abs/2004.01608), [Ma et al., 2021](https://arxiv.org/abs/2110.02544), [Xin et al., 2021](https://arxiv.org/abs/2110.07983), and [Hudson et al., 2021](https://arxiv.org/abs/2110.05291).
 
 <figure><center>
-  <img src="{{ site.url }}/public/images/2021-12-01-deep-learning-for-routing-problems/cyclic-pe.png" width="75%"/>
+  <img src="{{ site.url }}/public/images/2022-03-25-deep-learning-for-routing-problems/cyclic-pe.png" width="75%"/>
   <figcaption><b>Figure 10:</b> Architectures which learn to improve sub-optimal TSP solutions by guiding decisions within local search algorithms. (a) The original Transformer encoder-decoder architecture <a href="https://arxiv.org/abs/1912.05784">[Wu et al., 2021]</a> which used <b>sinusoidal positional encodings</b> to represent the current sub-optimal tour permutation; (b) <a href="https://arxiv.org/abs/2110.02544">Ma et al., 2021</a>'s upgrade through the lens of symmetry: the Dual-aspect Transformer encoder-decoder  with <b>learnable positional encodings</b> which capture the cyclic nature of TSP tours; (c) Visualizations of sinusoidal vs. cyclical positional encodings.</figcaption>
 </center></figure>
 
@@ -215,7 +214,7 @@ In general, it is encouraging to see recent papers move beyond showing minor per
 At the same time, we must be vary to not 'overfit' on the top `n` TSPLib or CVPRLib instances that every other paper is using. Thus, better synthetic datasets go hand-in-hand for benchmarking progress fairly, e.g., [Queiroga et al., 2021](https://openreview.net/forum?id=yHiMXKN6nTl) recently proposed a new libarary of synthetic 10,000 CVPR testing instances. Additionally, one can assess the robustness of neural solvers to small perturbations of problem instances with adversarial attacks, as proposed by [Geisler et al., 2021](https://arxiv.org/abs/2110.10942).
 
 <figure><center>
-  <img src="{{ site.url }}/public/images/2021-12-01-deep-learning-for-routing-problems/ml4co.png" width="25%"/>
+  <img src="{{ site.url }}/public/images/2022-03-25-deep-learning-for-routing-problems/ml4co.png" width="25%"/>
   <figcaption><b>Figure 11:</b> Community contests such as <a href="https://www.ecole.ai/2021/ml4co-competition/">ML4CO</a> are a great initiative to track progress. (Source: ML4CO website).</figcaption>
 </center></figure>
 
