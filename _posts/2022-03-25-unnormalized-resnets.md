@@ -2,7 +2,7 @@
 layout: post
 title: Normalization is dead, long live normalization!
 tags: [normalization, initialization, propagation, skip connections, residual networks]
-authors: Hoedt, Pieter-Jan; Klambauer, Günter; Hochreiter, Sepp
+authors: Hoedt, Pieter-Jan; Hochreiter, Sepp; Klambauer, Günter
 ---
 
 Since the advent of Batch Normalization (BN), almost every state-of-the-art (SOTA) method uses some form of normalization.
