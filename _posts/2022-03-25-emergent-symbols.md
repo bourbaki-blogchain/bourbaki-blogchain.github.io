@@ -219,11 +219,11 @@ $$
 \begin{aligned}
 k_{w_t} &= \text{ReLU}(\text{Linear}(h_t)) \\
 g_t &= \sigma(\text{Linear}(h_t)) \\
-y_t &= \sigma_F(\text{Linear}(h_t)) \\
+y_t &= \sigma_{\text{pred}}(\text{Linear}(h_t)) \\
 \end{aligned}
 $$
 
-where $\sigma_F$ is either the sigmoid activation or the softmax activation,
+where $\sigma_{\text{pred}}$ is either the sigmoid activation or the softmax activation,
 depending on the number of options present.
 
 This key $k_{w_t}$ is now concatenated to the memory $M_k$:
