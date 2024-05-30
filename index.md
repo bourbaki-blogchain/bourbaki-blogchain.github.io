@@ -5,11 +5,6 @@ tags: [proposal, call]
 authors: Bubeck, Sebastien (Microsoft); Dobre, David (Mila); Gauthier, Charlie (Mila); Gidel, Gauthier (Mila); Vernade, Claire (DeepMind)
 ---
 
-<link rel="canonical" href="https://iclr-blogposts.github.io/2023/about">
-<script>
-    window.location.replace("https://iclr-blogposts.github.io/2023/about");
-</script>
-
 <br>
 <p align="center">
   <img src="{{ site.url }}/public/images/2021-09-01-sample-submission/ICLR-logo.png" width="50%" alt="ICLR Logo">
@@ -17,6 +12,7 @@ authors: Bubeck, Sebastien (Microsoft); Dobre, David (Mila); Gauthier, Charlie (
 
 ## Important Information
 
+- For all editions of the ICLR Blog Track after 2022, please visit this website: [https://iclr-blogposts.github.io/2024/about](https://iclr-blogposts.github.io/2023/about)
 - The track has concluded and accepted blogposts are viewable [here]({{ site.url }}/blog)!
 - We've released a video talking about this track in more detail
 
